@@ -3,6 +3,9 @@ import React from "react";
 import { useRouter } from "expo-router";
 
 const router = useRouter();
+const handleLogin = () => {
+  router.replace("/(tabs)/home");
+}
 
 const login = () => {
   return (
@@ -37,7 +40,7 @@ const login = () => {
           <Text style={styles.titleBase}>Sign Up or Log In</Text>
           <Text style={styles.subtitleBase}>Select your preferred method to continue</Text>
           
-          <TouchableOpacity style={[styles.btnBase, { backgroundColor: "#fff", borderColor: "#8C8C8C", marginBottom: 8 }]}>
+          <TouchableOpacity style={[styles.btnBase, { backgroundColor: "#fff", borderColor: "#8C8C8C", marginBottom: 8 }]} onPress={handleLogin}>
             <Image
               source={require("../assets/images/initialization_assets/google.png")}
               style={styles.icon}
