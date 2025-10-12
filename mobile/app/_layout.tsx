@@ -11,6 +11,9 @@ export default function RootLayout() {
     'Gabarito': require('../assets/fonts/Gabarito-Bold.ttf'),
     'DMSans-Bold': require('../assets/fonts/DMSans_24pt-Bold.ttf'),
     'DMSans-EXLight': require('../assets/fonts/DMSans_18pt-ExtraLight.ttf'),
+    'DMSans-Medium': require('../assets/fonts/DMSans_18pt-Medium.ttf'),
+    'Manrope-EXBold': require('../assets/fonts/Manrope-ExtraBold.ttf'),
+    'Manrope-Bold': require('../assets/fonts/Manrope-Bold.ttf'),
   });
 
   useEffect(() => {
