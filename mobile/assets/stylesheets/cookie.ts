@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
   },
 
   sectionHeader: {
-    marginTop: 18,
+    marginTop: -8,
     paddingHorizontal: 20,
     flexDirection: "row",
     justifyContent: "space-between",
@@ -189,7 +189,7 @@ const styles = StyleSheet.create({
     color: "rgba(47,47,47, 0.5)",
   },
 
-  productGrid: {
+  brandGrid: {
   flexDirection: "row",
   flexWrap: "wrap",
   justifyContent: "space-between",

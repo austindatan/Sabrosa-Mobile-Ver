@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Stack, Tabs } from "expo-router";
 import { useFonts } from 'expo-font'; 
 import * as SplashScreen from 'expo-splash-screen'; 

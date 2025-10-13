@@ -1,12 +1,109 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import React from "react";
+import { View, Text, ImageBackground, TouchableOpacity, Animated } from "react-native";
+import styles from "../../assets/stylesheets/cookie";
+import BrandCard from "../components/SabrosaBrandCard";
+import useHomeHeaderAnimation from "../../hooks/HeaderAnimation";
+import HomeHeader from "../components/HomeHeader";
 
-const cookie = () => {
+const Cookie = () => {
+  const {
+    scrollY,
+    headerHeight,
+    topContentOpacity,
+    topContentTranslateY,
+    logoScale,
+    searchTranslateY,
+    HEADER_MAX,
+  } = useHomeHeaderAnimation();
+
   return (
-    <View>
-      <Text>cookie</Text>
-    </View>
-  )
-}
+    <View style={{ flex: 1, backgroundColor: "#fff" }}>
+      <HomeHeader
+        headerHeight={headerHeight}
+        topContentOpacity={topContentOpacity}
+        topContentTranslateY={topContentTranslateY}
+        logoScale={logoScale}
+        searchTranslateY={searchTranslateY}
+      />
 
-export default cookie
+      <Animated.ScrollView
+        contentContainerStyle={{
+          paddingTop: HEADER_MAX + 20,
+          paddingBottom: 70,
+        }}
+        showsVerticalScrollIndicator={false}
+        scrollEventThrottle={16}
+        onScroll={Animated.event(
+          [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+          { useNativeDriver: false }
+        )}
+      >
+        
+        <View style={styles.sectionHeader}>
+          <Text style={styles.sectionTitle}>Sabrosa Brands</Text>
+        </View>
+
+        <View style={styles.brandGrid}>
+
+          <BrandCard
+            image={require("../../assets/images/initialization_assets/light/sugar.png")}
+            color="#69CCE3"
+          />
+
+          <BrandCard
+            image={require("../../assets/images/initialization_assets/light/chobani.png")}
+            color="#1C5F4E"
+          />
+
+          <BrandCard
+            image={require("../../assets/images/initialization_assets/light/laduree.png")}
+            color="#FDC0D0"
+          />
+
+          <BrandCard
+            image={require("../../assets/images/initialization_assets/light/bluestar.png")}
+            color="#1F27A6"
+          />
+
+          <BrandCard
+            image={require("../../assets/images/initialization_assets/light/graze.png")}
+            color="#423064"
+          />
+
+          <BrandCard
+            image={require("../../assets/images/initialization_assets/light/byron.png")}
+            color="#FF8654"
+          />
+
+          <BrandCard
+            image={require("../../assets/images/initialization_assets/light/sweets.png")}
+            color="#FF0000"
+          />
+
+          <BrandCard
+            image={require("../../assets/images/initialization_assets/light/krispy.png")}
+            color="#CC083E"
+          />
+
+          <BrandCard
+            image={require("../../assets/images/initialization_assets/light/oli.png")}
+            color="#D6F2ED"
+          />
+
+          <BrandCard
+            image={require("../../assets/images/initialization_assets/light/tea forte.png")}
+            color="#B09040"
+          />
+
+          <BrandCard
+            image={require("../../assets/images/initialization_assets/light/compartes.png")}
+            color="#31625C"
+          />
+        </View>
+
+      </Animated.ScrollView>
+    </View>
+  );
+};
+
+export default Cookie;

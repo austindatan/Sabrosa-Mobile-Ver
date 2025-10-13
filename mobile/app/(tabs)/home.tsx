@@ -1,140 +1,109 @@
-import { View, Text, ImageBackground, StyleSheet, Image, TextInput, TouchableOpacity, ScrollView } from "react-native";
 import React from "react";
+import { View, Text, ImageBackground, TouchableOpacity, Animated } from "react-native";
 import styles from "../../assets/stylesheets/home";
 import ProductCard from "../components/ProductCard";
+import useHomeHeaderAnimation from "../../hooks/HeaderAnimation";
+import HomeHeader from "../components/HomeHeader";
 
 const Home = () => {
+  const {
+    scrollY,
+    headerHeight,
+    topContentOpacity,
+    topContentTranslateY,
+    logoScale,
+    searchTranslateY,
+    HEADER_MAX,
+  } = useHomeHeaderAnimation();
+
   return (
-    <ScrollView 
-      style={styles.container}
-      contentContainerStyle={{ paddingBottom: 70 }}
-      showsVerticalScrollIndicator={false}
-    >
+    <View style={{ flex: 1, backgroundColor: "#fff" }}>
+      <HomeHeader
+        headerHeight={headerHeight}
+        topContentOpacity={topContentOpacity}
+        topContentTranslateY={topContentTranslateY}
+        logoScale={logoScale}
+        searchTranslateY={searchTranslateY}
+      />
 
-      <View style={styles.headerWrapper}>
-        <ImageBackground
-          source={require("../../assets/images/initialization_assets/home_header.png")}
-          style={styles.header}
-          imageStyle={styles.headerImage}
-          resizeMode="cover"
-        >
-
-          <View style={styles.contentContainer}>
-            <View style={styles.leftContainer}>
-              <Text style={styles.locationLabel}>Location</Text>
-              <View style={styles.locationRow}>
-                <Image
-                  source={require("../../assets/images/initialization_assets/location.png")}
-                  style={styles.locationIcon}
-                  resizeMode="contain"
-                />
-                <Text style={styles.locationValue}>
-                  Cagayan de Oro, Philippines
-                </Text>
-              </View>
+      <Animated.ScrollView
+        contentContainerStyle={{
+          paddingTop: HEADER_MAX + 20,
+          paddingBottom: 70,
+        }}
+        showsVerticalScrollIndicator={false}
+        scrollEventThrottle={16}
+        onScroll={Animated.event(
+          [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+          { useNativeDriver: false }
+        )}
+      >
+        <View style={styles.specialOffer}>
+          <ImageBackground
+            source={require("../../assets/images/initialization_assets/promo_banner-Bg.png")}
+            style={styles.offerImage}
+            imageStyle={{ borderRadius: 15 }}
+          >
+            <View style={styles.offerContent}>
+              <Text style={styles.offerTitle}>Special Offer for March</Text>
+              <Text style={styles.offerSubtitle}>
+                A flavor that will make you feel nostalgia and home.
+              </Text>
+              <TouchableOpacity style={styles.offerButton}>
+                <Text style={styles.offerButtonText}>Buy Now</Text>
+              </TouchableOpacity>
             </View>
+          </ImageBackground>
+        </View>
 
-            <Image
-              source={require("../../assets/images/initialization_assets/sabrosa_logo.png")}
-              style={styles.logo}
-              resizeMode="contain"
-            />
-          </View>
+        <View style={styles.sectionHeader}>
+          <Text style={styles.sectionTitle}>Top Picks!</Text>
+          <TouchableOpacity>
+            <Text style={styles.seeAll}>See all</Text>
+          </TouchableOpacity>
+        </View>
 
-          <View style={styles.searchContainer}>
-            <View style={styles.searchBox}>
-              <Image
-                source={require("../../assets/images/initialization_assets/search.png")}
-                style={styles.searchIcon}
-              />
-              <TextInput
-                placeholder="Search"
-                placeholderTextColor="#999"
-                style={styles.searchInput}
-              />
-            </View>
-
-            <TouchableOpacity style={styles.filterButton}>
-              <Image
-                source={require("../../assets/images/initialization_assets/filter_big.png")}
-                style={styles.filterIcon}
-              />
-            </TouchableOpacity>
-          </View>
-        </ImageBackground>
-      </View>
-
-      <View style={styles.specialOffer}>
-        <ImageBackground
-          source={require("../../assets/images/initialization_assets/promo_banner-Bg.png")}
-          style={styles.offerImage}
-          imageStyle={{ borderRadius: 15 }}
-        >
-          <View style={styles.offerContent}>
-            <Text style={styles.offerTitle}>Special Offer for March</Text>
-            <Text style={styles.offerSubtitle}>
-              A flavor that will make you feel nostalgia and home.
-            </Text>
-            <TouchableOpacity style={styles.offerButton}>
-              <Text style={styles.offerButtonText}>Buy Now</Text>
-            </TouchableOpacity>
-          </View>
-        </ImageBackground>
-      </View>
-
-      <View style={styles.sectionHeader}>
-        <Text style={styles.sectionTitle}>Top Picks!</Text>
-        <TouchableOpacity>
-          <Text style={styles.seeAll}>See all</Text>
-        </TouchableOpacity>
-      </View>
-
-      <View style={styles.productGrid}>
-        <ProductCard
-          productName="Salted Caramel Bliss"
-          price="₱95"
-          productImage={require("../../assets/images/initialization_assets/product2.png")}
-          brandImage={require("../../assets/images/initialization_assets/byronbay_logo.png")}
-        />
-
-        <ProductCard
-          productName="Salted Caramel Bliss"
-          price="₱95"
-          productImage={require("../../assets/images/initialization_assets/product2.png")}
-          brandImage={require("../../assets/images/initialization_assets/byronbay_logo.png")}
-        />
-
-        <ProductCard
-          productName="Salted Caramel Bliss"
-          price="₱95"
-          productImage={require("../../assets/images/initialization_assets/product2.png")}
-          brandImage={require("../../assets/images/initialization_assets/byronbay_logo.png")}
-        />
-
-        <ProductCard
-          productName="Salted Caramel Bliss"
-          price="₱95"
-          productImage={require("../../assets/images/initialization_assets/product2.png")}
-          brandImage={require("../../assets/images/initialization_assets/byronbay_logo.png")}
-        />
-
-        <ProductCard
-          productName="Salted Caramel Bliss"
-          price="₱95"
-          productImage={require("../../assets/images/initialization_assets/product2.png")}
-          brandImage={require("../../assets/images/initialization_assets/byronbay_logo.png")}
-        />
-
-        <ProductCard
-          productName="Salted Caramel Bliss"
-          price="₱95"
-          productImage={require("../../assets/images/initialization_assets/product2.png")}
-          brandImage={require("../../assets/images/initialization_assets/byronbay_logo.png")}
-        />
-      </View>
-    </ScrollView>
+        <View style={styles.productGrid}>
+          <ProductCard
+            productName="Tropical Mango & Passionfruit"
+            price="₱195"
+            productImage={require("../../assets/images/initialization_assets/food/product1.png")}
+            brandImage={require("../../assets/images/initialization_assets/logo/byronbay_logo.png")}
+          />
+          <ProductCard
+            productName="Peaches & Cream Soda"
+            price="₱95"
+            productImage={require("../../assets/images/initialization_assets/food/barbie.png")}
+            brandImage={require("../../assets/images/initialization_assets/logo/olipop_black.png")}
+          />
+          <ProductCard
+            productName="Special Mixed Yakisoba"
+            price="₱125"
+            productImage={require("../../assets/images/initialization_assets/food/bun.png")}
+            brandImage={require("../../assets/images/initialization_assets/logo/sweets_logo.png")}
+          />
+          <ProductCard
+            productName="Double Dutch Originals"
+            price="₱95"
+            productImage={require("../../assets/images/initialization_assets/food/don.png")}
+            brandImage={require("../../assets/images/initialization_assets/logo/sabrosa_logo.png")}
+          />
+          <ProductCard
+            productName="Dragon Noodles"
+            price="₱95"
+            productImage={require("../../assets/images/initialization_assets/food/product2.png")}
+            brandImage={require("../../assets/images/initialization_assets/logo/sweets_logo.png")}
+          />
+          <ProductCard
+            productName="Tea Chest Pyramid"
+            price="₱95"
+            productImage={require("../../assets/images/initialization_assets/food/tea.png")}
+            brandImage={require("../../assets/images/initialization_assets/logo/tea_logo.png")}
+          />
+        </View>
+      </Animated.ScrollView>
+    </View>
   );
 };
 
 export default Home;
-

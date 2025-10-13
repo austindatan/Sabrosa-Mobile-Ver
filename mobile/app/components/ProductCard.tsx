@@ -2,8 +2,8 @@ import React from "react";
 import { View, Text, Image, StyleSheet } from "react-native";
 
 const ProductCard = ({
-  productImage = require("../../assets/images/initialization_assets/product1.png"),
-  brandImage = require("../../assets/images/initialization_assets/byronbay_logo.png"),
+  productImage = require("../../assets/images/initialization_assets/food/product1.png"),
+  brandImage = require("../../assets/images/initialization_assets/logo/byronbay_logo.png"),
   productName = "Tropical Mango & Passionfruit",
   price = "₱85",
 }) => {
@@ -42,7 +42,6 @@ const styles = StyleSheet.create({
   borderWidth: 1,
   borderColor: "rgba(255, 108, 155, 0.5)",
   padding: 12,
-  marginBottom: 15,
   width: "49%",
   alignSelf: "center",
   },
@@ -73,7 +72,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontFamily: "Barlow",
     color: "#000",
-    maxWidth: 90,
+    maxWidth: 80,
   },
 
   priceTag: {
