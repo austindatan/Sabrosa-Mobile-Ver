@@ -1,10 +1,11 @@
 // @ts-nocheck
 import { Stack, Tabs } from "expo-router";
-import { useFonts } from 'expo-font'; 
-import * as SplashScreen from 'expo-splash-screen'; 
-import {useEffect} from 'react';
-import { Ionicons } from '@expo/vector-icons';
+import { useFonts } from "expo-font";
+import * as SplashScreen from "expo-splash-screen";
+import { useEffect } from "react";
+import { Ionicons } from "@expo/vector-icons";
 import { View } from "react-native";
+import { usePathname } from "expo-router";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -20,32 +21,36 @@ const TabLabel = ({ label, focused, color }) => (
           }
         : null
     }
-  >
-  </View>
+  />
 );
 
 export default function TabsLayout() {
+  const pathname = usePathname();
+  const hideTabBar = pathname.includes("/(links)/");
+
   return (
     <Tabs
       screenOptions={{
         headerShown: false,
         tabBarActiveTintColor: "#FF6C9B",
         tabBarInactiveTintColor: "#8C8C8C",
-        tabBarStyle: {
-          height: 70,
-          paddingBottom: 5,
-          paddingTop: 10,
-          backgroundColor: "#FFEBF0",
-          borderTopLeftRadius: 20,
-          borderTopRightRadius: 20,
-          position: "absolute",
-          left: 0,
-          right: 0,
-          bottom: 0,
-          justifyContent: 'center',
-          alignItems: 'center',
-          gap: 30,
-        },
+        tabBarStyle: hideTabBar
+          ? { display: "none" }
+          : {
+              height: 70,
+              paddingBottom: 5,
+              paddingTop: 10,
+              backgroundColor: "#FFEBF0",
+              borderTopLeftRadius: 20,
+              borderTopRightRadius: 20,
+              position: "absolute",
+              left: 0,
+              right: 0,
+              bottom: 0,
+              justifyContent: "center",
+              alignItems: "center",
+              gap: 30,
+            },
         tabBarItemStyle: {
           flex: 0,
           width: 70,
@@ -57,7 +62,7 @@ export default function TabsLayout() {
       }}
     >
       <Tabs.Screen
-        name="home"
+        name="Home"
         options={{
           title: "Home",
           tabBarIcon: ({ color, size, focused }) => (
@@ -74,7 +79,7 @@ export default function TabsLayout() {
       />
 
       <Tabs.Screen
-        name="cookie"
+        name="Cookie"
         options={{
           title: "Cookie",
           tabBarIcon: ({ color, size, focused }) => (
@@ -85,13 +90,13 @@ export default function TabsLayout() {
             />
           ),
           tabBarLabel: ({ focused, color }) => (
-            <TabLabel label="Home" focused={focused} color={color} />
+            <TabLabel label="Cookie" focused={focused} color={color} />
           ),
         }}
       />
 
       <Tabs.Screen
-        name="cart"
+        name="Cart"
         options={{
           title: "Cart",
           tabBarIcon: ({ color, size, focused }) => (
@@ -102,13 +107,13 @@ export default function TabsLayout() {
             />
           ),
           tabBarLabel: ({ focused, color }) => (
-            <TabLabel label="Home" focused={focused} color={color} />
+            <TabLabel label="Cart" focused={focused} color={color} />
           ),
         }}
       />
 
       <Tabs.Screen
-        name="userprofile"
+        name="UserProfile"
         options={{
           title: "Profile",
           tabBarIcon: ({ color, size, focused }) => (
@@ -119,11 +124,17 @@ export default function TabsLayout() {
             />
           ),
           tabBarLabel: ({ focused, color }) => (
-            <TabLabel label="Home" focused={focused} color={color} />
+            <TabLabel label="Profile" focused={focused} color={color} />
           ),
         }}
       />
 
+      <Tabs.Screen
+        name="(links)"
+        options={{
+          href: null,
+        }}
+      />
     </Tabs>
-  )
+  );
 }

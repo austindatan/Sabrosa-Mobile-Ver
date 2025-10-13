@@ -1,35 +1,39 @@
+// @ts-nocheck
 import React from "react";
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 
 const ProductCard = ({
   productImage = require("../../assets/images/initialization_assets/food/product1.png"),
   brandImage = require("../../assets/images/initialization_assets/logo/byronbay_logo.png"),
   productName = "Tropical Mango & Passionfruit",
   price = "₱85",
+  onPress,
 }) => {
   return (
-    <View style={styles.productCard}>
-      <Image
-        source={productImage}
-        style={styles.productImage}
-        resizeMode="contain"
-      />
+    <TouchableOpacity onPress={onPress} activeOpacity={0.8}>
+      <View style={styles.productCard}>
+        <Image
+          source={productImage}
+          style={styles.productImage}
+          resizeMode="contain"
+        />
 
-      <View style={styles.productInfoRow}>
-        <View>
-          <Image
-            source={brandImage}
-            style={styles.brandImage}
-            resizeMode="contain"
-          />
-          <Text style={styles.productName}>{productName}</Text>
-        </View>
+        <View style={styles.productInfoRow}>
+          <View>
+            <Image
+              source={brandImage}
+              style={styles.brandImage}
+              resizeMode="contain"
+            />
+            <Text style={styles.productName}>{productName}</Text>
+          </View>
 
-        <View style={styles.priceTag}>
-          <Text style={styles.priceText}>{price}</Text>
+          <View style={styles.priceTag}>
+            <Text style={styles.priceText}>{price}</Text>
+          </View>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -41,8 +45,8 @@ const styles = StyleSheet.create({
   borderRadius: 15,
   borderWidth: 1,
   borderColor: "rgba(255, 108, 155, 0.5)",
-  padding: 12,
-  width: "49%",
+  padding: 16,
+  width: "100%",
   alignSelf: "center",
   },
 

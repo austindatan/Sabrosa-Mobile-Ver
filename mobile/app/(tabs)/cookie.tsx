@@ -4,8 +4,10 @@ import styles from "../../assets/stylesheets/cookie";
 import BrandCard from "../components/SabrosaBrandCard";
 import useHomeHeaderAnimation from "../../hooks/HeaderAnimation";
 import HomeHeader from "../components/HomeHeader";
+import { useRouter } from "expo-router";
 
 const Cookie = () => {
+  const router = useRouter();
   const {
     scrollY,
     headerHeight,
@@ -72,7 +74,7 @@ const Cookie = () => {
 
           <BrandCard
             image={require("../../assets/images/initialization_assets/light/byron.png")}
-            color="#FF8654"
+            color="#FF8654" onPress={() => router.push("/(tabs)/(links)/ByronBay")}
           />
 
           <BrandCard

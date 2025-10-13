@@ -4,10 +4,10 @@ import { useRouter } from "expo-router";
 
 const router = useRouter();
 const handleLogin = () => {
-  router.replace("/(tabs)/home");
+  router.replace("/(tabs)/Home");
 }
 
-const login = () => {
+const Login = () => {
   return (
     <ImageBackground
       source={require("../assets/images/initialization_assets/sabrosa_standard.png")}
@@ -204,4 +204,4 @@ const styles = StyleSheet.create({
   
 });
 
-export default login;
+export default Login;

@@ -4,8 +4,10 @@ import styles from "../../assets/stylesheets/home";
 import ProductCard from "../components/ProductCard";
 import useHomeHeaderAnimation from "../../hooks/HeaderAnimation";
 import HomeHeader from "../components/HomeHeader";
+import { useRouter } from "expo-router";
 
 const Home = () => {
+  const router = useRouter();
   const {
     scrollY,
     headerHeight,
@@ -69,6 +71,7 @@ const Home = () => {
             price="₱195"
             productImage={require("../../assets/images/initialization_assets/food/product1.png")}
             brandImage={require("../../assets/images/initialization_assets/logo/byronbay_logo.png")}
+            onPress={() => router.push("/products/TropicalMango")}
           />
           <ProductCard
             productName="Peaches & Cream Soda"

@@ -4,7 +4,7 @@ import { useRouter } from "expo-router";
 
 const router = useRouter();
 
-const index = () => {
+const Index = () => {
   return (
     <ImageBackground
       source={require("../assets/images/initialization_assets/onboarding_illus.png")}
@@ -105,4 +105,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default index;
+export default Index;

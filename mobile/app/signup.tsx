@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "expo-router";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
-const signup = () => {
+const SignUp = () => {
   const router = useRouter();
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
@@ -202,4 +202,4 @@ const styles = StyleSheet.create({
   
 });
 
-export default signup;
+export default SignUp;
