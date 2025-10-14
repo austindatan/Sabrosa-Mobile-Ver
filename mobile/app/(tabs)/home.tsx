@@ -1,5 +1,6 @@
-import React from "react";
-import { View, Text, ImageBackground, TouchableOpacity, Animated } from "react-native";
+// @ts-nocheck
+import React, { useEffect, useRef, useState } from "react";
+import { View, Text, ImageBackground, TouchableOpacity, Animated, Easing } from "react-native";
 import styles from "../../assets/stylesheets/home";
 import ProductCard from "../components/ProductCard";
 import useHomeHeaderAnimation from "../../hooks/HeaderAnimation";
@@ -8,6 +9,12 @@ import { useRouter } from "expo-router";
 
 const Home = () => {
   const router = useRouter();
+  const [showSpecialOffer, setShowSpecialOffer] = useState(false);
+  const specialOfferTranslateY = useRef(new Animated.Value(0)).current;
+  const specialOfferOpacity = useRef(new Animated.Value(0)).current;
+  const productGridTranslateY = useRef(new Animated.Value(130)).current;
+  const animatedPaddingTop = useRef(new Animated.Value(30)).current;
+
   const {
     scrollY,
     headerHeight,
@@ -15,8 +22,45 @@ const Home = () => {
     topContentTranslateY,
     logoScale,
     searchTranslateY,
-    HEADER_MAX,
   } = useHomeHeaderAnimation();
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowSpecialOffer(true);
+
+      Animated.parallel([
+        Animated.timing(animatedPaddingTop, {
+          toValue: 172,
+          duration: 200,
+          easing: Easing.out(Easing.exp),
+          useNativeDriver: false,
+        }),
+        Animated.spring(specialOfferTranslateY, {
+          toValue: 0,
+          friction: 8,
+          useNativeDriver: true,
+        }),
+        Animated.timing(specialOfferOpacity, {
+          toValue: 1,
+          duration: 800,
+          useNativeDriver: true,
+        }),
+        Animated.spring(productGridTranslateY, {
+          toValue: 0,
+          friction: 8,
+          useNativeDriver: true,
+        }),
+      ]).start();
+
+    }, 800);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  const animatedContentStyle = {
+    paddingTop: animatedPaddingTop,
+    paddingBottom: 70,
+  };
 
   return (
     <View style={{ flex: 1, backgroundColor: "#fff" }}>
@@ -29,10 +73,7 @@ const Home = () => {
       />
 
       <Animated.ScrollView
-        contentContainerStyle={{
-          paddingTop: HEADER_MAX + 20,
-          paddingBottom: 70,
-        }}
+        contentContainerStyle={animatedContentStyle}
         showsVerticalScrollIndicator={false}
         scrollEventThrottle={16}
         onScroll={Animated.event(
@@ -40,33 +81,44 @@ const Home = () => {
           { useNativeDriver: false }
         )}
       >
-        <View style={styles.specialOffer}>
-          <ImageBackground
-            source={require("../../assets/images/initialization_assets/promo_banner-Bg.png")}
-            style={styles.offerImage}
-            imageStyle={{ borderRadius: 15 }}
+        {showSpecialOffer && (
+          <Animated.View
+            style={[
+              styles.specialOffer,
+              {
+                transform: [{ translateY: specialOfferTranslateY }],
+                opacity: specialOfferOpacity,
+              },
+            ]}
           >
-            <View style={styles.offerContent}>
-              <Text style={styles.offerTitle}>Special Offer for March</Text>
-              <Text style={styles.offerSubtitle}>
-                A flavor that will make you feel nostalgia and home.
-              </Text>
-              <TouchableOpacity style={styles.offerButton}>
-                <Text style={styles.offerButtonText}>Buy Now</Text>
-              </TouchableOpacity>
-            </View>
-          </ImageBackground>
-        </View>
+            <ImageBackground
+              source={require("../../assets/images/initialization_assets/promo_banner-Bg.png")}
+              style={styles.offerImage}
+              imageStyle={{ borderRadius: 15 }}
+            >
+              <View style={styles.offerContent}>
+                <Text style={styles.offerTitle}>Special Offer for March</Text>
+                <Text style={styles.offerSubtitle}>
+                  A flavor that will make you feel nostalgia and home.
+                </Text>
+                <TouchableOpacity style={styles.offerButton}>
+                  <Text style={styles.offerButtonText}>Buy Now</Text>
+                </TouchableOpacity>
+              </View>
+            </ImageBackground>
+          </Animated.View>
+        )}
 
-        <View style={styles.sectionHeader}>
-          <Text style={styles.sectionTitle}>Top Picks!</Text>
-          <TouchableOpacity>
-            <Text style={styles.seeAll}>See all</Text>
-          </TouchableOpacity>
-        </View>
+        <Animated.View style={{ transform: [{ translateY: productGridTranslateY }] }}>
+          <View style={styles.sectionHeader}>
+            <Text style={styles.sectionTitle}>Top Picks!</Text>
+            <TouchableOpacity>
+              <Text style={styles.seeAll}>See all</Text>
+            </TouchableOpacity>
+          </View>
 
-        <View style={styles.productGrid}>
-          <ProductCard
+          <View style={styles.productGrid}>
+            <ProductCard
             productName="Tropical Mango & Passionfruit"
             price="₱195"
             productImage={require("../../assets/images/initialization_assets/food/product1.png")}
@@ -103,7 +155,8 @@ const Home = () => {
             productImage={require("../../assets/images/initialization_assets/food/tea.png")}
             brandImage={require("../../assets/images/initialization_assets/logo/tea_logo.png")}
           />
-        </View>
+          </View>
+        </Animated.View>
       </Animated.ScrollView>
     </View>
   );

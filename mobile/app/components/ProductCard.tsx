@@ -1,6 +1,35 @@
 // @ts-nocheck
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
+import { MotiView } from "moti";
+
+const SkeletonLoader = ({
+  width = "50%",
+  height = 180,
+  borderRadius = 8,
+  style,
+}) => {
+  return (
+    <MotiView
+      from={{ backgroundColor: "#C0C0C0" }}
+      animate={{ backgroundColor: "#E1E9EE" }}
+      transition={{
+        type: "timing",
+        duration: 800,
+        loop: true,
+        repeatReverse: true,
+      }}
+      style={[
+        {
+          width,
+          height,
+          borderRadius,
+        },
+        style,
+      ]}
+    />
+  );
+};
 
 const ProductCard = ({
   productImage = require("../../assets/images/initialization_assets/food/product1.png"),
@@ -9,6 +38,23 @@ const ProductCard = ({
   price = "₱85",
   onPress,
 }) => {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 600);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (loading) {
+    return (
+      <SkeletonLoader
+        width="48%"
+        height={180}
+        borderRadius={15}
+      />
+    );
+  }
+
   return (
     <TouchableOpacity onPress={onPress} activeOpacity={0.8}>
       <View style={styles.productCard}>
@@ -41,13 +87,13 @@ export default ProductCard;
 
 const styles = StyleSheet.create({
   productCard: {
-  backgroundColor: "#fff",
-  borderRadius: 15,
-  borderWidth: 1,
-  borderColor: "rgba(255, 108, 155, 0.5)",
-  padding: 16,
-  width: "100%",
-  alignSelf: "center",
+    backgroundColor: "#fff",
+    borderRadius: 15,
+    borderWidth: 1,
+    borderColor: "rgba(255, 108, 155, 0.5)",
+    padding: 16,
+    width: "100%",
+    alignSelf: "center",
   },
 
   productImage: {
@@ -67,7 +113,7 @@ const styles = StyleSheet.create({
   },
 
   brandImage: {
-    width: 50, 
+    width: 50,
     height: 20,
     resizeMode: "contain",
   },
