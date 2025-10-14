@@ -1,10 +1,10 @@
+// @ts-nocheck
 import React from "react";
-import { View, Text, ImageBackground, TouchableOpacity, Animated } from "react-native";
+import { View, Text, TouchableOpacity, Animated } from "react-native";
 import styles from "../../../assets/stylesheets/(links)/ByronBay";
-import BrandCard from "../../components/SabrosaBrandCard";
 import ProductCard from "../../components/ProductCard";
 import useHomeHeaderAnimation from "../../../hooks/HeaderAnimation";
-import BrandsHeader from "../../components/BrandsHeader";
+import AnimatedHeader from "../../components/BrandsHeader";
 import { useRouter } from "expo-router";
 
 const ByronBay = () => {
@@ -22,12 +22,16 @@ const ByronBay = () => {
 
   return (
     <View style={{ flex: 1, backgroundColor: "#fff" }}>
-      <BrandsHeader
+      <AnimatedHeader
         headerHeight={headerHeight}
         topContentOpacity={topContentOpacity}
         topContentTranslateY={topContentTranslateY}
         logoScale={logoScale}
         searchTranslateY={searchTranslateY}
+        brandName="Compartes"
+        brandTagline="Taste the chocolate everyone's talking about..."
+        backgroundImage={require("../../../assets/images/initialization_assets/compartes.png")}
+        brandLogo={require("../../../assets/images/initialization_assets/logo/compartes.png")}
       />
 
       <Animated.ScrollView
@@ -42,7 +46,6 @@ const ByronBay = () => {
           { useNativeDriver: false }
         )}
       >
-        
         <View style={styles.sectionHeader}>
           <Text style={styles.sectionTitle}>Top Picks!</Text>
           <TouchableOpacity>
@@ -59,7 +62,6 @@ const ByronBay = () => {
             onPress={() => router.push("/products/TropicalMango")}
           />
         </View>
-
       </Animated.ScrollView>
     </View>
   );

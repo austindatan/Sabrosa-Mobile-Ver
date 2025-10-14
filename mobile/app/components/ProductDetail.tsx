@@ -222,7 +222,7 @@ const styles = StyleSheet.create({
 
   productName: {
     fontSize: 15,
-    fontFamily: "DIN-Next",
+    fontFamily: "Barlow",
     color: "#000",
     flexWrap: "wrap",
     maxWidth: "90%",
@@ -243,7 +243,7 @@ const styles = StyleSheet.create({
 
   priceText: {
     color: "#fff",
-    fontFamily: "DIN-Next",
+    fontFamily: "Barlow",
     fontSize: 16
   },
 

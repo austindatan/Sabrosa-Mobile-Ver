@@ -1,13 +1,13 @@
 // @ts-nocheck
 import React, { useEffect, useRef, useState } from "react";
 import { View, Text, ImageBackground, TouchableOpacity, Animated, Easing } from "react-native";
+import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
+import { useRouter } from "expo-router";
 import styles from "../../assets/stylesheets/home";
 import ProductCard from "../components/ProductCard";
 import useHomeHeaderAnimation from "../../hooks/HeaderAnimation";
 import HomeHeader from "../components/HomeHeader";
-import { useRouter } from "expo-router";
 import useHideOnScroll from "../../hooks/useHideOnScroll";
-import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 
 const Home = () => {
   const router = useRouter();

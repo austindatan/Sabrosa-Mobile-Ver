@@ -3,13 +3,33 @@ import React from "react";
 import { View, Text, ImageBackground, Image, TextInput, Animated } from "react-native";
 import styles from "../../assets/stylesheets/BrandsHeader";
 
-const BrandsHeader = ({
+type AnimatedHeaderProps = {
+  headerHeight: Animated.Value;
+  topContentOpacity: Animated.AnimatedInterpolation<string | number>;
+  topContentTranslateY: Animated.AnimatedInterpolation<string | number>;
+  logoScale: Animated.AnimatedInterpolation<string | number>;
+  searchTranslateY: Animated.AnimatedInterpolation<string | number>;
+  brandName: string;
+  brandTagline: string;
+  backgroundImage: any; // require() path
+  brandLogo: any; // require() path
+  sabrosaLogo?: any; // optional secondary logo
+  placeholder?: string;
+};
+
+const AnimatedHeader = ({
   headerHeight,
   topContentOpacity,
   topContentTranslateY,
   logoScale,
   searchTranslateY,
-}) => {
+  brandName,
+  brandTagline,
+  backgroundImage,
+  brandLogo,
+  sabrosaLogo = require("../../assets/images/initialization_assets/sabrosa_logo.png"),
+  placeholder = "Look for products",
+}: AnimatedHeaderProps) => {
   return (
     <Animated.View
       style={[
@@ -25,43 +45,43 @@ const BrandsHeader = ({
       ]}
     >
       <ImageBackground
-        source={require("../../assets/images/initialization_assets/compartes.png")}
+        source={backgroundImage}
         style={[styles.header, { height: "103%" }]}
         imageStyle={styles.headerImage}
         resizeMode="cover"
       >
-
+        {/* Top section (logo + texts) */}
         <Animated.View
           style={{
             opacity: topContentOpacity,
             transform: [{ translateY: topContentTranslateY }],
           }}
         >
-
           <View style={styles.brandInfo}>
             <View style={styles.brandLogoContainer}>
-            <Animated.Image
-                source={require("../../assets/images/initialization_assets/logo/compartes.png")}
+              <Animated.Image
+                source={brandLogo}
                 style={[styles.brandLogoImage, { transform: [{ scale: logoScale }] }]}
                 resizeMode="contain"
-            />
+              />
             </View>
 
             <View style={styles.brandTextContainer}>
-              <Text style={styles.brandName}>Compartes</Text>
-              <Text style={styles.brandTagline}>
-                Taste the chocolate everyone's talking about...
-              </Text>
+              <Text style={styles.brandName}>{brandName}</Text>
+              <Text style={styles.brandTagline}>{brandTagline}</Text>
             </View>
-            <Animated.Image
-              source={require("../../assets/images/initialization_assets/sabrosa_logo.png")}
-              style={[styles.logo, { transform: [{ scale: logoScale }] }]}
-              resizeMode="contain"
-            />
+
+            {sabrosaLogo && (
+              <Animated.Image
+                source={sabrosaLogo}
+                style={[styles.logo, { transform: [{ scale: logoScale }] }]}
+                resizeMode="contain"
+              />
+            )}
           </View>
-          
         </Animated.View>
 
+        {/* Search section */}
         <Animated.View
           style={{
             transform: [{ translateY: searchTranslateY }],
@@ -75,7 +95,7 @@ const BrandsHeader = ({
                 style={styles.searchIcon}
               />
               <TextInput
-                placeholder="Look for products"
+                placeholder={placeholder}
                 placeholderTextColor="rgba(255, 108, 155, 0.4)"
                 style={styles.searchInput}
               />
@@ -87,4 +107,4 @@ const BrandsHeader = ({
   );
 };
 
-export default BrandsHeader;
+export default AnimatedHeader;
