@@ -6,9 +6,13 @@ import ProductCard from "../components/ProductCard";
 import useHomeHeaderAnimation from "../../hooks/HeaderAnimation";
 import HomeHeader from "../components/HomeHeader";
 import { useRouter } from "expo-router";
+import useHideOnScroll from "../../hooks/useHideOnScroll";
+import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 
 const Home = () => {
   const router = useRouter();
+  const { visible, handleScroll } = useHideOnScroll();
+  const tabBarHeight = useBottomTabBarHeight();
   const [showSpecialOffer, setShowSpecialOffer] = useState(false);
   const specialOfferTranslateY = useRef(new Animated.Value(0)).current;
   const specialOfferOpacity = useRef(new Animated.Value(0)).current;
@@ -78,7 +82,10 @@ const Home = () => {
         scrollEventThrottle={16}
         onScroll={Animated.event(
           [{ nativeEvent: { contentOffset: { y: scrollY } } }],
-          { useNativeDriver: false }
+          {
+            useNativeDriver: false,
+            listener: handleScroll,
+          }
         )}
       >
         {showSpecialOffer && (

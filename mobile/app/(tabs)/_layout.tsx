@@ -2,9 +2,9 @@
 import { Stack, Tabs } from "expo-router";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
+import { Animated, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { View } from "react-native";
 import { usePathname } from "expo-router";
 
 SplashScreen.preventAutoHideAsync();
@@ -28,6 +28,23 @@ export default function TabsLayout() {
   const pathname = usePathname();
   const hideTabBar = pathname.includes("/(links)/");
 
+  // 👇 animated value for showing/hiding tab bar
+  const tabBarTranslateY = useRef(new Animated.Value(0)).current;
+
+  // 👇 listen to visibility change events from useHideOnScroll()
+  useEffect(() => {
+    const listener = (isVisible) => {
+      Animated.timing(tabBarTranslateY, {
+        toValue: isVisible ? 0 : 100, // hide by moving down
+        duration: 250,
+        useNativeDriver: true,
+      }).start();
+    };
+
+    global.tabVisibility?.on("change", listener);
+    return () => global.tabVisibility?.off("change", listener);
+  }, []);
+
   return (
     <Tabs
       screenOptions={{
@@ -37,6 +54,7 @@ export default function TabsLayout() {
         tabBarStyle: hideTabBar
           ? { display: "none" }
           : {
+              transform: [{ translateY: tabBarTranslateY }],
               height: 70,
               paddingBottom: 5,
               paddingTop: 10,

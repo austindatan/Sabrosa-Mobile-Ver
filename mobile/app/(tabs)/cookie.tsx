@@ -1,10 +1,12 @@
 import React from "react";
-import { View, Text, ImageBackground, TouchableOpacity, Animated } from "react-native";
+import { View, Text, Animated } from "react-native";
 import styles from "../../assets/stylesheets/cookie";
 import BrandCard from "../components/SabrosaBrandCard";
 import useHomeHeaderAnimation from "../../hooks/HeaderAnimation";
 import HomeHeader from "../components/HomeHeader";
 import { useRouter } from "expo-router";
+import useHideOnScroll from "../../hooks/useHideOnScroll";
+import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 
 const Cookie = () => {
   const router = useRouter();
@@ -17,6 +19,8 @@ const Cookie = () => {
     searchTranslateY,
     HEADER_MAX,
   } = useHomeHeaderAnimation();
+
+  const { handleScroll } = useHideOnScroll();
 
   return (
     <View style={{ flex: 1, backgroundColor: "#fff" }}>
@@ -37,16 +41,17 @@ const Cookie = () => {
         scrollEventThrottle={16}
         onScroll={Animated.event(
           [{ nativeEvent: { contentOffset: { y: scrollY } } }],
-          { useNativeDriver: false }
+          {
+            useNativeDriver: false,
+            listener: handleScroll,
+          }
         )}
       >
-        
         <View style={styles.sectionHeader}>
           <Text style={styles.sectionTitle}>Sabrosa Brands</Text>
         </View>
 
         <View style={styles.brandGrid}>
-
           <BrandCard
             image={require("../../assets/images/initialization_assets/light/sugar.png")}
             color="#69CCE3"
@@ -74,7 +79,8 @@ const Cookie = () => {
 
           <BrandCard
             image={require("../../assets/images/initialization_assets/light/byron.png")}
-            color="#FF8654" onPress={() => router.push("/(tabs)/(links)/ByronBay")}
+            color="#FF8654"
+            onPress={() => router.push("/(tabs)/(links)/ByronBay")}
           />
 
           <BrandCard
@@ -102,7 +108,6 @@ const Cookie = () => {
             color="#31625C"
           />
         </View>
-
       </Animated.ScrollView>
     </View>
   );
