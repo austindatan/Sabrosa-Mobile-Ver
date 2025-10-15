@@ -9,7 +9,7 @@ export default function SugarfinaXOXOCandyBentoBox() {
       productName={"Sugarfina XOXO Candy Bento Box"}
       price={"1800"}
       galleryImages={[
-        require("../../../assets/images/initialization_assets/food/SugarfinaXOXOCandyBentoBoxt.png"),
+        require("../../../assets/images/initialization_assets/food/SugarfinaXOXOCandyBentoBox.png"),
         require("../../../assets/images/initialization_assets/product/SugarfinaXOXOCandyBentoBox2.png"),
         require("../../../assets/images/initialization_assets/product/SugarfinaXOXOCandyBentoBox3.png"),
       ]}

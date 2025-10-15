@@ -28,14 +28,12 @@ export default function TabsLayout() {
   const pathname = usePathname();
   const hideTabBar = pathname.includes("/(links)/");
 
-  // 👇 animated value for showing/hiding tab bar
   const tabBarTranslateY = useRef(new Animated.Value(0)).current;
 
-  // 👇 listen to visibility change events from useHideOnScroll()
   useEffect(() => {
     const listener = (isVisible) => {
       Animated.timing(tabBarTranslateY, {
-        toValue: isVisible ? 0 : 100, // hide by moving down
+        toValue: isVisible ? 0 : 100,
         duration: 250,
         useNativeDriver: true,
       }).start();
@@ -46,9 +44,11 @@ export default function TabsLayout() {
   }, []);
 
   return (
+    <View style={{ flex: 1, overflow: "visible" }}>
     <Tabs
       screenOptions={{
         headerShown: false,
+        gestureEnabled: true,
         tabBarActiveTintColor: "#FF6C9B",
         tabBarInactiveTintColor: "#8C8C8C",
         tabBarStyle: hideTabBar
@@ -68,6 +68,12 @@ export default function TabsLayout() {
               justifyContent: "center",
               alignItems: "center",
               gap: 30,
+              shadowColor: "#000",
+              shadowOffset: { width: 0, height: -4 },
+              shadowOpacity: 0.2,
+              shadowRadius: 6,
+              elevation: 10,
+              zIndex: 100,
             },
         tabBarItemStyle: {
           flex: 0,
@@ -154,5 +160,6 @@ export default function TabsLayout() {
         }}
       />
     </Tabs>
+    </View>
   );
 }

@@ -1,18 +1,12 @@
 // @ts-nocheck
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  Animated,
-  FlatList,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, Animated, FlatList, TouchableOpacity } from "react-native";
 import styles from "../../assets/stylesheets/cookie";
 import useHomeHeaderAnimation from "../../hooks/HeaderAnimation";
 import HomeHeader from "../components/CartHeader";
 import { useRouter } from "expo-router";
 import useHideOnScroll from "../../hooks/useHideOnScroll";
-import CartItem from "../components/CartItem"; // ✅ import the reusable component
+import CartItem from "../components/CartItem";
 
 const Cart = () => {
   const router = useRouter();

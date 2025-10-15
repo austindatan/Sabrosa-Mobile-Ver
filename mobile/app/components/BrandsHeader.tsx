@@ -11,9 +11,9 @@ type AnimatedHeaderProps = {
   searchTranslateY: Animated.AnimatedInterpolation<string | number>;
   brandName: string;
   brandTagline: string;
-  backgroundImage: any; // require() path
-  brandLogo: any; // require() path
-  sabrosaLogo?: any; // optional secondary logo
+  backgroundImage: any;
+  brandLogo: any;
+  sabrosaLogo?: any;
   placeholder?: string;
 };
 
@@ -50,7 +50,6 @@ const AnimatedHeader = ({
         imageStyle={styles.headerImage}
         resizeMode="cover"
       >
-        {/* Top section (logo + texts) */}
         <Animated.View
           style={{
             opacity: topContentOpacity,
@@ -81,7 +80,6 @@ const AnimatedHeader = ({
           </View>
         </Animated.View>
 
-        {/* Search section */}
         <Animated.View
           style={{
             transform: [{ translateY: searchTranslateY }],

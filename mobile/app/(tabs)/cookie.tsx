@@ -55,26 +55,31 @@ const Cookie = () => {
           <BrandCard
             image={require("../../assets/images/initialization_assets/light/sugar.png")}
             color="#69CCE3"
+            onPress={() => router.push("/(tabs)/(links)/Sugarfina")}
           />
 
           <BrandCard
             image={require("../../assets/images/initialization_assets/light/chobani.png")}
             color="#1C5F4E"
+            onPress={() => router.push("/(tabs)/(links)/Chobani")}
           />
 
           <BrandCard
             image={require("../../assets/images/initialization_assets/light/laduree.png")}
             color="#FDC0D0"
+            onPress={() => router.push("/(tabs)/(links)/Laduree")}
           />
 
           <BrandCard
             image={require("../../assets/images/initialization_assets/light/bluestar.png")}
             color="#1F27A6"
+            onPress={() => router.push("/(tabs)/(links)/Bluestar")}
           />
 
           <BrandCard
             image={require("../../assets/images/initialization_assets/light/graze.png")}
             color="#423064"
+            onPress={() => router.push("/(tabs)/(links)/Graze")}
           />
 
           <BrandCard
@@ -86,26 +91,31 @@ const Cookie = () => {
           <BrandCard
             image={require("../../assets/images/initialization_assets/light/sweets.png")}
             color="#FF0000"
+            onPress={() => router.push("/(tabs)/(links)/SweetsParadise")}
           />
 
           <BrandCard
             image={require("../../assets/images/initialization_assets/light/krispy.png")}
             color="#CC083E"
+            onPress={() => router.push("/(tabs)/(links)/KrispyKreme")}
           />
 
           <BrandCard
             image={require("../../assets/images/initialization_assets/light/oli.png")}
             color="#D6F2ED"
+            onPress={() => router.push("/(tabs)/(links)/Olipop")}
           />
 
           <BrandCard
             image={require("../../assets/images/initialization_assets/light/tea forte.png")}
             color="#B09040"
+            onPress={() => router.push("/(tabs)/(links)/Teaforte")}
           />
 
           <BrandCard
             image={require("../../assets/images/initialization_assets/light/compartes.png")}
             color="#31625C"
+            onPress={() => router.push("/(tabs)/(links)/Compartes")}
           />
         </View>
       </Animated.ScrollView>

@@ -4,7 +4,7 @@ import ProductDetail from "../../components/ProductDetail";
 export default function BiscoffLatte() {
   return (
     <ProductDetail
-      heroImage={require("../../../assets/images/initialization_assets/food/BiscoffLatte.png")}
+      heroImage={require("../../../assets/images/initialization_assets/food/BiscoffLatte.jpg")}
       brandLogo={require("../../../assets/images/initialization_assets/light/krispy.png")}
       productName={"Biscoff Latte"}
       price={"₱215"}

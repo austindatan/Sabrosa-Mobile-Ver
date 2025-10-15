@@ -4,12 +4,12 @@ import ProductDetail from "../../components/ProductDetail";
 export default function DottyCookie() {
   return (
     <ProductDetail
-      heroImage={require("../../../assets/images/initialization_assets/food/DottyCookie.png")}
-      brandLogo={require("../../../assets/images/initialization_assets/light/byron.png")}
+      heroImage={require("../../../assets/images/initialization_assets/product/DottyCookie.png")}
+      brandLogo={require("../../../assets/images/initialization_assets/logo/byronbay_logo.png")}
       productName={"Biscoff Latte"}
       price={"₱280"}
       galleryImages={[
-        require("../../../assets/images/initialization_assets/food/DottyCookie.png"),
+        require("../../../assets/images/initialization_assets/product/DottyCookie.png"),
         require("../../../assets/images/initialization_assets/product/DottyCookie2.png"),
         require("../../../assets/images/initialization_assets/product/DottyCookie3.png"),
       ]}

@@ -225,11 +225,11 @@ const styles = StyleSheet.create({
     fontFamily: "Barlow",
     color: "#000",
     flexWrap: "wrap",
-    maxWidth: "90%",
+    maxWidth: "60%",
   },
 
   priceTag: {
-    width: 60,
+    width: 70,
     height: 60,
     justifyContent: "center",
     alignItems: "center",

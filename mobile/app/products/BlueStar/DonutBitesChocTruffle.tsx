@@ -9,7 +9,7 @@ export default function DonutBitesChocTruffle() {
       productName={"Donut Bites Choco Truffle"}
       price={"750"}
       galleryImages={[
-        require(".././../assets/images/initialization_assets/food/DonutBitesChocTruffle.png"),
+        require("../../../assets/images/initialization_assets/food/DonutBitesChocTruffle.png"),
         require("../../../assets/images/initialization_assets/product/DonutBitesChocTruffle2.png"),
         require("../../../assets/images/initialization_assets/product/DonutBitesChocTruffle3.png"),
       ]}

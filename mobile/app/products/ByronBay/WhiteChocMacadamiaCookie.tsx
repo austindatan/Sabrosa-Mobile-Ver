@@ -4,14 +4,14 @@ import ProductDetail from "../../components/ProductDetail";
 export default function WhiteChocMacadamiaCookie() {
   return (
     <ProductDetail
-      heroImage={require("../../assets/images/initialization_assets/food/WhiteChocMacadamiaCookie.png")}
-      brandLogo={require("../../assets/images/initialization_assets/light/byron.png")}
+      heroImage={require("../../../assets/images/initialization_assets/food/WhiteChocMacadamiaCookie.png")}
+      brandLogo={require("../../../assets/images/initialization_assets/light/byron.png")}
       productName={"White Choc Macadamia Cookie"}
       price={"₱250"}
       galleryImages={[
-        require("../../../assets/images/initialization_assets/food/WhiteChocMacadamiaCookie.jpg"),
-        require("../../../assets/images/initialization_assets/product/WhiteChocMacadamiaCookie2.jpg"),
-        require("../../../assets/images/initialization_assets/product/WhiteChocMacadamiaCookie3.jpg"),
+        require("../../../assets/images/initialization_assets/food/WhiteChocMacadamiaCookie.png"),
+        require("../../../assets/images/initialization_assets/product/WhiteChocMacadamiaCookie2.png"),
+        require("../../../assets/images/initialization_assets/product/WhiteChocMacadamiaCookie3.png"),
       ]}
       description={[
         "This classic doughnut combines creamy white chocolate chunks with crunchy macadamia nuts for a timeless favorite.",

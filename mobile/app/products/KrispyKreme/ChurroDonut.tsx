@@ -7,7 +7,7 @@ export default function ChurroDonut() {
       heroImage={require("../../../assets/images/initialization_assets/food/ChurroDonut.png")}
       brandLogo={require("../../../assets/images/initialization_assets/light/krispy.png")}
       productName={"Churro Donut"}
-      price={"₱449"}
+      price={"441"}
       galleryImages={[
         require("../../../assets/images/initialization_assets/food/ChurroDonut.png"),
         require("../../../assets/images/initialization_assets/product/ChurroDonut2.png"),

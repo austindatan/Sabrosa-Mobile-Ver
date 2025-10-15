@@ -10,8 +10,8 @@ export default function OriginalLemonade() {
       price={"₱125"}
       galleryImages={[
         require("../../../assets/images/initialization_assets/food/OriginalLemonade.jpg"),
-        require("../../../assets/images/initialization_assets/product/OriginalLemonade2.jpeg"),
-        require("../../../assets/images/initialization_assets/product/OriginalLemonade3.jpg"),
+        require("../../../assets/images/initialization_assets/product/OriginalLemonade3.jpeg"),
+        require("../../../assets/images/initialization_assets/product/OriginalLemonade2.png"),
       ]}
       description={[
         "A refreshing iced-blended drink bursting with zesty lemonade flavor.",

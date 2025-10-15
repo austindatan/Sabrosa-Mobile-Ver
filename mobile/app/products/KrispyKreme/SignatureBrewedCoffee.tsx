@@ -10,8 +10,8 @@ export default function SignatureBrewedCoffee() {
       price={"₱125"}
       galleryImages={[
         require("../../../assets/images/initialization_assets/food/SignatureBrewedCoffee.jpg"),
-        require("../../../assets/images/initialization_assets/product/SignatureBrewedCoffee2.jpg"),
-        require("../../../assets/images/initialization_assets/product/SignatureBrewedCoffee3.jpg"),
+        require("../../../assets/images/initialization_assets/product/SignatureBrewedCoffee2.png"),
+        require("../../../assets/images/initialization_assets/product/SignatureBrewedCoffee3.png"),
       ]}
       description={[
         "A rich caramel toffee-inspired latte blended to perfection for a smooth, golden treat.",

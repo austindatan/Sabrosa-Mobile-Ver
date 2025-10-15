@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { MotiView } from "moti";
 
-// Same skeleton effect as your BrandCard
 const SkeletonLoader = ({
   width = "100%",
   height = 20,
@@ -35,7 +34,6 @@ const SkeletonLoader = ({
 const CartItem = ({ item, onAdd, onRemove }) => {
   const [loading, setLoading] = useState(true);
 
-  // Simulate loading delay (like your BrandCard)
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 600);
     return () => clearTimeout(timer);
@@ -47,14 +45,12 @@ const CartItem = ({ item, onAdd, onRemove }) => {
         {/* Product Image Skeleton */}
         <SkeletonLoader width={70} height={70} borderRadius={10} />
 
-        {/* Details Skeleton */}
         <View style={styles.detailsContainer}>
           <SkeletonLoader width={40} height={20} borderRadius={4} style={{ marginBottom: 8 }} />
           <SkeletonLoader width="80%" height={14} borderRadius={4} style={{ marginBottom: 6 }} />
           <SkeletonLoader width="30%" height={15} borderRadius={4} />
         </View>
 
-        {/* Counter Skeleton */}
         <View style={styles.counterContainer}>
           <SkeletonLoader width={26} height={26} borderRadius={6} style={{ marginHorizontal: 3 }} />
           <SkeletonLoader width={20} height={14} borderRadius={4} style={{ marginHorizontal: 3 }} />
@@ -66,10 +62,8 @@ const CartItem = ({ item, onAdd, onRemove }) => {
 
   return (
     <View style={styles.container}>
-      {/* Product image */}
       <Image source={item.image} style={styles.image} />
 
-      {/* Product details */}
       <View style={styles.detailsContainer}>
         {item.brandImage && (
           <Image source={item.brandImage} style={styles.brandImage} resizeMode="contain" />
@@ -78,7 +72,6 @@ const CartItem = ({ item, onAdd, onRemove }) => {
         <Text style={styles.price}>₱{item.price}</Text>
       </View>
 
-      {/* Quantity controls */}
       <View style={styles.counterContainer}>
         <TouchableOpacity onPress={() => onRemove(item)} style={styles.minusButton}>
           <Text style={styles.minusText}>-</Text>

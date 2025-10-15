@@ -29,7 +29,7 @@ const SkeletonLoader = ({
           width,
           height,
           borderRadius,
-          backgroundColor: "#E1E9EE", // light gray skeleton color
+          backgroundColor: "#E1E9EE",
         },
         style,
       ]}
