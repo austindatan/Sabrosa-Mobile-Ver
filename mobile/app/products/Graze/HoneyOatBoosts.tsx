@@ -15,8 +15,8 @@ export default function HoneyOatBoosts() {
       ]}
       description={[
         "Fuel your day with Honey Oat Boosts — a wholesome blend of golden honey and hearty oats.",
-        "Soft, chewy, and naturally sweet, they’re perfect for an energy boost anytime.",
-        "A simple, delicious snack that’s as nourishing as it is satisfying!"
+        "Soft, chewy, and naturally sweet, they are perfect for an energy boost anytime.",
+        "A simple, delicious snack that is as nourishing as it is satisfying!"
       ]}
     />
   );
