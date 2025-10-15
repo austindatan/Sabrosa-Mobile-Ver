@@ -44,7 +44,7 @@ const Laduree = () => {
         topContentTranslateY={topContentTranslateY}
         logoScale={logoScale}
         searchTranslateY={searchTranslateY}
-        brandName="Chobani"
+        brandName="Laduree"
         brandTagline="the good, the beautiful, and the extraordinary."
         backgroundImage={require("../../../assets/images/initialization_assets/laduree_bg.png")}
         brandLogo={require("../../../assets/images/initialization_assets/logo/laduree.png")}

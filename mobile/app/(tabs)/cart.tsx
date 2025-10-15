@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { View, Text, Animated, FlatList, TouchableOpacity } from "react-native";
 import styles from "../../assets/stylesheets/cookie";
 import useHomeHeaderAnimation from "../../hooks/HeaderAnimation";
-import HomeHeader from "../components/CartHeader";
+import HomeHeader from "../components/HomeHeader";
 import { useRouter } from "expo-router";
 import useHideOnScroll from "../../hooks/useHideOnScroll";
 import CartItem from "../components/CartItem";
@@ -117,7 +117,7 @@ const Cart = () => {
                 style={{
                   fontSize: 16,
                   color: activeTab === tab ? "#FF6C9B" : "#999",
-                  fontfamily: "Barlow",
+                  fontFamily: "DMSans-Bold"
                 }}
               >
                 {tab === "OnCart" ? "On Cart" : "History"}

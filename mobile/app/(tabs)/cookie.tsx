@@ -35,7 +35,7 @@ const Cookie = () => {
       <Animated.ScrollView
         contentContainerStyle={{
           paddingTop: HEADER_MAX + 20,
-          paddingBottom: 70,
+          paddingBottom: 0,
         }}
         showsVerticalScrollIndicator={false}
         scrollEventThrottle={16}

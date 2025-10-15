@@ -102,9 +102,9 @@ const styles = StyleSheet.create({
   },
 
   image: {
-    width: 70,
-    height: 70,
-    borderRadius: 10,
+    width: 60,
+    height: 60,
+    borderRadius: 8,
   },
 
   detailsContainer: {
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
   },
 
   name: {
-    fontSize: 14,
+    fontSize: 12,
     fontWeight: "600",
     color: "#000",
     fontFamily: "Barlow",
@@ -127,9 +127,8 @@ const styles = StyleSheet.create({
 
   price: {
     fontSize: 15,
-    fontWeight: "700",
     color: "#FF6C9B",
-    fontFamily: "DIN-Next",
+    fontFamily: "DMSans-Bold"
   },
 
   counterContainer: {

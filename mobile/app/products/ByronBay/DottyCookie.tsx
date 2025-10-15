@@ -6,7 +6,7 @@ export default function DottyCookie() {
     <ProductDetail
       heroImage={require("../../../assets/images/initialization_assets/product/DottyCookie.png")}
       brandLogo={require("../../../assets/images/initialization_assets/logo/byronbay_logo.png")}
-      productName={"Biscoff Latte"}
+      productName={"Dotty Cookie"}
       price={"₱280"}
       galleryImages={[
         require("../../../assets/images/initialization_assets/product/DottyCookie.png"),

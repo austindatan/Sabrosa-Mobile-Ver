@@ -5,8 +5,8 @@ export default function BlueberryMuffinCookie() {
   return (
     <ProductDetail
       heroImage={require("../../../assets/images/initialization_assets/food/BlueberryMuffinCookie.png")}
-      brandLogo={require("../../../assets/images/initialization_assets/light/byron.png")}
-      productName={"White Choc Macadamia Cookie"}
+      brandLogo={require("../../../assets/images/initialization_assets/logo/byronbay_logo.png")}
+      productName={"Blueberry Muffin Cookie"}
       price={"₱350"}
       galleryImages={[
         require("../../../assets/images/initialization_assets/food/BlueberryMuffinCookie.png"),

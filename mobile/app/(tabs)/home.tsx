@@ -63,7 +63,7 @@ const Home = () => {
 
   const animatedContentStyle = {
     paddingTop: animatedPaddingTop,
-    paddingBottom: 70,
+    paddingBottom: 0,
   };
 
   return (

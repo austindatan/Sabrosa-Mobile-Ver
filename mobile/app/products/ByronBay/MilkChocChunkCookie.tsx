@@ -6,7 +6,7 @@ export default function MilkChocChunkCookie() {
     <ProductDetail
       heroImage={require("../../../assets/images/initialization_assets/food/MilkChocChunkCookie.png")}
       brandLogo={require("../../../assets/images/initialization_assets/light/byron.png")}
-      productName={"Milk Choc Chunk Cookie"}
+      productName={"Milk Choco Chunk Cookie"}
       price={"₱250"}
       galleryImages={[
         require("../../../assets/images/initialization_assets/food/MilkChocChunkCookie.png"),
