@@ -1,7 +1,7 @@
 // @ts-nocheck
 import React from "react";
 import { View, Text, ImageBackground, Image, TextInput, TouchableOpacity, Animated } from "react-native";
-import styles from "../../assets/stylesheets/home";
+import styles from "../styles/AppEffects";
 
 const HomeHeader = ({
   headerHeight,

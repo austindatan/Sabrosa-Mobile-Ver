@@ -1,94 +1,94 @@
 // @ts-nocheck
-import React from "react";
-import { View, Text, ImageBackground, Image, TextInput, TouchableOpacity, Animated } from "react-native";
-import styles from "../../assets/stylesheets/home";
+import React, { useState } from "react";
+import { View, TextInput, TouchableOpacity, Image, Text, Animated, ImageBackground } from "react-native"; 
+import { Ionicons } from "@expo/vector-icons";
+import styles from "../styles/HeaderHOME";
 
-const HomeHeader = ({
-  headerHeight,
-  topContentOpacity,
-  topContentTranslateY,
-  logoScale,
-  searchTranslateY,
-}) => {
-  return (
-    <Animated.View
-      style={[
-        styles.headerWrapper,
-        {
-          height: headerHeight,
-          position: "absolute",
-          top: 0,
-          left: 0,
-          right: 0,
-          zIndex: 10,
-        },
-      ]}
-    >
-      <ImageBackground
-        source={require("../../assets/images/initialization_assets/home_header.png")}
-        style={[styles.header, { height: "100%" }]}
-        imageStyle={styles.headerImage}
-        resizeMode="cover"
-      >
-        <Animated.View
-          style={{
-            opacity: topContentOpacity,
-            transform: [{ translateY: topContentTranslateY }],
-          }}
+const HomeHeader = ({ scrollY = new Animated.Value(0) }) => {
+    const searchOpacity = scrollY.interpolate({
+        inputRange: [0, 80],
+        outputRange: [1, 0],
+        extrapolate: "clamp",
+    });
+
+    const searchTranslateY = scrollY.interpolate({
+        inputRange: [0, 80],
+        outputRange: [0, -30],
+        extrapolate: "clamp",
+    });
+
+    const toggleTranslateY = scrollY.interpolate({
+        inputRange: [0, 80],
+        outputRange: [0, -40],
+        extrapolate: "clamp",
+    });
+
+    return (
+        <ImageBackground 
+            source={require("../../assets/images/initialization_assets/new.png")}
+            style={styles.backgroundImageContainer} 
         >
-          <View style={styles.contentContainer}>
-            <View style={styles.leftContainer}>
-              <Text style={styles.locationLabel}>Location</Text>
-              <View style={styles.locationRow}>
-                <Image
-                  source={require("../../assets/images/initialization_assets/location.png")}
-                  style={styles.locationIcon}
-                  resizeMode="contain"
-                />
-                <Text style={styles.locationValue}>
-                  Cagayan de Oro, Philippines
-                </Text>
-              </View>
+            <View style={[styles.headerfirst, { paddingBottom: 0 }]}>
+                <View style={styles.topRow}>
+                    <Image
+                        source={require("../../assets/images/initialization_assets/SABROSA.png")}
+                        style={styles.logo}
+                        resizeMode="contain"
+                    />
+                    <TouchableOpacity>
+                        <View style={styles.notif}>
+                            <Ionicons name="notifications-outline" size={24} color="#fff" />
+                        </View>
+                    </TouchableOpacity>
+                </View>
             </View>
 
-            <Animated.Image
-              source={require("../../assets/images/initialization_assets/sabrosa_logo.png")}
-              style={[styles.logo, { transform: [{ scale: logoScale }] }]}
-              resizeMode="contain"
-            />
-          </View>
-        </Animated.View>
-
-        <Animated.View
-          style={{
-            transform: [{ translateY: searchTranslateY }],
-            marginTop: 10,
-          }}
-        >
-          <View style={styles.searchContainer}>
-            <View style={styles.searchBox}>
-              <Image
-                source={require("../../assets/images/initialization_assets/search.png")}
-                style={styles.searchIcon}
-              />
-              <TextInput
-                placeholder="Search"
-                placeholderTextColor="#999"
-                style={styles.searchInput}
-              />
-            </View>
-
-            <TouchableOpacity style={styles.filterButton}>
-              <Image
-                source={require("../../assets/images/initialization_assets/filter_big.png")}
-                style={styles.filterIcon}
-              />
-            </TouchableOpacity>
-          </View>
-        </Animated.View>
-      </ImageBackground>
-    </Animated.View>
-  );
+            <Animated.View
+                style={[
+                    styles.header,
+                    {
+                        paddingTop: 0,
+                        borderTopLeftRadius: 0,
+                        borderTopRightRadius: 0,
+                        transform: [
+                            {
+                                translateY: scrollY.interpolate({
+                                    inputRange: [0, 80],
+                                    outputRange: [0, -40],
+                                    extrapolate: "clamp",
+                                }),
+                            },
+                        ],
+                    },
+                ]}
+            >
+                <Animated.View
+                    style={[
+                        styles.searchRow,
+                        {
+                            opacity: searchOpacity,
+                            transform: [{ translateY: searchTranslateY }],
+                        },
+                    ]}
+                >
+                    <View style={styles.searchContainer}>
+                        <Ionicons name="search" size={24} color="#fff" style={{ marginRight: 8 }} />
+                        <TextInput
+                            placeholder="Search..."
+                            placeholderTextColor="#ffffff94"
+                            style={styles.searchInput}
+                        />
+                    </View>
+                    <TouchableOpacity style={styles.filterButton}>
+                        <View style={styles.filterB}>
+                            <Ionicons name="filter" size={14} color="#222762" />
+                        </View>
+                        <Text style={styles.filterText}>Filters</Text>
+                    </TouchableOpacity>
+                </Animated.View>
+            </Animated.View>
+        </ImageBackground>
+    );
 };
 
 export default HomeHeader;

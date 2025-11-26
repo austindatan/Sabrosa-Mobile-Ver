@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
-    container: {
+  container: {
     flex: 1,
     backgroundColor: "#fff",
   },
@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
   },
   profileSection: {
     alignItems: "center",
-    marginBottom: -100,
+    marginBottom: -45,
     
   },
   avatar: {
@@ -22,29 +22,12 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     borderWidth: 3,
     borderColor: "#fff",
+    backgroundColor: "#fff",
   },
-  editButton: {
-    backgroundColor: "#FF6C9B",
-    borderRadius: 20,
-    padding: 5,
-    position: "absolute",
-    right: "6%",
-    top: 70,
-  },
-  userName: {
-    fontSize: 18,
-    marginTop: 10,
-    color: "#333",
-    fontFamily: "DMSans-Bold"
-  },
-  userOccupation: {
-    fontSize: 14,
-    color: "#777",
-    fontFamily: "DMSans-Medium"
-  },
+
   body: {
     paddingHorizontal: 20,
-    marginTop: 120,
+    marginTop: 70,
   },
   card: {
     backgroundColor: "#fff",
@@ -94,7 +77,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     paddingVertical: 14,
     alignItems: "center",
-    marginBottom: 80
+    marginBottom: 10
   },
   editProfileText: {
     color: "#fff",

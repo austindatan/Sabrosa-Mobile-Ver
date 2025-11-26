@@ -1,7 +1,7 @@
 // @ts-nocheck
 import React from "react";
 import { View, Text, ImageBackground, Image, TextInput, Animated } from "react-native";
-import styles from "../../assets/stylesheets/BrandsHeader";
+import styles from "../styles/BrandsHeader";
 
 type AnimatedHeaderProps = {
   headerHeight: Animated.Value;

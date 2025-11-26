@@ -1,120 +1,88 @@
-import React from "react";
-import { View, Text, Animated } from "react-native";
-import styles from "../../assets/stylesheets/cookie";
+import React, { useRef, useState, useEffect } from "react";
+import { View, Animated, ScrollView, ImageBackground, Text, TouchableOpacity } from "react-native";
+import Header from "../components/HomeHeader";
 import BrandCard from "../components/SabrosaBrandCard";
-import useHomeHeaderAnimation from "../../hooks/HeaderAnimation";
-import HomeHeader from "../components/HomeHeader";
 import { useRouter } from "expo-router";
-import useHideOnScroll from "../../hooks/useHideOnScroll";
-import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
+import styles from "../styles/Cookie";
+import useHideOnScroll from "../../hooks/useHideOnScroll"; // Import the hook
 
 const Cookie = () => {
+  const scrollY = useRef(new Animated.Value(0)).current;
   const router = useRouter();
-  const {
-    scrollY,
-    headerHeight,
-    topContentOpacity,
-    topContentTranslateY,
-    logoScale,
-    searchTranslateY,
-    HEADER_MAX,
-  } = useHomeHeaderAnimation();
 
+  // Get the scroll handler from the hook
   const { handleScroll } = useHideOnScroll();
 
   return (
-    <View style={{ flex: 1, backgroundColor: "#fff" }}>
-      <HomeHeader
-        headerHeight={headerHeight}
-        topContentOpacity={topContentOpacity}
-        topContentTranslateY={topContentTranslateY}
-        logoScale={logoScale}
-        searchTranslateY={searchTranslateY}
-      />
-
+    <View style={[styles.container, { flex: 1 }]}>
+      <Header />
       <Animated.ScrollView
-        contentContainerStyle={{
-          paddingTop: HEADER_MAX + 20,
-          paddingBottom: 0,
-        }}
-        showsVerticalScrollIndicator={false}
         scrollEventThrottle={16}
         onScroll={Animated.event(
           [{ nativeEvent: { contentOffset: { y: scrollY } } }],
           {
             useNativeDriver: false,
-            listener: handleScroll,
+            listener: handleScroll, // Listener to hide/show the tab bar
           }
         )}
       >
-        <View style={styles.sectionHeader}>
-          <Text style={styles.sectionTitle}>Sabrosa Brands</Text>
+        <View style={[styles.specialOffer, { marginTop: 5 }]}>
         </View>
 
         <View style={styles.brandGrid}>
           <BrandCard
             image={require("../../assets/images/initialization_assets/light/sugar.png")}
-            color="#69CCE3"
+            colors={['#69CCE3', '#00FFFF']}
             onPress={() => router.push("/(tabs)/(links)/Sugarfina")}
           />
-
           <BrandCard
             image={require("../../assets/images/initialization_assets/light/chobani.png")}
-            color="#1C5F4E"
+            colors={['#1C5F4E', '#3D9970']}
             onPress={() => router.push("/(tabs)/(links)/Chobani")}
           />
-
           <BrandCard
             image={require("../../assets/images/initialization_assets/light/laduree.png")}
-            color="#FDC0D0"
+            colors={['#FDC0D0', '#F1548A']}
             onPress={() => router.push("/(tabs)/(links)/Laduree")}
           />
-
           <BrandCard
             image={require("../../assets/images/initialization_assets/light/bluestar.png")}
-            color="#1F27A6"
+            colors={['#1F27A6', '#8a90ffff']}
             onPress={() => router.push("/(tabs)/(links)/Bluestar")}
           />
-
           <BrandCard
             image={require("../../assets/images/initialization_assets/light/graze.png")}
-            color="#423064"
+            colors={['#a38ad1ff', '#7B679B']}
             onPress={() => router.push("/(tabs)/(links)/Graze")}
           />
-
           <BrandCard
             image={require("../../assets/images/initialization_assets/light/byron.png")}
-            color="#FF8654"
+            colors={['#ffa57fff', '#d14200ff']}
             onPress={() => router.push("/(tabs)/(links)/ByronBay")}
           />
-
           <BrandCard
             image={require("../../assets/images/initialization_assets/light/sweets.png")}
-            color="#FF0000"
+            colors={['#ff5a5aff', '#c12121ff']}
             onPress={() => router.push("/(tabs)/(links)/SweetsParadise")}
           />
-
           <BrandCard
             image={require("../../assets/images/initialization_assets/light/krispy.png")}
-            color="#CC083E"
+            colors={['#ff2f6aff', '#ff7da2ff']}
             onPress={() => router.push("/(tabs)/(links)/KrispyKreme")}
           />
-
           <BrandCard
             image={require("../../assets/images/initialization_assets/light/oli.png")}
-            color="#D6F2ED"
+            colors={['#6cffe4ff', '#1a836fff']}
             onPress={() => router.push("/(tabs)/(links)/Olipop")}
           />
-
           <BrandCard
             image={require("../../assets/images/initialization_assets/light/tea forte.png")}
-            color="#B09040"
+            colors={['#ffd876ff', '#D3B162']}
             onPress={() => router.push("/(tabs)/(links)/Teaforte")}
           />
-
           <BrandCard
             image={require("../../assets/images/initialization_assets/light/compartes.png")}
-            color="#31625C"
+            colors={['#60daccff', '#0c453bff']}
             onPress={() => router.push("/(tabs)/(links)/Compartes")}
           />
         </View>

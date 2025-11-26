@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { MotiView } from "moti";
+import styles from "../styles/Card_CartItem";
 
 const SkeletonLoader = ({
   width = "100%",
@@ -15,7 +16,7 @@ const SkeletonLoader = ({
       animate={{ backgroundColor: "#e7edf1ff" }}
       transition={{
         type: "timing",
-        duration: 800,
+        duration: 1800,
         loop: true,
         repeatReverse: true,
       }}
@@ -88,88 +89,3 @@ const CartItem = ({ item, onAdd, onRemove }) => {
 };
 
 export default CartItem;
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "#fff",
-    borderRadius: 15,
-    marginVertical: 8,
-    marginHorizontal: 20,
-    padding: 10,
-    elevation: 1,
-  },
-
-  image: {
-    width: 60,
-    height: 60,
-    borderRadius: 8,
-  },
-
-  detailsContainer: {
-    flex: 1,
-    marginLeft: 15,
-  },
-
-  name: {
-    fontSize: 12,
-    fontWeight: "600",
-    color: "#000",
-    fontFamily: "Barlow",
-    marginBottom: 1,
-  },
-
-  brandImage: {
-    width: 40,
-    height: 20,
-  },
-
-  price: {
-    fontSize: 15,
-    color: "#FF6C9B",
-    fontFamily: "DMSans-Bold"
-  },
-
-  counterContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    borderRadius: 10,
-    paddingHorizontal: 6,
-    paddingVertical: 3,
-  },
-
-  minusButton: {
-    backgroundColor: "#ffc8d9ff",
-    borderRadius: 6,
-    width: 26,
-    height: 26,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-
-  minusText: {
-    color: "#FF6C9B",
-    fontWeight: "bold",
-  },
-
-  quantityText: {
-    marginHorizontal: 10,
-    fontWeight: "600",
-    fontFamily: "DIN-Next",
-  },
-
-  plusButton: {
-    backgroundColor: "#FF6C9B",
-    borderRadius: 6,
-    width: 26,
-    height: 26,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-
-  plusText: {
-    color: "#fff",
-    fontWeight: "bold",
-  },
-});

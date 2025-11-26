@@ -3,7 +3,7 @@ import React, { useRef } from "react";
 import { View, Text, TouchableOpacity, Animated } from "react-native";
 import { useRouter } from "expo-router";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
-import styles from "../../../assets/stylesheets/(links)/ByronBay";
+import styles from "../../styles/links/ByronBay";
 import ProductCard from "../../components/ProductCard";
 import AnimatedHeader from "../../components/BrandsHeader";
 import useHomeHeaderAnimation from "../../../hooks/HeaderAnimation";

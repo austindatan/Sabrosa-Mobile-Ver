@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
 
   header: {
     width: "100%",
-    height: 180,
+    height: 100,
     justifyContent: "flex-start",
   },
 
@@ -196,6 +196,8 @@ const styles = StyleSheet.create({
   rowGap: 12,
   padding: 20,
   marginTop: -10,
+  bottom: 0,
+  zIndex: -100,
   },
 
 
