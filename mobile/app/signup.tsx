@@ -1,13 +1,20 @@
-import { StyleSheet, Text, View, Image, ImageBackground, TouchableOpacity, Pressable, TextInput} from "react-native";
+import { StyleSheet, Text, View, Image, ImageBackground, TouchableOpacity, Pressable, TextInput } from "react-native";
 import React from "react";
 import { useState } from "react";
 import { useRouter } from "expo-router";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import config from "../config";
 
 const SignUp = () => {
   const router = useRouter();
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
+
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [number, setNumber] = useState("");
+  const [password, setPassword] = useState("");
 
   const onChange = (event: any, selectedDate?: Date) => {
     setShow(false);
@@ -22,6 +29,38 @@ const SignUp = () => {
     return `${mm}/${dd}/${yy}`;
   };
 
+  const handleRegister = async () => {
+    try {
+      const body = {
+        firstName,
+        lastName,
+        birthday: formatDate(date), // from your date picker
+        number,
+        email,
+        password,
+      };
+
+      const res = await fetch(`${config.API_BASE_URL}/api/auth/register`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        alert(data.message);
+        return;
+      }
+
+      alert("Registration Successful!");
+      router.replace("/(tabs)/Home");
+    } catch (err) {
+      console.log(err);
+      alert("Something went wrong");
+    }
+  };
+
   return (
     <ImageBackground
       source={require("../assets/images/initialization_assets/signup_bg.png")}
@@ -32,10 +71,10 @@ const SignUp = () => {
         <View style={styles.headerRow}>
           <View style={styles.leftTagline}>
             <Pressable onPress={() => router.push("/")}>
-                <Image
-                    source={require("../assets/images/initialization_assets/arrow-narrow-left.png")}
-                    style={styles.leftarrow}
-                />
+              <Image
+                source={require("../assets/images/initialization_assets/arrow-narrow-left.png")}
+                style={styles.leftarrow}
+              />
             </Pressable>
           </View>
         </View>
@@ -44,38 +83,75 @@ const SignUp = () => {
           source={require("../assets/images/initialization_assets/sabrosa_logo.png")}
           style={styles.sabrosa_logo}
         />
-        
+
         <View style={styles.onboardingContainer}>
+          <View style={styles.onboardingTitle}>
+            <Text style={styles.titleBase}>Register</Text>
+            <Text style={styles.subtitleBase}>Create an account to continue! </Text>
+          </View>
 
-            <View style={styles.onboardingTitle}>
-                <Text style={styles.titleBase}>Register</Text>
-                <Text style={styles.subtitleBase}>Create an account to continue! </Text>
-            </View>
+          <View style={styles.onboardingForm}>
+            <TextInput
+              style={styles.inputBase}
+              placeholder="First Name"
+              placeholderTextColor="#8C8C8C"
+              value={firstName}
+              onChangeText={setFirstName}
+            />
 
-            <View style={styles.onboardingForm}>
-                <TextInput style={styles.inputBase} placeholder="First Name" placeholderTextColor="#8C8C8C"/>
-                <TextInput style={styles.inputBase} placeholder="Last Name" placeholderTextColor="#8C8C8C"/>
-                <TextInput style={styles.inputBase} placeholder="Email" placeholderTextColor="#8C8C8C"/>
+            <TextInput
+              style={styles.inputBase}
+              placeholder="Last Name"
+              placeholderTextColor="#8C8C8C"
+              value={lastName}
+              onChangeText={setLastName}
+            />
 
-                <TouchableOpacity style={styles.inputBase} onPress={() => setShow(true)}>
-                    <Text style={{ color: date ? "#000" : "#8C8C8C" }}>Birthday: {date ? formatDate(date) : "MM/DD/YY"}</Text>
-                </TouchableOpacity>
+            <TextInput
+              style={styles.inputBase}
+              placeholder="Email"
+              placeholderTextColor="#8C8C8C"
+              value={email}
+              onChangeText={setEmail}
+            />
 
-                    {show && (
-                        <DateTimePicker value={date || new Date()} mode="date" display="default" onChange={onChange} />
-                    )}
-                <TextInput style={styles.inputBase} placeholder="Number" placeholderTextColor="#8C8C8C"/>
-                <TextInput style={styles.inputBase} placeholder="Password" placeholderTextColor="#8C8C8C"/>
+            <TouchableOpacity style={styles.inputBase} onPress={() => setShow(true)}>
+              <Text style={{ color: date ? "#000" : "#8C8C8C" }}>
+                Birthday: {date ? formatDate(date) : "MM/DD/YY"}
+              </Text>
+            </TouchableOpacity>
 
-                <TouchableOpacity style={[styles.btnBase, { backgroundColor: "#FF6C9B", borderColor: "#FF6C9B", marginBottom: 8 }]}>
-                    <Text style={[styles.btnText, { color: "#fff" }]}>Register</Text>
-                </TouchableOpacity>
+            {show && (
+              <DateTimePicker value={date || new Date()} mode="date" display="default" onChange={onChange} />
+            )}
 
-                <Text style={styles.termsBase}>By continuing, you agree to our Terms and Conditions and Privacy Policy</Text>
-            </View>
+            <TextInput
+              style={styles.inputBase}
+              placeholder="Number"
+              placeholderTextColor="#8C8C8C"
+              value={number}
+              onChangeText={setNumber}
+            />
+
+            <TextInput
+              style={styles.inputBase}
+              placeholder="Password"
+              placeholderTextColor="#8C8C8C"
+              secureTextEntry
+              value={password}
+              onChangeText={setPassword}
+            />
+
+            <TouchableOpacity style={[styles.btnBase, { backgroundColor: "#FF6C9B" }]} onPress={handleRegister}>
+              <Text style={[styles.btnText, { color: "#fff" }]}>Register</Text>
+            </TouchableOpacity>
+
+            <Text style={styles.termsBase}>
+              By continuing, you agree to our Terms and Conditions and Privacy Policy
+            </Text>
+          </View>
         </View>
       </View>
-
     </ImageBackground>
   );
 };
@@ -152,7 +228,7 @@ const styles = StyleSheet.create({
   titleBase: {
     fontFamily: "DMSans-Bold",
     fontSize: 16,
-    marginBottom:3,
+    marginBottom: 3,
   },
 
   subtitleBase: {
@@ -199,7 +275,6 @@ const styles = StyleSheet.create({
     fontFamily: "DMSans-EXLight",
     fontSize: 9,
   },
-  
 });
 
 export default SignUp;
