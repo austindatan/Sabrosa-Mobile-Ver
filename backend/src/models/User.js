@@ -27,7 +27,11 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
     minlength: 6,
-  }
+  },
+  profileImage: {
+    type: String,
+    default: "https://res.cloudinary.com/dldwg8flq/image/upload/v1764486395/PAGSUGPONG_v2_oiens8.png",
+  },
 });
 
 // Hash password before save

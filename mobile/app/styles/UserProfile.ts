@@ -55,6 +55,14 @@ const styles = StyleSheet.create({
     fontFamily: "DMSans-Bold"
   },
 
+  emailname: {
+    fontSize: 22,
+    marginLeft: 20,
+    marginTop: 15,
+    fontFamily: "DMSans-Regular"
+  },
+
+
   tabRow: {
     flexDirection: "row",
     justifyContent: "space-between",

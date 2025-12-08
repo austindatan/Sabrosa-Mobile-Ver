@@ -1,0 +1,28 @@
+import mongoose from "mongoose";
+
+const PaymentMethodSchema = new mongoose.Schema({
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
+    },
+    type: {
+        type: String,
+        enum: ["Credit Card", "GCash", "Cash"],
+        required: true,
+    },
+    cardNumber: {
+        type: String,
+        default: null,
+    },
+    gcashNumber: {
+        type: String,
+        default: null,
+    },
+    isDefault: {
+        type: Boolean,
+        default: false,
+    }
+}, { timestamps: true });
+
+export default mongoose.model("PaymentMethod", PaymentMethodSchema);

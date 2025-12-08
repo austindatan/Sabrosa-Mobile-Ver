@@ -116,7 +116,8 @@ const styles = StyleSheet.create({
 
   galleryImage: {
     width: 80,
-    height: 80
+    height: 80,
+    resizeMode: "contain",
   },
 
   description: {

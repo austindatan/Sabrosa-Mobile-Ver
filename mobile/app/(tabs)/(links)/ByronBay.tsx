@@ -9,6 +9,7 @@ import AnimatedHeader from "../../components/BrandsHeader";
 import useHomeHeaderAnimation from "../../../hooks/HeaderAnimation";
 import useHideOnScroll from "../../../hooks/useHideOnScroll";
 import { useBackToCookie } from "../../../hooks/BacktoCookie";
+import config from "../../../config";
 
 const ByronBay = () => {
   useBackToCookie();
@@ -36,6 +37,15 @@ const ByronBay = () => {
     }).start();
   }, [visible]);
 
+  const [products, setProducts] = React.useState([]);
+
+  React.useEffect(() => {
+    fetch(`${config.API_BASE_URL}/api/products/brand/ByronBay`)
+      .then(res => res.json())
+      .then(data => setProducts(data))
+      .catch(e => console.log(e));
+  }, []);
+
   return (
     <View style={{ flex: 1, backgroundColor: "#fff" }}>
       <AnimatedHeader
@@ -44,7 +54,7 @@ const ByronBay = () => {
         topContentTranslateY={topContentTranslateY}
         logoScale={logoScale}
         searchTranslateY={searchTranslateY}
-        brandName="Byron Bay Cookies"
+        brandName="Byron Bay"
         brandTagline="Crafted with passion and baked to perfection."
         backgroundImage={require("../../../assets/images/initialization_assets/byronbay_bg.png")}
         brandLogo={require("../../../assets/images/initialization_assets/logo/byronbay_logo.png")}
@@ -53,7 +63,7 @@ const ByronBay = () => {
       <Animated.ScrollView
         contentContainerStyle={{
           paddingTop: HEADER_MAX + 20,
-          paddingBottom: tabBarHeight - 60,
+          paddingBottom: tabBarHeight + 70,
         }}
         showsVerticalScrollIndicator={false}
         scrollEventThrottle={16}
@@ -73,70 +83,18 @@ const ByronBay = () => {
         </View>
 
         <View style={styles.productGrid}>
-          <ProductCard
-            productName="Tropical Mango & Passionfruit"
-            price="₱195"
-            productImage={require("../../../assets/images/initialization_assets/food/product1.png")}
-            brandImage={require("../../../assets/images/initialization_assets/logo/byronbay_logo.png")}
-            onPress={() => router.push("/products/ByronBay/TropicalMango")}
-          />
-          
-          <ProductCard
-            productName="Blueberry Muffin Cookie"
-            price="₱195"
-            productImage={require("../../../assets/images/initialization_assets/product_sprites/Blueberry Muffin Cookie.png")}
-            brandImage={require("../../../assets/images/initialization_assets/logo/byronbay_logo.png")}
-            onPress={() => router.push("/products/ByronBay/BlueberryMuffinCookie")}
-          />
-
-          <ProductCard
-            productName="Dotty Cookie Bundle"
-            price="₱195"
-            productImage={require("../../../assets/images/initialization_assets/product/DottyCookie2.png")}
-            brandImage={require("../../../assets/images/initialization_assets/logo/byronbay_logo.png")}
-            onPress={() => router.push("/products/ByronBay/DottyCookie")}
-          />
-
-          <ProductCard
-            productName="Milk Choc Chunk Cookie"
-            price="₱195"
-            productImage={require("../../../assets/images/initialization_assets/product_sprites/MilkChocChunkCookie.jpg")}
-            brandImage={require("../../../assets/images/initialization_assets/logo/byronbay_logo.png")}
-            onPress={() => router.push("/products/ByronBay/MilkChocChunkCookie")}
-          />
-          
-          <ProductCard
-            productName="White Choc Macadamia"
-            price="₱195"
-            productImage={require("../../../assets/images/initialization_assets/product/WhiteChocMacadamiaCookie3.png")}
-            brandImage={require("../../../assets/images/initialization_assets/logo/byronbay_logo.png")}
-            onPress={() => router.push("/products/ByronBay/WhiteChocMacadamiaCookie")}
-          />
-
-          <ProductCard
-            productName="Vegan Gluten Maple & Pecan"
-            price="₱195"
-            productImage={require("../../../assets/images/initialization_assets/product_sprites/Vegan Gluten Maple & Pecan Cookie Jar.png")}
-            brandImage={require("../../../assets/images/initialization_assets/logo/byronbay_logo.png")}
-            onPress={() => router.push("/products/ByronBay/WhiteChocMacadamiaCookie")}
-          />
-
-          <ProductCard
-            productName="Toasted Coconut Bites"
-            price="₱195"
-            productImage={require("../../../assets/images/initialization_assets/product_sprites/Toasted Coconut & White Cookie Bites.png")}
-            brandImage={require("../../../assets/images/initialization_assets/logo/byronbay_logo.png")}
-            onPress={() => router.push("/products/ByronBay/WhiteChocMacadamiaCookie")}
-          />
-
-          <ProductCard
-            productName="2024 Pride Cookies"
-            price="₱195"
-            productImage={require("../../../assets/images/initialization_assets/product_sprites/2024 Pride Cookie Limiteds.png")}
-            brandImage={require("../../../assets/images/initialization_assets/logo/byronbay_logo.png")}
-            onPress={() => router.push("/products/ByronBay/WhiteChocMacadamiaCookie")}
-          />
+          {products.map((p) => (
+            <ProductCard
+              key={p._id}
+              productName={p.productName}
+              price={`₱${p.price}`}
+              productImage={{ uri: p.productImages[0] }}
+              brandImage={{ uri: p.brandImage }}
+              onPress={() => router.push(`/products/${p._id}`)}
+            />
+          ))}
         </View>
+
       </Animated.ScrollView>
 
     </View>

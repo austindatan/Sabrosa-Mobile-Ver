@@ -20,10 +20,12 @@ export default function ProductPage() {
 
   return (
     <ProductDetail
+      productId={product._id}
       heroImage={{ uri: product.productImages[1] }}
       brandLogo={{ uri: product.brandImage }}
       productName={product.productName}
       price={`₱${product.price}`}
+
       galleryImages={[
         { uri: product.productImages[0] },
         { uri: product.productImages[1] },

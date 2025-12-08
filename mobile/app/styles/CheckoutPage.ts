@@ -107,10 +107,10 @@ const styles = StyleSheet.create({
         gap: 10,
     },
     paymentLabel: {
-        marginLeft: 10,
         color: '#666',
         fontFamily: 'DMSans-Medium',
     },
+    
     paymentLabelActive: {
         color: '#222',
         fontFamily: 'DMSans-Bold',

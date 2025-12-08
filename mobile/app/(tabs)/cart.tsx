@@ -1,83 +1,85 @@
-// @ts-nocheck
+//@ts-nocheck
 import React, { useState, useMemo, useEffect, useRef } from "react";
 import { View, Text, Animated, FlatList, TouchableOpacity } from "react-native";
 import styles from "../styles/Cookie";
 import Header from "../components/HomeHeader";
 import { useRouter } from "expo-router";
-import useHideOnScroll from "../../hooks/useHideOnScroll";
 import CartItem from "../components/CartItem";
 import localStyles from "../styles/CartEffects";
+import axios from "axios";
+import config from "../../config";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useFocusEffect } from "@react-navigation/native";
 
 const Cart = () => {
   const scrollY = useRef(new Animated.Value(0)).current;
   const router = useRouter();
-
   const [activeTab, setActiveTab] = useState("OnCart");
   const [loading, setLoading] = useState(true);
   const [cartItems, setCartItems] = useState([]);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setCartItems([
-        {
-          id: "1",
-          name: "Tropical Mango & Passionfruit",
-          brandImage: require("../../assets/images/initialization_assets/logo/byronbay_logo.png"),
-          price: 195,
-          image: require("../../assets/images/initialization_assets/food/product1.png"),
-          quantity: 1,
-        },
-        {
-          id: "2",
-          name: "Peaches & Cream Soda",
-          brandImage: require("../../assets/images/initialization_assets/logo/olipop_black.png"),
-          price: 500,
-          image: require("../../assets/images/initialization_assets/food/barbie.png"),
-          quantity: 1,
-        },
-        {
-          id: "3",
-          name: "Special Mixed Yakisoba",
-          brandImage: require("../../assets/images/initialization_assets/logo/sweets_logo.png"),
-          price: 250,
-          image: require("../../assets/images/initialization_assets/food/bun.png"),
-          quantity: 1,
-        },
-        {
-          id: "4",
-          name: "Special Mixed Yakisoba",
-          brandImage: require("../../assets/images/initialization_assets/logo/sweets_logo.png"),
-          price: 250,
-          image: require("../../assets/images/initialization_assets/food/bun.png"),
-          quantity: 1,
-        },
-      ]);
-      setLoading(false);
-    } );
-    return () => clearTimeout(timer);
-  }, []);
+  const fetchCart = async () => {
+    try {
+      const userId = await AsyncStorage.getItem("userId");
+      if (!userId) return;
 
-  const handleAdd = (item) => {
-    setCartItems((prev) =>
-      prev.map((i) => (i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i))
-    );
+      const res = await axios.get(`${config.API_BASE_URL}/api/cart/${userId}`);
+      const addedItems = res.data.items.filter((i) => i.status === "Added");
+      setCartItems(addedItems);
+    } catch (err) {
+      console.log("LOAD CART ERROR:", err.response?.data || err.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const handleRemove = (item) => {
-    setCartItems((prev) =>
-      prev.map((i) =>
-        i.id === item.id && i.quantity > 1 ? { ...i, quantity: i.quantity - 1 } : i
-      )
-    );
+  useEffect(() => {
+    fetchCart();
+  }, []);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchCart(); // ← refresh cart every time you return to this screen
+    }, [])
+  );
+
+  const handleAdd = async (item) => {
+    try {
+      const userId = await AsyncStorage.getItem("userId");
+      await axios.put(`${config.API_BASE_URL}/api/cart/update`, {
+        userId,
+        productId: item.product._id || item.product,
+        quantity: item.quantity + 1,
+      });
+      fetchCart();
+    } catch (err) {
+      console.log("ADD ERROR:", err.response?.data || err.message);
+    }
+  };
+
+  const handleRemove = async (item) => {
+    try {
+      const userId = await AsyncStorage.getItem("userId");
+      await axios.put(`${config.API_BASE_URL}/api/cart/update`, {
+        userId,
+        productId: item.product._id || item.product,
+        quantity: item.quantity - 1,
+      });
+      fetchCart();
+    } catch (err) {
+      console.log("REMOVE ERROR:", err.response?.data || err.message);
+    }
   };
 
   const { totalItems, totalPrice } = useMemo(() => {
     let items = 0;
     let price = 0;
-    for (let item of cartItems) {
-      items += item.quantity;
-      price += item.price * item.quantity;
+
+    for (let i of cartItems) {
+      items += i.quantity;
+      price += i.product?.price * i.quantity || 0;
     }
+
     return { totalItems: items, totalPrice: price };
   }, [cartItems]);
 
@@ -86,26 +88,15 @@ const Cart = () => {
       <Header />
 
       <View style={{ flex: 1 }}>
-        <Animated.ScrollView
-          contentContainerStyle={{ paddingBottom: 200 }}
-          scrollEventThrottle={16}
-        >
+        <Animated.ScrollView contentContainerStyle={{ paddingBottom: 200 }} scrollEventThrottle={16}>
           <View style={localStyles.tabsContainer}>
             {["OnCart", "History"].map((tab) => (
               <TouchableOpacity
                 key={tab}
                 onPress={() => setActiveTab(tab)}
-                style={[
-                  localStyles.tabButton,
-                  activeTab === tab && localStyles.tabButtonActive,
-                ]}
+                style={[localStyles.tabButton, activeTab === tab && localStyles.tabButtonActive]}
               >
-                <Text
-                  style={[
-                    localStyles.tabText,
-                    activeTab === tab && localStyles.tabTextActive,
-                  ]}
-                >
+                <Text style={[localStyles.tabText, activeTab === tab && localStyles.tabTextActive]}>
                   {tab === "OnCart" ? "On Cart" : "History"}
                 </Text>
               </TouchableOpacity>
@@ -113,15 +104,41 @@ const Cart = () => {
           </View>
 
           {activeTab === "OnCart" && !loading && (
-            <FlatList
-              data={cartItems}
-              renderItem={({ item }) => (
-                <CartItem item={item} onAdd={handleAdd} onRemove={handleRemove} />
-              )}
-              keyExtractor={(item) => item.id}
-              scrollEnabled={false}
-              contentContainerStyle={{ marginTop: 5, marginBottom: 30 }}
-            />
+            cartItems.length > 0 ? (
+              <FlatList
+                data={cartItems}
+                renderItem={({ item }) => (
+                  <CartItem
+                    item={{
+                      ...item,
+                      name: item.product?.productName,
+                      price: item.product?.price,
+                      image: { uri: item.product?.productImages[0] },
+                      brandImage: { uri: item.product?.brandImage },
+                    }}
+                    onAdd={() => handleAdd(item)}
+                    onRemove={() => handleRemove(item)}
+                  />
+                )}
+                keyExtractor={(item) => item._id}
+                scrollEnabled={false}
+                contentContainerStyle={{ marginTop: 5, marginBottom: 30 }}
+              />
+            ) : (
+              <View style={{ padding: 20, alignItems: "center", marginTop: 50 }}>
+                <Text style={{ fontSize: 20, fontWeight: "bold", color: "#333", marginBottom: 10 }}>
+                  Your Cart is Empty 🛒
+                </Text>
+                <TouchableOpacity
+                  onPress={() => router.push("/Home")}
+                  style={{ backgroundColor: "#FF6C9B", padding: 12, borderRadius: 8 }}
+                >
+                  <Text style={{ color: "#fff", fontSize: 16, fontWeight: "600" }}>
+                    Add to Cart Now!
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            )
           )}
 
           {activeTab === "History" && (
@@ -131,24 +148,26 @@ const Cart = () => {
               </Text>
             </View>
           )}
-
         </Animated.ScrollView>
 
-        {activeTab === "OnCart" && !loading && (
+        {activeTab === "OnCart" && !loading && cartItems.length > 0 && (
           <View style={localStyles.stickyCheckout}>
             <View style={localStyles.checkoutRow}>
               <Text style={localStyles.checkoutLabel}>Total Items</Text>
               <Text style={localStyles.checkoutValue}>{totalItems}</Text>
             </View>
+
             <View style={localStyles.checkoutRow}>
               <Text style={localStyles.checkoutLabel}>Total Price</Text>
-              <Text style={localStyles.checkoutTotal}>
-                ₱{totalPrice.toLocaleString()}
-              </Text>
+              <Text style={localStyles.checkoutTotal}>₱{totalPrice.toLocaleString()}</Text>
             </View>
 
-            <TouchableOpacity style={localStyles.checkoutButton} activeOpacity={0.8}>
-              <Text style={localStyles.checkoutButtonText} onPress={() => router.push("/products/Checkout_Page")}>Proceed to Checkout</Text>
+            <TouchableOpacity
+              style={localStyles.checkoutButton}
+              activeOpacity={0.8}
+              onPress={() => router.push("/products/Checkout_Page")}
+            >
+              <Text style={localStyles.checkoutButtonText}>Proceed to Checkout</Text>
             </TouchableOpacity>
           </View>
         )}
@@ -158,8 +177,3 @@ const Cart = () => {
 };
 
 export default Cart;
-
-const pulse = {
-  from: { opacity: 0.3 },
-  to: { opacity: 1 },
-};

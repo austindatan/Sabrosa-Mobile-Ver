@@ -1,49 +1,13 @@
-import { StyleSheet, Text, View, Image, ImageBackground, TouchableOpacity, TextInput, Alert } from "react-native";
-import React, { useState } from "react";
+import { StyleSheet, Text, View, Image, ImageBackground, TouchableOpacity, TextInput} from "react-native";
+import React from "react";
 import { useRouter } from "expo-router";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import config from "../config";
+
+const router = useRouter();
+const handleLogin = () => {
+  router.replace("/(tabs)/Home");
+}
 
 const Login = () => {
-  const router = useRouter();
-
-  // added states
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  // backend login flow
-  const handleLogin = async () => {
-    if (!email || !password) {
-      Alert.alert("Missing Fields", "Please enter both email and password.");
-      return;
-    }
-
-    try {
-      const response = await fetch(`${config.API_BASE_URL}/api/auth/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        Alert.alert("Login Failed", data.message || "Invalid email or password.");
-        return;
-      }
-
-      // store data
-      await AsyncStorage.setItem("token", data.token);
-      await AsyncStorage.setItem("userId", data.user.id);
-
-      // go to tabs
-      router.replace("/(tabs)/Home");
-
-    } catch (error) {
-      Alert.alert("Error", "Unable to connect to server.");
-    }
-  };
-
   return (
     <ImageBackground
       source={require("../assets/images/initialization_assets/sabrosa_standard.png")}
@@ -76,15 +40,12 @@ const Login = () => {
           <Text style={styles.titleBase}>Sign Up or Log In</Text>
           <Text style={styles.subtitleBase}>Select your preferred method to continue</Text>
 
-          {/* Email Input */}
           <TextInput
             placeholder="Email"
             placeholderTextColor="#555"
             style={styles.input}
             autoCapitalize="none"
             keyboardType="email-address"
-            value={email}
-            onChangeText={setEmail}
           />
 
           {/* Password Input */}
@@ -93,29 +54,28 @@ const Login = () => {
             placeholderTextColor="#555"
             style={styles.input}
             secureTextEntry
-            value={password}
-            onChangeText={setPassword}
           />
-
-          <TouchableOpacity
-            style={[styles.btnBase, { backgroundColor: "#964E1E", borderColor: "#964E1E", marginBottom: 10 }]}
-            onPress={handleLogin}
-          >
-            <Text style={[styles.btnText, { color: "#fff" }]}>Login</Text>
-          </TouchableOpacity>
-
+          
           <View style={[styles.segregationFlow, { flexDirection: "row", alignItems: "center", marginVertical: 10 }]}>
             <View style={{ width: 50, height: 1, backgroundColor: "#fff" }} />
             <Text style={{ marginHorizontal: 8, color: "#fff", fontSize: 12 }}>or</Text>
             <View style={{ width: 50, height: 1, backgroundColor: "#fff" }} />
           </View>
 
-          <TouchableOpacity style={[styles.registerBase, { backgroundColor: "#FF6C9B", borderColor: "#FF6C9B", marginBottom: 8 }]} onPress={() => router.push("/signup")}>
+          <TouchableOpacity style={[styles.btnBase, { backgroundColor: "#fff", borderColor: "#8C8C8C", marginBottom: 8 }]} onPress={handleLogin}>
             <Image
-              source={require("../assets/images/initialization_assets/person.png")}
+              source={require("../assets/images/initialization_assets/google.png")}
               style={styles.icon}
             />
-            <Text style={[styles.btnText, { color: "#fff" }]}>Register Account</Text>
+            <Text style={[styles.btnText, { color: "#8C8C8C" }]}>  Continue with Google</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={[styles.btnBase, { backgroundColor: "#1877F2", borderColor: "#1877F2", marginBottom: 7 }]}>
+            <Image
+              source={require("../assets/images/initialization_assets/facebook.png")}
+              style={styles.icon}
+            />
+            <Text style={[styles.btnText, { color: "#fff" }]}>Continue with Facebook</Text>
           </TouchableOpacity>
 
           <Text style={styles.termsBase}>By continuing, you agree to our Terms and Conditions and Privacy Policy</Text>
@@ -163,7 +123,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     borderWidth: 1,
     borderColor: "#ccc",
-    fontFamily: "DMSans-Regular",
   },
 
   logo: {
@@ -207,7 +166,7 @@ const styles = StyleSheet.create({
   titleBase: {
     fontFamily: "DMSans-Bold",
     fontSize: 16,
-    marginBottom: 3,
+    marginBottom:3,
   },
 
   subtitleBase: {
@@ -252,6 +211,8 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     width: "90%",
   },
+  
+  
 });
 
 export default Login;

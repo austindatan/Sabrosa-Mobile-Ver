@@ -8,7 +8,7 @@ const ProductSchema = new mongoose.Schema(
     },
     productImages: [{ 
         type: String 
-    }], // up to 3 URLs
+    }],
     brandName: { 
         type: String, 
         required: true 
@@ -22,7 +22,7 @@ const ProductSchema = new mongoose.Schema(
         required: true 
     },
     description: { 
-        type: String, 
+        type: [String], 
         required: true 
     }
   },
