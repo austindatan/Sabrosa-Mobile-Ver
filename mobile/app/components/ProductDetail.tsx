@@ -1,6 +1,15 @@
 //@ts-nocheck
-import React, { useState, useEffect } from "react";
-import { View, Text, Image, ScrollView, TouchableOpacity } from "react-native";
+import React, { useState, useEffect, useRef } from "react";
+import {
+  View,
+  Text,
+  Image,
+  ScrollView,
+  TouchableOpacity,
+  Modal,
+  Pressable,
+  Animated,
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { MotiView } from "moti";
 import { useRouter } from "expo-router";
@@ -33,6 +42,46 @@ const ProductDetail = ({
   const [loading, setLoading] = useState(true);
   const [activeImage, setActiveImage] = useState(heroImage);
 
+  // MODAL STATES
+  const [showModal, setShowModal] = useState(false);
+
+  // Animation refs
+  const scaleAnim = useRef(new Animated.Value(0.8)).current;
+  const opacityAnim = useRef(new Animated.Value(0)).current;
+
+  const openModal = () => {
+    setShowModal(true);
+
+    Animated.parallel([
+      Animated.timing(scaleAnim, {
+        toValue: 1,
+        duration: 250,
+        useNativeDriver: true,
+      }),
+      Animated.timing(opacityAnim, {
+        toValue: 1,
+        duration: 250,
+        useNativeDriver: true,
+      }),
+    ]).start();
+  };
+
+  const closeModal = () => {
+    Animated.parallel([
+      Animated.timing(scaleAnim, {
+        toValue: 0.8,
+        duration: 200,
+        useNativeDriver: true,
+      }),
+      Animated.timing(opacityAnim, {
+        toValue: 0,
+        duration: 200,
+        useNativeDriver: true,
+      }),
+    ]).start(() => setShowModal(false));
+  };
+
+  // Loader timeout
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 800);
     return () => clearTimeout(timer);
@@ -42,31 +91,6 @@ const ProductDetail = ({
     setActiveImage(heroImage);
   }, [heroImage]);
 
-  if (loading) {
-    return (
-      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-        <SkeletonLoader width="100%" height={240} borderRadius={0} />
-        <View style={{ padding: 20 }}>
-          <SkeletonLoader width={50} height={20} style={{ marginBottom: 10 }} />
-          <SkeletonLoader width="70%" height={20} style={{ marginBottom: 10 }} />
-        </View>
-
-        <View style={{ flexDirection: "row", gap: 10, paddingHorizontal: 20 }}>
-          {[1, 2, 3].map((_, i) => (
-            <SkeletonLoader key={i} width={80} height={80} />
-          ))}
-        </View>
-
-        <View style={{ padding: 20 }}>
-          {[1, 2, 3].map((_, i) => (
-            <SkeletonLoader key={i} width="100%" height={16} style={{ marginBottom: 12 }} />
-          ))}
-        </View>
-      </ScrollView>
-    );
-  }
-
-  // ⭐ CORRECTED ADD TO CART
   const addToCart = async () => {
     try {
       const userId = await AsyncStorage.getItem("userId");
@@ -79,8 +103,7 @@ const ProductDetail = ({
       });
 
       console.log("CART RESPONSE:", response.data);
-      console.log("CART ITEMS:", JSON.stringify(response.data.cart.items, null, 2));
-      alert("Added to cart!");
+      openModal();
     } catch (err) {
       console.log("ADD TO CART ERROR:", err.response?.data || err.message);
       alert("Error adding to cart");
@@ -90,8 +113,22 @@ const ProductDetail = ({
   const desc = String(description || "");
   const sentences = desc.split("/,").map(s => s.trim()).filter(Boolean);
 
+  if (loading) {
+    return (
+      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+        <SkeletonLoader width="100%" height={240} borderRadius={0} />
+        <View style={{ padding: 20 }}>
+          <SkeletonLoader width={50} height={20} style={{ marginBottom: 10 }} />
+          <SkeletonLoader width="70%" height={20} style={{ marginBottom: 10 }} />
+        </View>
+      </ScrollView>
+    );
+  }
+
   return (
     <View style={styles.wrapper}>
+
+      {/* MAIN SCROLL */}
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         <View style={styles.heroContainer}>
           <Image source={activeImage} style={styles.heroImage} resizeMode="cover" />
@@ -144,20 +181,16 @@ const ProductDetail = ({
 
         <View style={styles.description}>
           {sentences.map((line, i) => (
-            <Text
-              key={i}
-              style={[
-                styles.text,
-                i > 0 ? { marginTop: 5 } : null  // spacing between sentences
-              ]}
-            >
+            <Text key={i} style={[styles.text, i > 0 ? { marginTop: 5 } : null]}>
               {line}
             </Text>
           ))}
         </View>
+
         <View style={{ height: 50 }} />
       </ScrollView>
 
+      {/* FOOTER ADD TO CART */}
       <View style={styles.footer}>
         <View style={styles.quantityContainer}>
           <TouchableOpacity
@@ -179,8 +212,115 @@ const ProductDetail = ({
           <Text style={styles.cartText}>Add to Cart</Text>
         </TouchableOpacity>
       </View>
+
+      {/* MODAL */}
+      <Modal transparent visible={showModal} animationType="fade">
+        <View style={modalStyles.overlay}>
+          <Animated.View
+            style={[
+              modalStyles.modalContainer,
+              {
+                transform: [{ scale: scaleAnim }],
+                opacity: opacityAnim,
+              },
+            ]}
+          >
+            <Ionicons name="checkmark-circle" size={60} color="#FF6C9B" />
+
+            <Text style={modalStyles.modalTitle}>Added to Cart!</Text>
+            <Text style={modalStyles.modalSubtitle}>{productName} has been added.</Text>
+
+            {/* ⬇️⬇️⬇️ ADDED BUTTONS BELOW — NOTHING ELSE CHANGED */}
+
+            <View style={modalStyles.buttonRow}>
+              <Pressable style={modalStyles.closeButton} onPress={closeModal}>
+                <Text style={modalStyles.closeText}>Close</Text>
+              </Pressable>
+
+              <Pressable
+                style={modalStyles.cartButton}
+                onPress={() => router.push("/(tabs)/Cart")}
+              >
+                <Text style={modalStyles.cartText}>Go to Cart</Text>
+              </Pressable>
+            </View>
+
+            {/* ⬆️⬆️⬆️ ONLY THIS WAS ADDED */}
+
+          </Animated.View>
+        </View>
+      </Modal>
+
     </View>
   );
 };
 
 export default ProductDetail;
+
+/* ===========================
+   INLINE MODAL STYLES
+=========================== */
+const modalStyles = {
+  overlay: {
+    flex: 1,
+    backgroundColor: "rgba(0,0,0,0.4)",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  modalContainer: {
+    width: 280,
+    padding: 20,
+    backgroundColor: "#fff",
+    borderRadius: 14,
+    alignItems: "center",
+    elevation: 10,
+  },
+
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: "700",
+    marginTop: 12,
+    color: "#964E1E",
+  },
+
+  modalSubtitle: {
+    fontSize: 13,
+    color: "#555",
+    textAlign: "center",
+    marginTop: 5,
+  },
+
+  closeButton: {
+    backgroundColor: "#FF6C9B",
+    paddingVertical: 10,
+    paddingHorizontal: 25,
+    borderRadius: 8,
+  },
+
+  closeText: {
+    color: "#fff",
+    fontWeight: "600",
+    fontSize: 14,
+  },
+
+  /* ⬇️ NEWLY ADDED STYLES (NOTHING ELSE TOUCHED) */
+  buttonRow: {
+    flexDirection: "row",
+    gap: 10,
+    marginTop: 20,
+  },
+
+  cartButton: {
+    backgroundColor: "#964E1E",
+    paddingVertical: 10,
+    paddingHorizontal: 25,
+    borderRadius: 8,
+  },
+
+  cartText: {
+    color: "#fff",
+    fontWeight: "600",
+    fontSize: 14,
+  },
+};
