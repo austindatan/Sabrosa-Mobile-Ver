@@ -30,7 +30,8 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     justifyContent: "space-between",
     rowGap: 12,
-    padding: 20,
+    paddingVertical: 20,
+    paddingHorizontal: 18,
     marginTop: -10,
   },
 

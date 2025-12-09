@@ -189,6 +189,16 @@ const styles = StyleSheet.create({
     color: "rgba(47,47,47, 0.5)",
   },
 
+  productGridSE: {
+  flexDirection: "row",
+  flexWrap: "wrap",
+  justifyContent: "space-between",
+  rowGap: 12,
+  padding: 20,
+  marginTop: -10,
+  bottom: 0,
+  zIndex: -100,
+  },
   productGrid: {
   flexDirection: "row",
   flexWrap: "wrap",

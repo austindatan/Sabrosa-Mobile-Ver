@@ -1,6 +1,6 @@
 //@ts-nocheck
 import React, { useState, useEffect } from "react";
-import { View, Text, Image, TouchableOpacity, ActivityIndicator } from "react-native";
+import { View, Text, Image, TouchableOpacity, ActivityIndicator, FlatList } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import styles from "../styles/UserProfile";
 import { useRouter } from "expo-router";
@@ -15,31 +15,34 @@ export default function ProfileScreen() {
   const tabs = ["  Orders  ", "History", "Favorites"];
 
   const [user, setUser] = useState(null);
+  const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // ------------------------------
-  // 🔥 FETCH CURRENT USER
-  // ------------------------------
   useEffect(() => {
-    const loadUser = async () => {
+    const loadData = async () => {
       try {
         const userId = await AsyncStorage.getItem("userId");
 
         if (!userId) {
           console.log("No user found in storage.");
+          setLoading(false);
           return;
         }
 
-        const res = await axios.get(`${config.API_BASE_URL}/api/auth/users/${userId}`);
-        setUser(res.data);
+        const userRes = await axios.get(`${config.API_BASE_URL}/api/auth/users/${userId}`);
+        setUser(userRes.data);
+
+        const orderRes = await axios.get(`${config.API_BASE_URL}/api/order/user/${userId}`);
+        setOrders(orderRes.data);
+
       } catch (err) {
-        console.log("Error loading user:", err);
+        console.log("Error loading data:", err);
       } finally {
         setLoading(false);
       }
     };
 
-    loadUser();
+    loadData();
   }, []);
 
   if (loading) {
@@ -81,19 +84,14 @@ export default function ProfileScreen() {
         />
       </View>
 
-      {/* 🔥 REAL USER NAME */}
       <Text style={styles.name}>
         {user?.firstName} {user?.lastName}
       </Text>
 
-      {/* 🔥 OPTIONAL EMAIL BELOW IF YOU WANT */}
       <Text style={[styles.emailname, { fontSize: 13, marginTop: 0, opacity: 0.6, color: "#424242a1"}]}>
         {user?.email}
       </Text>
 
-      {/* ------------------------------ */}
-      {/*             TABS              */}
-      {/* ------------------------------ */}
       <View style={styles.tabRow}>
         {tabs.map((t) => (
           <TouchableOpacity key={t} onPress={() => setActiveTab(t)}>
@@ -107,26 +105,25 @@ export default function ProfileScreen() {
         ))}
       </View>
 
-      {/* ------------------------------ */}
-      {/*              ORDERS            */}
-      {/* (YOU SAID: KEEP THIS UNTOUCHED) */}
-      {/* ------------------------------ */}
       {activeTab === "  Orders  " && (
-        <View style={styles.content}>
-          <OrderHistoryCard
-            item={{
-              name: "Tropical Mango",
-              price: 195,
-              quantity: 2,
-              image: require("../../assets/images/initialization_assets/food/product1.png"),
-
-              date: "Jan 20, 2025",
-              status: "Delivered",
-              brandImage: require("../../assets/images/initialization_assets/logo/byronbay_logo.png"),
-            }}
-            onPress={() => console.log("Open order details")}
+          <FlatList
+              data={orders}
+              keyExtractor={(item) => item._id}
+              renderItem={({ item }) => (
+                  <OrderHistoryCard
+                      item={{
+                          ...item,
+                          totalQuantity: item.items.reduce(
+                              (acc, current) => acc + current.quantity,
+                              0
+                          ),
+                          date: new Date(item.createdAt).toLocaleDateString(),
+                      }}
+                      onPress={() => console.log("Open order details for:", item._id)}
+                  />
+              )}
+              contentContainerStyle={styles.content}
           />
-        </View>
       )}
     </View>
   );

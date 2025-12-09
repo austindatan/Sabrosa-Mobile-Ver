@@ -25,9 +25,12 @@ const Cart = () => {
 
       const res = await axios.get(`${config.API_BASE_URL}/api/cart/${userId}`);
       const addedItems = res.data.items.filter((i) => i.status === "Added");
+      console.log("CART RESPONSE:", JSON.stringify(res.data, null, 2));
       setCartItems(addedItems);
     } catch (err) {
       console.log("LOAD CART ERROR:", err.response?.data || err.message);
+      console.log("CART RESPONSE:", JSON.stringify(res.data, null, 2));
+
     } finally {
       setLoading(false);
     }

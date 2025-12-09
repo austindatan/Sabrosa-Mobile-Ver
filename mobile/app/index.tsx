@@ -1,33 +1,66 @@
 import { StyleSheet, Text, View, Image, ImageBackground, TouchableOpacity} from "react-native";
-import React from "react";
+import React, { useEffect } from "react"; // 🚨 Import useEffect
 import { useRouter } from "expo-router";
-
-const router = useRouter();
+import * as SecureStore from "expo-secure-store";
 
 const Index = () => {
-  return (
-    <ImageBackground
-      source={require("../assets/images/initialization_assets/onboarding_illus.png")}
-      style={[styles.background, { width: 400, height: 550, alignSelf: "center"}]}
-      resizeMode="cover"
-    >
-      <View style={styles.container}>
-        <Image source={require("../assets/images/initialization_assets/linear_gra.png")} style={styles.lineargra} />
+    // 🚨 FIX 1: Move router initialization inside the component
+    const router = useRouter(); 
 
-        <View style={styles.introBase}>
-          <Image source={require("../assets/images/initialization_assets/sabrosa_logo.png")} style={styles.logo} />
-          <Text style={styles.titleBase}>Taste the sweetness!</Text>
-          <Text style={styles.subtitleBase}>A flavor that will make you feel {"\n"}nostalgia and home</Text>
-          
-          <TouchableOpacity style={[styles.btnBase, { backgroundColor: "#1F27A6", borderColor: "#1F27A6", marginBottom: 8 }]} onPress={() => router.push("/login")}>
-            <Text style={[styles.btnText, { color: "#fff" }]}>Get Started!</Text>
-          </TouchableOpacity>
-        </View>
-        
-      </View>
+    // ------------------------------------
+    // 🚨 FIX 2: Add useEffect for Auth Check
+    // ------------------------------------
+    useEffect(() => {
+        const checkAuthStatus = async () => {
+            try {
+                // Check if a token exists in secure storage
+                const token = await SecureStore.getItemAsync("token");
+                
+                // If a token exists, the user is logged in.
+                if (token) {
+                    console.log("User logged in. Redirecting to Home.");
+                    // Use replace to prevent the user from navigating back to the index/splash screen
+                    router.replace("/(tabs)/Home"); 
+                }
+                // If no token exists, do nothing, allowing the splash screen to display.
 
-    </ImageBackground>
-  );
+            } catch (error) {
+                console.error("Error checking auth status:", error);
+                // Even on error, we assume no token and allow normal flow
+            }
+        };
+
+        checkAuthStatus();
+    }, []); // Empty dependency array ensures this runs only once on mount
+    // ------------------------------------
+
+
+    return (
+        <ImageBackground
+            source={require("../assets/images/initialization_assets/onboarding_illus.png")}
+            style={[styles.background, { width: 400, height: 550, alignSelf: "center"}]}
+            resizeMode="cover"
+        >
+            <View style={styles.container}>
+                <Image source={require("../assets/images/initialization_assets/linear_gra.png")} style={styles.lineargra} />
+
+                <View style={styles.introBase}>
+                    <Image source={require("../assets/images/initialization_assets/sabrosa_logo.png")} style={styles.logo} />
+                    <Text style={styles.titleBase}>Taste the sweetness!</Text>
+                    <Text style={styles.subtitleBase}>A flavor that will make you feel {"\n"}nostalgia and home</Text>
+                    
+                    <TouchableOpacity 
+                        style={[styles.btnBase, { backgroundColor: "#1F27A6", borderColor: "#1F27A6", marginBottom: 8 }]} 
+                        onPress={() => router.push("/login")}
+                    >
+                        <Text style={[styles.btnText, { color: "#fff" }]}>Get Started!</Text>
+                    </TouchableOpacity>
+                </View>
+                
+            </View>
+
+        </ImageBackground>
+    );
 };
 
 const styles = StyleSheet.create({

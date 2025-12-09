@@ -72,7 +72,7 @@ const ProductCard = ({
               style={styles.brandImage}
               resizeMode="contain"
             />
-            <Text style={styles.productName}>{productName}</Text>
+            <Text style={styles.productName} numberOfLines={2} ellipsizeMode="tail">{productName}</Text>
           </View>
 
           <View style={styles.priceTag}>

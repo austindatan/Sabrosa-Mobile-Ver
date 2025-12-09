@@ -1,86 +1,64 @@
 // @ts-nocheck
-import React, { useState, useEffect } from "react";
-import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
-import { MotiView } from "moti";
-import styles from "../styles/Card_OrderHistory";
+import React from "react";
+import { View, Text, Image, TouchableOpacity, FlatList } from "react-native";
+import { MotiView } from "moti"; 
+import styles from "../styles/Card_OrderHistory"; 
 
-const SkeletonLoader = ({
-  width = "100%",
-  height = 20,
-  borderRadius = 8,
-  style,
-}) => {
-  return (
-    <MotiView
-      from={{ backgroundColor: "#ddddddff" }}
-      animate={{ backgroundColor: "#e7edf1ff" }}
-      transition={{
-        type: "timing",
-        duration: 1800,
-        loop: true,
-        repeatReverse: true,
-      }}
-      style={[{ width, height, borderRadius }, style]}
+const OrderItemRow = ({ item }) => (
+  <View style={styles.itemRow}>
+    <Image 
+      source={{ uri: item.product.productImages[0] }} 
+      style={styles.itemImage} 
     />
-  );
-};
+    <View style={styles.itemDetails}>
+      <Text style={styles.itemName} numberOfLines={1} ellipsisMode="tail"> 
+        {item.name}
+      </Text>
+      <Text style={styles.itemQuantity}>
+        Qty: {item.quantity} x ₱{item.price.toFixed(2)}
+      </Text>
+    </View>
+    <Text style={styles.itemTotal}>
+      ₱{(item.price * item.quantity).toFixed(2)}
+    </Text>
+  </View>
+);
 
 const OrderHistoryCard = ({ item, onPress }) => {
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 600);
-    return () => clearTimeout(timer);
-  }, []);
-
-  if (loading) {
-    return (
-      <View style={styles.container}>
-        <SkeletonLoader width={70} height={70} borderRadius={10} />
-
-        <View style={styles.detailsContainer}>
-          <SkeletonLoader width="60%" height={18} style={{ marginBottom: 8 }} />
-          <SkeletonLoader width="40%" height={15} style={{ marginBottom: 8 }} />
-          <SkeletonLoader width="30%" height={14} />
-        </View>
-      </View>
-    );
-  }
-
   return (
     <TouchableOpacity
       style={styles.container}
       activeOpacity={0.7}
       onPress={onPress}
     >
-      <Image source={item.image} style={styles.image} />
-
-      <View style={styles.detailsContainer}>
-        <View style={styles.row}>
-          <View>
-            {item.brandImage && (
-              <Image
-                source={item.brandImage}
-                style={styles.brandImage}
-                resizeMode="contain"
-              />
-            )}
-
-            <Text style={styles.name}>{item.name}</Text>
-
-            {/* Date */}
-            {item.date && <Text style={styles.date}>{item.date}</Text>}
-          </View>
-          
-          <View>
-            <View style={[styles.statusBadge, getStatusColor(item.status)]}>
-              <Text style={styles.statusText}>{item.status}</Text>
-            </View>
-
-            {/* Price */}
-            <Text style={styles.price}>₱{item.price}</Text>
-          </View>
+      <View style={styles.headerRow}>
+        <View style={[styles.statusBadge, getStatusColor(item.status)]}>
+          <Text style={styles.statusText}>{item.status}</Text>
         </View>
+        <Text style={styles.dateText}>
+          Ordered on: {item.date}
+        </Text>
+      </View>
+
+      <View style={styles.itemsListContainer}>
+        {item.items.map((orderItem) => (
+          <OrderItemRow key={orderItem.product._id} item={orderItem} />
+        ))}
+      </View>
+
+      <View style={styles.summaryRow}>
+        <Text style={styles.summaryText}>Items ({item.totalQuantity}) Subtotal:</Text>
+        <Text style={styles.summaryValue}>₱{item.subtotal.toFixed(2)}</Text>
+      </View>
+
+      <View style={styles.summaryRow}>
+        <Text style={styles.summaryText}>Delivery Fee:</Text>
+        <Text style={styles.summaryValue}>₱{item.deliveryFee.toFixed(2)}</Text>
+      </View>
+
+      <View style={styles.totalRow}>
+        <Text style={styles.totalText}>Order Total:</Text>
+        <Text style={styles.totalValue}>₱{item.total.toFixed(2)}</Text>
       </View>
     </TouchableOpacity>
   );

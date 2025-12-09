@@ -40,6 +40,23 @@ const seedProducts = [
       " ",
     ],
   },
+  {
+    productName: "Barbie Peaches & Cream",
+    productImages: [
+      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765197053/BARBIE_Peaches_Cream_Soda_l7kcue.png",
+      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765197083/BarbiePeachesAndCream3_xt9ml0.png",
+      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765197083/BarbiePeachesAndCream2_kolmqu.png"
+    ],
+    brandName: "Olipop",
+    brandImage: "https://res.cloudinary.com/dldwg8flq/image/upload/v1765197113/olipop_black_j5vpqj.png",
+    price: 175,
+    description: [
+      "Embrace the sweetness of Barbie Peaches and Cream — a dreamy chocolate bar inspired by classic nostalgia and modern glamour. /",
+      "Blended with creamy white chocolate, juicy peach flavor, and a touch of sparkle for that signature Barbie magic. /",
+      "Pretty, playful, and irresistibly smooth — a treat as iconic as Barbie herself! /", 
+      " ",
+    ],
+  },
 ];
 
 const seed = async () => {

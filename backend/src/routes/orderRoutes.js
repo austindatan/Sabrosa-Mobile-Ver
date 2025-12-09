@@ -8,6 +8,18 @@ import PaymentMethod from "../models/PaymentMethod.js"; // Existing Payment Meth
 
 const router = express.Router();
 
+// Get all orders for a specific user
+router.get("/user/:userId", async (req, res) => {
+  try {
+    const orders = await Order.find({ user: req.params.userId }).populate(
+      "items.product"
+    );
+    res.json(orders);
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
 router.post("/place", async (req, res) => {
     try {
         const { userId, selectedPayment, total, subtotal, deliveryFee, tax, items } = req.body;

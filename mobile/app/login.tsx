@@ -1,8 +1,9 @@
 import { StyleSheet, Text, View, Image, ImageBackground, TouchableOpacity, TextInput, Alert } from "react-native";
 import React, { useState } from "react";
 import { useRouter } from "expo-router";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as SecureStore from "expo-secure-store";
 import config from "../config";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Login = () => {
   const router = useRouter();
@@ -33,7 +34,7 @@ const Login = () => {
       }
 
       // store data
-      await AsyncStorage.setItem("token", data.token);
+      await SecureStore.setItemAsync("token", data.token);
       await AsyncStorage.setItem("userId", data.user.id);
 
       // go to tabs
