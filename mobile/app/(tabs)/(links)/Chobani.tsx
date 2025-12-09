@@ -9,6 +9,7 @@ import AnimatedHeader from "../../components/BrandsHeader";
 import useHomeHeaderAnimation from "../../../hooks/HeaderAnimation";
 import useHideOnScroll from "../../../hooks/useHideOnScroll";
 import { useBackToCookie } from "../../../hooks/BacktoCookie";
+import config from "../../../config";
 
 const Chobani = () => {
   useBackToCookie();
@@ -35,6 +36,15 @@ const Chobani = () => {
       useNativeDriver: true,
     }).start();
   }, [visible]);
+
+  const [products, setProducts] = React.useState([]);
+
+  React.useEffect(() => {
+    fetch(`${config.API_BASE_URL}/api/products/brand/Chobani`)
+      .then(res => res.json())
+      .then(data => setProducts(data))
+      .catch(e => console.log(e));
+  }, []);
 
   return (
     <View style={{ flex: 1, backgroundColor: "#fff" }}>
@@ -73,22 +83,18 @@ const Chobani = () => {
         </View>
 
         <View style={styles.productGrid}>
-          <ProductCard
-            productName="Tropical Mango & Passionfruit"
-            price="₱195"
-            productImage={require("../../../assets/images/initialization_assets/food/product1.png")}
-            brandImage={require("../../../assets/images/initialization_assets/logo/byronbay_logo.png")}
-            onPress={() => router.push("/products/TropicalMango")}
-          />
-          
-          <ProductCard
-            productName="Blueberry Muffin Cookie"
-            price="₱195"
-            productImage={require("../../../assets/images/initialization_assets/product/BlueberryMuffinCookie2.png")}
-            brandImage={require("../../../assets/images/initialization_assets/logo/byronbay_logo.png")}
-            onPress={() => router.push("/products/BlueberryMuffinCookie")}
-          />
+          {products.map((p) => (
+            <ProductCard
+              key={p._id}
+              productName={p.productName}
+              price={`₱${p.price}`}
+              productImage={{ uri: p.productImages[0] }}
+              brandImage={{ uri: p.brandImage }}
+              onPress={() => router.push(`/products/${p._id}`)}
+            />
+          ))}
         </View>
+
       </Animated.ScrollView>
 
     </View>

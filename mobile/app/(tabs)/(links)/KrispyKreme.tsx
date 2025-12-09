@@ -9,6 +9,7 @@ import AnimatedHeader from "../../components/BrandsHeader";
 import useHomeHeaderAnimation from "../../../hooks/HeaderAnimation";
 import useHideOnScroll from "../../../hooks/useHideOnScroll";
 import { useBackToCookie } from "../../../hooks/BacktoCookie";
+import config from "../../../config";
 
 const KrispyKreme = () => {
   useBackToCookie();
@@ -35,6 +36,15 @@ const KrispyKreme = () => {
       useNativeDriver: true,
     }).start();
   }, [visible]);
+
+  const [products, setProducts] = React.useState([]);
+
+  React.useEffect(() => {
+    fetch(`${config.API_BASE_URL}/api/products/brand/KrispyKreme`)
+      .then(res => res.json())
+      .then(data => setProducts(data))
+      .catch(e => console.log(e));
+  }, []);
 
   return (
     <View style={{ flex: 1, backgroundColor: "#fff" }}>
@@ -73,55 +83,18 @@ const KrispyKreme = () => {
         </View>
 
         <View style={styles.productGrid}>
-          <ProductCard
-            productName="Premium Biscoff Latte"
-            price="₱215"
-            productImage={require("../../../assets/images/initialization_assets/food/BiscoffLatte.jpg")}
-            brandImage={require("../../../assets/images/initialization_assets/light/krispy.png")}
-            onPress={() => router.push("/products/BiscoffLatte")}
-          />
-
-          <ProductCard
-            productName="Original Glazed Donut"
-            price="₱415"
-            productImage={require("../../../assets/images/initialization_assets/food/GlazedDonut.png")}
-            brandImage={require("../../../assets/images/initialization_assets/light/krispy.png")}
-            onPress={() => router.push("/products/GlazedDonut")}
-          />
-
-          <ProductCard
-            productName="Signature Brewed Coffee"
-            price="₱415"
-            productImage={require("../../../assets/images/initialization_assets/food/SignatureBrewedCoffee.jpg")}
-            brandImage={require("../../../assets/images/initialization_assets/light/krispy.png")}
-            onPress={() => router.push("/products/SignatureBrewedCoffee")}
-          />
-
-          <ProductCard
-            productName="Signature Mocha"
-            price="₱415"
-            productImage={require("../../../assets/images/initialization_assets/food/SignatureMocha.jpg")}
-            brandImage={require("../../../assets/images/initialization_assets/light/krispy.png")}
-            onPress={() => router.push("/products/SignatureMocha")}
-          />
-
-          <ProductCard
-            productName="Original Lemonade"
-            price="₱415"
-            productImage={require("../../../assets/images/initialization_assets/food/OriginalLemonade.jpg")}
-            brandImage={require("../../../assets/images/initialization_assets/light/krispy.png")}
-            onPress={() => router.push("/products/Lemonade")}
-          />
-
-          <ProductCard
-            productName="OG Churro Donut"
-            price="₱440"
-            productImage={require("../../../assets/images/initialization_assets/food/ChurroDonut.png")}
-            brandImage={require("../../../assets/images/initialization_assets/light/krispy.png")}
-            onPress={() => router.push("/products/ChurroDonut")}
-          />
-          
+          {products.map((p) => (
+            <ProductCard
+              key={p._id}
+              productName={p.productName}
+              price={`₱${p.price}`}
+              productImage={{ uri: p.productImages[0] }}
+              brandImage={{ uri: p.brandImage }}
+              onPress={() => router.push(`/products/${p._id}`)}
+            />
+          ))}
         </View>
+
       </Animated.ScrollView>
 
     </View>
