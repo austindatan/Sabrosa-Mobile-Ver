@@ -21,9 +21,7 @@ const User_Settings = () => {
 
         if (token && userId) {
           const response = await fetch(`${config.API_BASE_URL}/api/auth/users/${userId}`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
+            headers: { Authorization: `Bearer ${token}` },
           });
 
           if (response.ok) {
@@ -31,8 +29,7 @@ const User_Settings = () => {
             setUser(userData);
           } else {
             console.error("Failed to fetch user data");
-            // maybe the token is expired, so we log out
-            handleLogout();
+            handleLogout(); // maybe the token is expired
           }
         }
       } catch (error) {
@@ -55,6 +52,7 @@ const User_Settings = () => {
 
   return (
     <ScrollView style={styles.container}>
+      {/* Header */}
       <ImageBackground
         source={require("../../assets/images/initialization_assets/new.png")}
         style={styles.headerBackground}
@@ -69,6 +67,7 @@ const User_Settings = () => {
       </ImageBackground>
 
       <View style={styles.body}>
+        {/* Personal Info */}
         <View style={styles.card}>
           <Text style={styles.cardTitle}>Personal Info</Text>
           <View style={styles.infoRow}>
@@ -85,6 +84,7 @@ const User_Settings = () => {
           </View>
         </View>
 
+        {/* Contact Info */}
         <View style={styles.card}>
           <Text style={styles.cardTitle}>Contact Info</Text>
           <View style={styles.infoRow}>
@@ -97,7 +97,7 @@ const User_Settings = () => {
           </View>
         </View>
 
-        {/* ✅ EDIT PROFILE BUTTON WITH ROUTER ADDED */}
+        {/* Edit Profile Button */}
         <TouchableOpacity
           style={styles.editProfileButton}
           onPress={() => router.push("products/Edit_Profile")}
@@ -105,16 +105,25 @@ const User_Settings = () => {
           <Text style={styles.editProfileText}>Edit Profile</Text>
         </TouchableOpacity>
 
+        {/* Settings */}
         <View style={styles.card}>
           <Text style={styles.cardTitle}>Settings</Text>
 
-          <TouchableOpacity style={styles.settingRow}>
+          <TouchableOpacity
+            style={styles.settingRow}
+            activeOpacity={0.7}
+            onPress={() => router.push("products/Account_Settings")}
+          >
             <Ionicons name="person-outline" size={22} color="#FF6C9B" />
             <Text style={styles.settingLabel}>Account Settings</Text>
             <Ionicons name="chevron-forward" size={20} color="#999" />
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.settingRow}>
+          <TouchableOpacity
+            style={styles.settingRow}
+            activeOpacity={0.7}
+            onPress={() => router.push("products/Privacy")}
+          >
             <Ionicons name="lock-closed-outline" size={22} color="#FF6C9B" />
             <Text style={styles.settingLabel}>Privacy</Text>
             <Ionicons name="chevron-forward" size={20} color="#999" />
@@ -131,13 +140,21 @@ const User_Settings = () => {
             />
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.settingRow}>
+          <TouchableOpacity
+            style={styles.settingRow}
+            activeOpacity={0.7}
+            onPress={() => router.push("products/Help_Center")}
+          >
             <Ionicons name="help-circle-outline" size={22} color="#FF6C9B" />
             <Text style={styles.settingLabel}>Help Center</Text>
             <Ionicons name="chevron-forward" size={20} color="#999" />
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.settingRow}>
+          <TouchableOpacity
+            style={styles.settingRow}
+            activeOpacity={0.7}
+            onPress={() => router.push("products/Terms_Policies")}
+          >
             <Ionicons name="document-text-outline" size={22} color="#FF6C9B" />
             <Text style={styles.settingLabel}>Terms & Policies</Text>
             <Ionicons name="chevron-forward" size={20} color="#999" />
