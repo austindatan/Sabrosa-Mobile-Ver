@@ -97,7 +97,11 @@ const User_Settings = () => {
           </View>
         </View>
 
-        <TouchableOpacity style={styles.editProfileButton}>
+        {/* ✅ EDIT PROFILE BUTTON WITH ROUTER ADDED */}
+        <TouchableOpacity
+          style={styles.editProfileButton}
+          onPress={() => router.push("products/Edit_Profile")}
+        >
           <Text style={styles.editProfileText}>Edit Profile</Text>
         </TouchableOpacity>
 
@@ -151,8 +155,6 @@ const User_Settings = () => {
             <Text style={[styles.settingLabel, { color: "#FF6C9B" }]}>Log out</Text>
           </TouchableOpacity>
         </View>
-
-
       </View>
     </ScrollView>
   );

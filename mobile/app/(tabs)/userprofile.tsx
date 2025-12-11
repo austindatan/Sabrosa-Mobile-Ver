@@ -1,5 +1,5 @@
 //@ts-nocheck
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { View, Text, Image, TouchableOpacity, ActivityIndicator, FlatList } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import styles from "../styles/UserProfile";
@@ -8,6 +8,7 @@ import OrderHistoryCard from "../components/OrderCard";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import config from "../../config";
+import { useFocusEffect } from "@react-navigation/native";
 
 export default function ProfileScreen() {
   const router = useRouter();
@@ -18,32 +19,36 @@ export default function ProfileScreen() {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const loadData = async () => {
-      try {
-        const userId = await AsyncStorage.getItem("userId");
+  // ✅ Dynamic reload when screen comes into focus
+  useFocusEffect(
+    useCallback(() => {
+      const loadData = async () => {
+        setLoading(true);
+        try {
+          const userId = await AsyncStorage.getItem("userId");
 
-        if (!userId) {
-          console.log("No user found in storage.");
+          if (!userId) {
+            console.log("No user found in storage.");
+            setLoading(false);
+            return;
+          }
+
+          const userRes = await axios.get(`${config.API_BASE_URL}/api/auth/users/${userId}`);
+          setUser(userRes.data);
+
+          const orderRes = await axios.get(`${config.API_BASE_URL}/api/order/user/${userId}`);
+          setOrders(orderRes.data);
+
+        } catch (err) {
+          console.log("Error loading data:", err);
+        } finally {
           setLoading(false);
-          return;
         }
+      };
 
-        const userRes = await axios.get(`${config.API_BASE_URL}/api/auth/users/${userId}`);
-        setUser(userRes.data);
-
-        const orderRes = await axios.get(`${config.API_BASE_URL}/api/order/user/${userId}`);
-        setOrders(orderRes.data);
-
-      } catch (err) {
-        console.log("Error loading data:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadData();
-  }, []);
+      loadData();
+    }, [])
+  );
 
   if (loading) {
     return (
