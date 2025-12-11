@@ -40,7 +40,7 @@ const Teaforte = () => {
   const [products, setProducts] = React.useState([]);
 
   React.useEffect(() => {
-    fetch(`${config.API_BASE_URL}/api/products/brand/Teaforte`)
+    fetch(`${config.API_BASE_URL}/api/products/brand/TeaForte`)
       .then(res => res.json())
       .then(data => setProducts(data))
       .catch(e => console.log(e));
@@ -63,7 +63,6 @@ const Teaforte = () => {
       <Animated.ScrollView
         contentContainerStyle={{
           paddingTop: HEADER_MAX + 20,
-          paddingBottom: tabBarHeight + 70,
         }}
         showsVerticalScrollIndicator={false}
         scrollEventThrottle={16}

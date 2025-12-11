@@ -4,7 +4,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon src/index.js"
+    "dev": "nodemon src/index.js",
+    "rebuild-indexes": "node src/scripts/rebuildIndexes.js"
   },
   "keywords": [],
   "author": "",

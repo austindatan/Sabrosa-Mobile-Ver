@@ -25,15 +25,15 @@ const OrderSchema = new mongoose.Schema({
     },
     // Captures payment details
     paymentMethod: {
-        type: { type: String, required: true }, 
-        details: { type: String, default: null }, 
+        type: { type: String, required: true },
+        details: { type: String, default: null },
     },
     // Financials
     subtotal: { type: Number, required: true },
     deliveryFee: { type: Number, required: true },
     tax: { type: Number, required: true },
     total: { type: Number, required: true },
-    
+
     status: {
         type: String,
         enum: ['Pending', 'Confirmed', 'Shipping', 'Delivered', 'Cancelled'],
@@ -41,5 +41,8 @@ const OrderSchema = new mongoose.Schema({
     },
     createdAt: { type: Date, default: Date.now },
 });
+
+// Add compound index for efficient querying by user and sorting by createdAt
+OrderSchema.index({ user: 1, createdAt: -1 });
 
 export default mongoose.model('Order', OrderSchema);

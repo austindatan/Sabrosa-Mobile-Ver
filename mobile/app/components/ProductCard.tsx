@@ -5,7 +5,7 @@ import { MotiView } from "moti";
 import styles from "../styles/Card_ProductCard";
 
 const SkeletonLoader = ({
-  width = "50%",
+  width = 157,
   height = 180,
   borderRadius = 8,
   style,
@@ -66,7 +66,7 @@ const ProductCard = ({
         />
 
         <View style={styles.productInfoRow}>
-          <View>
+          <View style={styles.productColumn}>
             <Image
               source={brandImage}
               style={styles.brandImage}
