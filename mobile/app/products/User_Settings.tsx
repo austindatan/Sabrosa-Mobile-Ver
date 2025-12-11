@@ -1,44 +1,49 @@
 // @ts-nocheck
-import React, { useState, useEffect } from "react";
+import React, { useState, useCallback } from "react";
 import { View, Text, ScrollView, TouchableOpacity, Switch, Image, ImageBackground, Alert } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
+import { useFocusEffect } from "@react-navigation/native";
 import styles from "../styles/UserSettings";
 import * as SecureStore from "expo-secure-store";
-import config from "../../config";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import config from "../../config";
 
 const User_Settings = () => {
   const router = useRouter();
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
   const [user, setUser] = useState(null);
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const token = await SecureStore.getItemAsync("token");
-        const userId = await AsyncStorage.getItem("userId");
+  // Fetch user data function
+  const fetchUserData = async () => {
+    try {
+      const token = await SecureStore.getItemAsync("token");
+      const userId = await AsyncStorage.getItem("userId");
 
-        if (token && userId) {
-          const response = await fetch(`${config.API_BASE_URL}/api/auth/users/${userId}`, {
-            headers: { Authorization: `Bearer ${token}` },
-          });
+      if (token && userId) {
+        const response = await fetch(`${config.API_BASE_URL}/api/auth/users/${userId}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
 
-          if (response.ok) {
-            const userData = await response.json();
-            setUser(userData);
-          } else {
-            console.error("Failed to fetch user data");
-            handleLogout(); // maybe the token is expired
-          }
+        if (response.ok) {
+          const userData = await response.json();
+          setUser(userData);
+        } else {
+          console.error("Failed to fetch user data");
+          handleLogout(); // maybe token expired
         }
-      } catch (error) {
-        console.error("Error fetching user data:", error);
       }
-    };
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  };
 
-    fetchUserData();
-  }, []);
+  // Refresh on screen focus
+  useFocusEffect(
+    useCallback(() => {
+      fetchUserData();
+    }, [])
+  );
 
   const handleLogout = async () => {
     try {
