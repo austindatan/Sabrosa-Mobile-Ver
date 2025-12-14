@@ -32,9 +32,7 @@ const AccountSettings = () => {
   return (
     <ScrollView
       style={styles.container}
-      contentContainerStyle={{ paddingBottom: 30 }}
     >
-      {/* Header with smaller full-width background and curved bottom */}
       <View style={headerStyles.curvedContainer}>
         <ImageBackground
           source={require("../../assets/images/initialization_assets/new.png")}
@@ -140,7 +138,7 @@ const AccountSettings = () => {
         </View>
 
         <View style={{ marginTop: 30 }}>
-          <Text style={{ textAlign: "center", color: "#999", fontSize: 12 }}>
+          <Text style={{ textAlign: "center", color: "#999", fontSize: 12, fontFamily: "DMSans-Regular" }}>
             Manage your account settings and preferences here. You can edit
             your profile, secure your account, control notifications, or
             deactivate it if necessary.
@@ -160,14 +158,14 @@ const headerStyles = StyleSheet.create({
   },
   background: {
     width: "100%",
-    height: 130, // slightly taller for description
+    height: 130,
     justifyContent: "center",
     alignItems: "center",
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight + 25 : 25,
   },
   title: {
-    fontSize: 22, // smaller font
-    fontWeight: "bold",
+    fontSize: 22,
+    fontFamily: "DMSans-Bold",
     color: "#fff",
     textAlign: "center",
   },
@@ -177,6 +175,7 @@ const headerStyles = StyleSheet.create({
     marginTop: 1,
     textAlign: "center",
     marginBottom: 30,
+    fontFamily: "DMSans-Regular",
   },
 });
 

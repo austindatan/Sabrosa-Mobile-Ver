@@ -1,18 +1,53 @@
 // @ts-nocheck
 import React, { useRef, useState, useEffect } from "react";
-import { View, Animated, ScrollView, ImageBackground, Text, TouchableOpacity } from "react-native";
+import { View, Animated, ScrollView, ImageBackground, Text, TouchableOpacity, ActivityIndicator } from "react-native";
 import Header from "../components/HomeHeader";
 import ProductCard from "../components/ProductCard";
 import { useRouter } from "expo-router";
 import styles from "../styles/AppEffects";
-import useHideOnScroll from "../../hooks/useHideOnScroll"; 
+import useHideOnScroll from "../../hooks/useHideOnScroll";
+import { useFocusEffect } from "@react-navigation/native";
+import axios from "axios";
+import config from "../../config";
 
 const Home = () => {
   const scrollY = useRef(new Animated.Value(0)).current;
   const router = useRouter();
-  
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
   // Get the scroll handler from the hook
   const { handleScroll } = useHideOnScroll();
+
+  const fetchRandomProducts = async () => {
+    try {
+      setLoading(true);
+      const res = await axios.get(`${config.API_BASE_URL}/api/products`);
+      const allProducts = res.data.products || res.data;
+
+      // Shuffle and get 10 random products
+      const shuffled = [...allProducts].sort(() => 0.5 - Math.random());
+      const randomProducts = shuffled.slice(0, 10);
+
+      setProducts(randomProducts);
+    } catch (err) {
+      console.error("Error fetching products:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Fetch on mount
+  useEffect(() => {
+    fetchRandomProducts();
+  }, []);
+
+  // Refresh every time user returns to this screen
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchRandomProducts();
+    }, [])
+  );
 
   return (
     <View style={[styles.container, { flex: 1 }]}>
@@ -48,50 +83,32 @@ const Home = () => {
         <View>
           <View style={styles.sectionHeader}>
             <Text style={styles.sectionTitle}>Top Picks!</Text>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => router.push("/products/Search")}>
               <Text style={styles.seeAll}>See all</Text>
             </TouchableOpacity>
           </View>
 
-          <View style={styles.productGrid}>
-            <ProductCard
-              productName="Tropical Mango & Passionfruit"
-              price="₱195"
-              productImage={require("../../assets/images/initialization_assets/food/product1.png")}
-              brandImage={require("../../assets/images/initialization_assets/logo/byronbay_logo.png")}
-              onPress={() => router.push("/products/ByronBay/TropicalMango")}
-            />
-            <ProductCard
-              productName="Peaches & Cream Soda"
-              price="₱95"
-              productImage={require("../../assets/images/initialization_assets/food/barbie.png")}
-              brandImage={require("../../assets/images/initialization_assets/logo/olipop_black.png")}
-            />
-            <ProductCard
-              productName="Special Mixed Yakisoba"
-              price="₱125"
-              productImage={require("../../assets/images/initialization_assets/food/bun.png")}
-              brandImage={require("../../assets/images/initialization_assets/logo/sweets_logo.png")}
-            />
-            <ProductCard
-              productName="Double Dutch Originals"
-              price="₱95"
-              productImage={require("../../assets/images/initialization_assets/food/don.png")}
-              brandImage={require("../../assets/images/initialization_assets/logo/sabrosa_logo.png")}
-            />
-            <ProductCard
-              productName="Dragon Noodles"
-              price="₱95"
-              productImage={require("../../assets/images/initialization_assets/food/product2.png")}
-              brandImage={require("../../assets/images/initialization_assets/logo/sweets_logo.png")}
-            />
-            <ProductCard
-              productName="Tea Chest Pyramid"
-              price="₱95"
-              productImage={require("../../assets/images/initialization_assets/food/tea.png")}
-              brandImage={require("../../assets/images/initialization_assets/logo/tea_logo.png")}
-            />
-          </View>
+          {loading ? (
+            <View style={{ padding: 40, alignItems: "center" }}>
+              <ActivityIndicator size="large" color="#FF6C9B" />
+              <Text style={{ marginTop: 10, color: "#999", fontFamily: "DMSans-Medium" }}>
+                Loading products...
+              </Text>
+            </View>
+          ) : (
+            <View style={styles.productGrid}>
+              {products.map((product) => (
+                <ProductCard
+                  key={product._id}
+                  productName={product.productName}
+                  price={`₱${product.price}`}
+                  productImage={{ uri: product.productImages?.[0] }}
+                  brandImage={{ uri: product.brand?.image }}
+                  onPress={() => router.push(`/products/${product._id}`)}
+                />
+              ))}
+            </View>
+          )}
         </View>
       </Animated.ScrollView>
     </View>

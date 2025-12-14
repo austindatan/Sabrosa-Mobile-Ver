@@ -1,41 +1,18 @@
 // @ts-nocheck
-import React, { useRef } from "react";
-import { View, Text, TouchableOpacity, Animated } from "react-native";
+import React from "react";
+import { View, Text, TouchableOpacity, ScrollView } from "react-native";
 import { useRouter } from "expo-router";
-import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import styles from "../../styles/links/ByronBay";
 import ProductCard from "../../components/ProductCard";
 import AnimatedHeader from "../../components/BrandsHeader";
-import useHomeHeaderAnimation from "../../../hooks/HeaderAnimation";
-import useHideOnScroll from "../../../hooks/useHideOnScroll";
 import { useBackToCookie } from "../../../hooks/BacktoCookie";
 import config from "../../../config";
+
+const STATIC_HEADER_HEIGHT = 165;
 
 const Olipop = () => {
   useBackToCookie();
   const router = useRouter();
-  const { visible, handleScroll } = useHideOnScroll();
-  const tabBarHeight = useBottomTabBarHeight();
-
-  const {
-    scrollY,
-    headerHeight,
-    topContentOpacity,
-    topContentTranslateY,
-    logoScale,
-    searchTranslateY,
-    HEADER_MAX,
-  } = useHomeHeaderAnimation();
-
-  const tabBarTranslateY = useRef(new Animated.Value(0)).current;
-
-  React.useEffect(() => {
-    Animated.timing(tabBarTranslateY, {
-      toValue: visible ? 0 : 100,
-      duration: 250,
-      useNativeDriver: true,
-    }).start();
-  }, [visible]);
 
   const [products, setProducts] = React.useState([]);
 
@@ -49,31 +26,18 @@ const Olipop = () => {
   return (
     <View style={{ flex: 1, backgroundColor: "#fff" }}>
       <AnimatedHeader
-        headerHeight={headerHeight}
-        topContentOpacity={topContentOpacity}
-        topContentTranslateY={topContentTranslateY}
-        logoScale={logoScale}
-        searchTranslateY={searchTranslateY}
         brandName="Olipop"
-        brandTagline="A new kind of soda.                                                  "
+        brandTagline="Soda reimagined for your gut health."
         backgroundImage={require("../../../assets/images/initialization_assets/olipop_bg.png")}
         brandLogo={require("../../../assets/images/initialization_assets/logo/olipop_black.png")}
       />
 
-      <Animated.ScrollView
+      <ScrollView
         contentContainerStyle={{
-          paddingTop: HEADER_MAX + 20,
-          paddingBottom: tabBarHeight + 70,
+          paddingTop: STATIC_HEADER_HEIGHT + 20,
+          paddingBottom: 70,
         }}
         showsVerticalScrollIndicator={false}
-        scrollEventThrottle={16}
-        onScroll={Animated.event(
-          [{ nativeEvent: { contentOffset: { y: scrollY } } }],
-          {
-            useNativeDriver: false,
-            listener: handleScroll,
-          }
-        )}
       >
         <View style={styles.sectionHeader}>
           <Text style={styles.sectionTitle}>Top Picks!</Text>
@@ -89,13 +53,13 @@ const Olipop = () => {
               productName={p.productName}
               price={`₱${p.price}`}
               productImage={{ uri: p.productImages[0] }}
-              brandImage={{ uri: p.brandImage }}
+              brandImage={{ uri: p.brand?.image }}
               onPress={() => router.push(`/products/${p._id}`)}
             />
           ))}
         </View>
 
-      </Animated.ScrollView>
+      </ScrollView>
 
     </View>
   );

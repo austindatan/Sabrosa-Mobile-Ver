@@ -81,6 +81,46 @@ const ProductDetail = ({
     ]).start(() => setShowModal(false));
   };
 
+  // Check if product is favorited on load
+  useEffect(() => {
+    const checkFavoriteStatus = async () => {
+      try {
+        const userId = await AsyncStorage.getItem("userId");
+        if (!userId || !productId) return;
+
+        const response = await axios.get(
+          `${config.API_BASE_URL}/api/favorites/check/${userId}/${productId}`
+        );
+        setLiked(response.data.isFavorited);
+      } catch (err) {
+        console.log("CHECK FAVORITE ERROR:", err);
+      }
+    };
+
+    checkFavoriteStatus();
+  }, [productId]);
+
+  // Toggle favorite
+  const toggleFavorite = async () => {
+    try {
+      const userId = await AsyncStorage.getItem("userId");
+      if (!userId) {
+        alert("Please login first");
+        return;
+      }
+
+      const response = await axios.post(`${config.API_BASE_URL}/api/favorites/toggle`, {
+        userId,
+        productId,
+      });
+
+      setLiked(response.data.isFavorited);
+    } catch (err) {
+      console.log("TOGGLE FAVORITE ERROR:", err);
+      alert("Error updating favorites");
+    }
+  };
+
   // Loader timeout
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 800);
@@ -115,20 +155,64 @@ const ProductDetail = ({
 
   if (loading) {
     return (
-      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-        <SkeletonLoader width="100%" height={240} borderRadius={0} />
-        <View style={{ padding: 20 }}>
-          <SkeletonLoader width={50} height={20} style={{ marginBottom: 10 }} />
-          <SkeletonLoader width="70%" height={20} style={{ marginBottom: 10 }} />
+      <View style={styles.wrapper}>
+        <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+          {/* Hero Image Skeleton */}
+          <View style={styles.heroContainer}>
+            <SkeletonLoader width="100%" height={240} borderRadius={0} />
+
+            {/* Back Button Skeleton */}
+            <View style={[styles.backButton, { backgroundColor: '#E1E9EE' }]}>
+              <SkeletonLoader width={24} height={24} borderRadius={12} />
+            </View>
+
+            {/* Heart Button Skeleton */}
+            <View style={[styles.heartButton, { backgroundColor: '#E1E9EE' }]}>
+              <SkeletonLoader width={24} height={24} borderRadius={12} />
+            </View>
+          </View>
+
+          {/* Product Info Skeleton */}
+          <View style={styles.productInfo}>
+            <View style={styles.leftColumn}>
+              <SkeletonLoader width={50} height={20} style={{ marginBottom: 4 }} />
+              <SkeletonLoader width={150} height={15} />
+            </View>
+            <View style={styles.priceSkeleton}>
+              <SkeletonLoader width={50} height={20} />
+            </View>
+          </View>
+
+          {/* Gallery Skeleton */}
+          <View style={styles.galleryContainer}>
+            <SkeletonLoader width={80} height={80} borderRadius={10} />
+            <SkeletonLoader width={80} height={80} borderRadius={10} />
+            <SkeletonLoader width={80} height={80} borderRadius={10} />
+          </View>
+
+          {/* Description Skeleton */}
+          <View style={styles.description}>
+            <SkeletonLoader width="100%" height={12} style={{ marginBottom: 8 }} />
+            <SkeletonLoader width="90%" height={12} style={{ marginBottom: 8 }} />
+            <SkeletonLoader width="95%" height={12} style={{ marginBottom: 8 }} />
+            <SkeletonLoader width="85%" height={12} />
+          </View>
+
+          <View style={{ height: 50 }} />
+        </ScrollView>
+
+        {/* Footer Skeleton */}
+        <View style={styles.footer}>
+          <SkeletonLoader width={120} height={34} borderRadius={17} />
+          <SkeletonLoader width={150} height={48} borderRadius={30} />
         </View>
-      </ScrollView>
+      </View>
     );
   }
 
   return (
     <View style={styles.wrapper}>
 
-      {/* MAIN SCROLL */}
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         <View style={styles.heroContainer}>
           <Image source={activeImage} style={styles.heroImage} resizeMode="cover" />
@@ -137,7 +221,7 @@ const ProductDetail = ({
             <Ionicons name="arrow-back" size={24} color="#000" />
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.heartButton} onPress={() => setLiked(!liked)}>
+          <TouchableOpacity style={styles.heartButton} onPress={toggleFavorite}>
             <MotiView
               from={{ scale: 0.8, opacity: 0.8 }}
               animate={{ scale: liked ? 1.4 : 1, opacity: 1 }}
@@ -155,7 +239,7 @@ const ProductDetail = ({
         <View style={styles.productInfo}>
           <View style={styles.leftColumn}>
             <Image source={brandLogo} style={styles.brandLogo} resizeMode="contain" />
-            <Text style={styles.productName}>{productName}</Text>
+            <Text style={styles.productName} numberOfLines={2} ellipsizeMode="tail">{productName}</Text>
           </View>
 
           <View style={styles.priceTag}>
@@ -279,7 +363,7 @@ const modalStyles = {
 
   modalTitle: {
     fontSize: 18,
-    fontWeight: "700",
+    fontFamily: "DMSans-Bold",
     marginTop: 12,
     color: "#964E1E",
   },
@@ -289,6 +373,7 @@ const modalStyles = {
     color: "#555",
     textAlign: "center",
     marginTop: 5,
+    fontFamily: "DMSans-Regular",
   },
 
   closeButton: {
@@ -300,11 +385,10 @@ const modalStyles = {
 
   closeText: {
     color: "#fff",
-    fontWeight: "600",
+    fontFamily: "DMSans-Bold",
     fontSize: 14,
   },
 
-  /* ⬇️ NEWLY ADDED STYLES (NOTHING ELSE TOUCHED) */
   buttonRow: {
     flexDirection: "row",
     gap: 10,
@@ -320,7 +404,7 @@ const modalStyles = {
 
   cartText: {
     color: "#fff",
-    fontWeight: "600",
+    fontFamily: "DMSans-Bold",
     fontSize: 14,
   },
 };

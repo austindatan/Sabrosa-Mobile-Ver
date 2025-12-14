@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
   profileSection: {
     alignItems: "center",
     marginBottom: -45,
-    
+
   },
   avatar: {
     width: 100,
@@ -25,9 +25,14 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
 
-  body: {
+  bodyUser: {
     paddingHorizontal: 20,
     marginTop: 70,
+  },
+
+  body: {
+    paddingHorizontal: 20,
+    marginTop: 20,
   },
   card: {
     backgroundColor: "#fff",
@@ -35,6 +40,7 @@ const styles = StyleSheet.create({
     padding: 15,
     marginBottom: 15,
     elevation: 1,
+    fontFamily: "DMSans-Regular",
   },
   cardTitle: {
     fontSize: 16,

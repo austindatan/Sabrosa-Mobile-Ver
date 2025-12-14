@@ -1,8 +1,8 @@
 // routes/order.js
 import express from "express";
 import Cart from "../models/Cart.js";
-import Order from "../models/Order.js"; 
-import User from "../models/User.js"; 
+import Order from "../models/Order.js";
+import User from "../models/User.js";
 import DeliveryAddress from "../models/Address.js"; // Existing Delivery Address Model
 import PaymentMethod from "../models/PaymentMethod.js"; // Existing Payment Method Model
 
@@ -10,14 +10,17 @@ const router = express.Router();
 
 // Get all orders for a specific user
 router.get("/user/:userId", async (req, res) => {
-  try {
-    const orders = await Order.find({ user: req.params.userId }).populate(
-      "items.product"
-    );
-    res.json(orders);
-  } catch (err) {
-    res.status(500).json({ message: "Server error" });
-  }
+    try {
+        const orders = await Order.find({ user: req.params.userId }).populate({
+            path: "items.product",
+            populate: {
+                path: "brand"
+            }
+        });
+        res.json(orders);
+    } catch (err) {
+        res.status(500).json({ message: "Server error" });
+    }
 });
 
 router.post("/place", async (req, res) => {
@@ -27,7 +30,7 @@ router.post("/place", async (req, res) => {
         if (!userId) {
             return res.status(400).json({ error: "User ID is required." });
         }
-        
+
         // 1. Fetch User and Delivery Address Details by userId
         // The User model provides recipient name and phone number
         const user = await User.findById(userId).select('firstName lastName number');
@@ -37,13 +40,13 @@ router.post("/place", async (req, res) => {
         if (!user || !deliveryAddress) {
             return res.status(404).json({ error: "User or Delivery Address not found." });
         }
-        
+
         // 2. Determine Payment Details from the PaymentMethod model
         let paymentDetails = { type: selectedPayment, details: null };
-        
+
         if (selectedPayment === 'card' || selectedPayment === 'gcash') {
-            const defaultMethod = await PaymentMethod.findOne({ 
-                user: userId, 
+            const defaultMethod = await PaymentMethod.findOne({
+                user: userId,
                 isDefault: true,
                 // Match the type stored in your PaymentMethod model
                 type: selectedPayment === 'card' ? 'Credit Card' : 'GCash'
@@ -85,22 +88,22 @@ router.post("/place", async (req, res) => {
 
         // 4. Delete Items from the Cart Table
         const cart = await Cart.findOne({ user: userId });
-        
+
         if (cart) {
-            const orderedProductIds = items.map(item => item.id.toString()); 
+            const orderedProductIds = items.map(item => item.id.toString());
 
             // Filter out items that were just ordered and had the "Added" status
-            cart.items = cart.items.filter(item => 
-                !orderedProductIds.includes(item.product.toString()) || 
+            cart.items = cart.items.filter(item =>
+                !orderedProductIds.includes(item.product.toString()) ||
                 item.status !== "Added"
             );
-            
+
             await cart.save();
         }
 
-        res.status(201).json({ 
-            message: "Order placed successfully! Cart items moved to order.", 
-            orderId: order._id 
+        res.status(201).json({
+            message: "Order placed successfully! Cart items moved to order.",
+            orderId: order._id
         });
 
     } catch (err) {

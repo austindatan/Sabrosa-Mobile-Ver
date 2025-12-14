@@ -117,7 +117,7 @@ const Privacy = () => {
         </View>
 
         <View style={{ marginTop: 30 }}>
-          <Text style={{ textAlign: "center", color: "#999", fontSize: 12 }}>
+          <Text style={{ textAlign: "center", color: "#999", fontSize: 12, fontFamily: "DMSans-Regular" }}>
             Control your privacy and security settings. Manage who sees your profile, your activity, data sharing preferences, location, and connected sessions.
           </Text>
         </View>
@@ -142,7 +142,7 @@ const headerStyles = StyleSheet.create({
   },
   title: {
     fontSize: 22,
-    fontWeight: "bold",
+    fontFamily: "DMSans-Bold",
     color: "#fff",
     textAlign: "center",
   },
@@ -152,6 +152,7 @@ const headerStyles = StyleSheet.create({
     marginTop: 2,
     textAlign: "center",
     marginBottom: 20,
+    fontFamily: "DMSans-Regular",
   },
 });
 

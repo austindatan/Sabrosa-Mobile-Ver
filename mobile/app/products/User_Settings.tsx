@@ -71,7 +71,7 @@ const User_Settings = () => {
         </View>
       </ImageBackground>
 
-      <View style={styles.body}>
+      <View style={styles.bodyUser}>
         {/* Personal Info */}
         <View style={styles.card}>
           <Text style={styles.cardTitle}>Personal Info</Text>

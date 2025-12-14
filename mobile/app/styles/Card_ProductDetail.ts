@@ -77,7 +77,6 @@ const styles = StyleSheet.create({
     fontFamily: "Barlow",
     color: "#000",
     flexWrap: "wrap",
-    maxWidth: "60%",
   },
 
   priceTag: {
@@ -87,7 +86,20 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#FF6C9B",
     borderRadius: 6,
-    paddingHorizontal: 14,
+    paddingHorizontal: 0,
+    paddingVertical: 6,
+    alignSelf: "flex-start",
+    right: 0,
+  },
+
+  priceSkeleton: {
+    width: 70,
+    height: 60,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#E1E9EE",
+    borderRadius: 6,
+    paddingHorizontal: 20,
     paddingVertical: 6,
     alignSelf: "flex-start",
     right: 0,
@@ -191,7 +203,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 45,
     gap: 8,
   },
-  
+
   cartText: {
     color: "#fff",
     fontFamily: "DIN-Next",

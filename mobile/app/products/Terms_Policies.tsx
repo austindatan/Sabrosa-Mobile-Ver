@@ -74,7 +74,6 @@ const TermsPolicies = () => {
 
   return (
     <View style={{ flex: 1, backgroundColor: "#fff" }}>
-      <StatusBar barStyle="light-content" translucent backgroundColor="transparent" />
 
       <ScrollView
         ref={scrollRef}
@@ -97,17 +96,17 @@ const TermsPolicies = () => {
           {termsSections.map((section, index) => (
             <View key={index} style={styles.card}>
               <Text style={styles.cardTitle}>{section.title}</Text>
-              <Text style={{ marginTop: 8, color: "#555", lineHeight: 22 }}>{section.content}</Text>
+              <Text style={{ marginTop: 8, color: "#555", lineHeight: 22, fontFamily: "DMSans-Regular" }}>{section.content}</Text>
             </View>
           ))}
 
           {/* Footer */}
           <View style={{ marginTop: 20, marginBottom: 30 }}>
-            <Text style={{ textAlign: "center", color: "#999", fontSize: 12, lineHeight: 18 }}>
+            <Text style={{ textAlign: "center", color: "#999", fontSize: 12, lineHeight: 18, fontFamily: "DMSans-Regular" }}>
               By using Sabrosa, you acknowledge that you have read, understood, and agree to these Terms & Policies.
             </Text>
             <TouchableOpacity style={{ alignSelf: "center", marginTop: 20 }} onPress={scrollToTop}>
-              <Text style={{ color: "#FF6C9B", fontWeight: "600" }}>Back to Top</Text>
+              <Text style={{ color: "#FF6C9B", fontWeight: "600", fontFamily: "DMSans-Regular" }}>Back to Top</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -130,14 +129,15 @@ const headerStyles = StyleSheet.create({
   headerTitle: {
     color: "#fff",
     fontSize: 22,
-    fontWeight: "700",
     textAlign: "center",
+    fontFamily: "DMSans-Bold",
   },
   subtitle: {
     color: "#fff",
     fontSize: 12,
     marginTop: 4,
     textAlign: "center",
+    fontFamily: "DMSans-Regular",
   },
 });
 

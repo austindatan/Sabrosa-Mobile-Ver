@@ -4,28 +4,14 @@ import Header from "../components/HomeHeader";
 import BrandCard from "../components/SabrosaBrandCard";
 import { useRouter } from "expo-router";
 import styles from "../styles/Cookie";
-import useHideOnScroll from "../../hooks/useHideOnScroll"; // Import the hook
 
 const Cookie = () => {
-  const scrollY = useRef(new Animated.Value(0)).current;
   const router = useRouter();
-
-  // Get the scroll handler from the hook
-  const { handleScroll } = useHideOnScroll();
 
   return (
     <View style={[styles.container, { flex: 1 }]}>
       <Header />
-      <Animated.ScrollView
-        scrollEventThrottle={16}
-        onScroll={Animated.event(
-          [{ nativeEvent: { contentOffset: { y: scrollY } } }],
-          {
-            useNativeDriver: false,
-            listener: handleScroll, // Listener to hide/show the tab bar
-          }
-        )}
-      >
+      <ScrollView>
         <View style={[styles.specialOffer, { marginTop: 5 }]}>
         </View>
 
@@ -86,7 +72,8 @@ const Cookie = () => {
             onPress={() => router.push("/(tabs)/(links)/Compartes")}
           />
         </View>
-      </Animated.ScrollView>
+        <View style={{ height: 60 }} />
+      </ScrollView>
     </View>
   );
 };

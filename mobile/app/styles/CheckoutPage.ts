@@ -92,6 +92,31 @@ const styles = StyleSheet.create({
         marginTop: 12,
     },
 
+    mapOverlay: {
+        position: 'absolute',
+        bottom: 12,
+        left: 12,
+        right: 12,
+        backgroundColor: 'rgba(255, 255, 255, 0.95)',
+        borderRadius: 8,
+        paddingVertical: 8,
+        paddingHorizontal: 12,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: 6,
+        elevation: 3,
+        shadowColor: '#000',
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+    },
+
+    mapOverlayText: {
+        color: '#FF6C9B',
+        fontSize: 13,
+        fontFamily: 'DMSans-Bold',
+    },
+
     paymentRow: {
         marginTop: 12,
     },
@@ -110,7 +135,7 @@ const styles = StyleSheet.create({
         color: '#666',
         fontFamily: 'DMSans-Medium',
     },
-    
+
     paymentLabelActive: {
         color: '#222',
         fontFamily: 'DMSans-Bold',

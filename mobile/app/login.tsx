@@ -36,9 +36,14 @@ const Login = () => {
       // store data
       await SecureStore.setItemAsync("token", data.token);
       await AsyncStorage.setItem("userId", data.user.id);
+      await AsyncStorage.setItem("userEmail", email);
 
-      // go to tabs
-      router.replace("/(tabs)/Home");
+      // Check if admin and redirect accordingly
+      if (email === "admin@sabrosa.com") {
+        router.replace("/products/AdminDashboard");
+      } else {
+        router.replace("/(tabs)/Home");
+      }
 
     } catch (error) {
       Alert.alert("Error", "Unable to connect to server.");

@@ -8,6 +8,7 @@ import Address from "../models/Address.js";
 import Order from "../models/Order.js";
 import Product from "../models/Product.js";
 import User from "../models/User.js";
+import Favorite from "../models/Favorite.js";
 
 const rebuildIndexes = async () => {
     try {
@@ -84,6 +85,17 @@ const rebuildIndexes = async () => {
         const userIndexes = await User.collection.getIndexes();
         console.log("   Indexes:", Object.keys(userIndexes).join(", "));
 
+        // Favorite
+        console.log("\n❤️  Favorite collection:");
+        try {
+            await Favorite.collection.dropIndexes();
+        } catch (e) {
+            console.log("   (No existing indexes to drop)");
+        }
+        await Favorite.createIndexes();
+        const favoriteIndexes = await Favorite.collection.getIndexes();
+        console.log("   Indexes:", Object.keys(favoriteIndexes).join(", "));
+
         console.log("\n✅ All indexes rebuilt successfully!");
         console.log("\n📊 Summary:");
         console.log("   - PaymentMethod:", Object.keys(pmIndexes).length, "indexes");
@@ -92,6 +104,7 @@ const rebuildIndexes = async () => {
         console.log("   - Order:", Object.keys(orderIndexes).length, "indexes");
         console.log("   - Product:", Object.keys(productIndexes).length, "indexes");
         console.log("   - User:", Object.keys(userIndexes).length, "indexes");
+        console.log("   - Favorite:", Object.keys(favoriteIndexes).length, "indexes");
 
         // Close connection
         await mongoose.connection.close();
@@ -105,3 +118,4 @@ const rebuildIndexes = async () => {
 };
 
 rebuildIndexes();
+

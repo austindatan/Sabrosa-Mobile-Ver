@@ -156,7 +156,7 @@ const Edit_Profile = () => {
         </View>
       </ImageBackground>
 
-      <View style={styles.body}>
+      <View style={styles.bodyUser}>
         <View style={styles.card}>
           <Text style={styles.cardTitle}>Edit Personal Info</Text>
 
@@ -229,11 +229,11 @@ export default Edit_Profile;
 const modalStyles = {
   overlay: { flex: 1, backgroundColor: "rgba(0,0,0,0.4)", justifyContent: "center", alignItems: "center" },
   modalContainer: { width: 280, padding: 20, backgroundColor: "#fff", borderRadius: 14, alignItems: "center", elevation: 10 },
-  modalTitle: { fontSize: 18, fontWeight: "700", marginTop: 12, color: "#964E1E" },
-  modalSubtitle: { fontSize: 13, color: "#555", textAlign: "center", marginTop: 5 },
+  modalTitle: { fontSize: 18, fontFamily: "DMSans-Bold", marginTop: 12, color: "#964E1E" },
+  modalSubtitle: { fontSize: 13, color: "#555", textAlign: "center", marginTop: 5, fontFamily: "DMSans-Regular" },
   closeButton: { backgroundColor: "#FF6C9B", paddingVertical: 10, paddingHorizontal: 25, borderRadius: 8 },
-  closeText: { color: "#fff", fontWeight: "600", fontSize: 14 },
+  closeText: { color: "#fff", fontFamily: "DMSans-Bold", fontSize: 14 },
   buttonRow: { flexDirection: "row", gap: 10, marginTop: 20 },
   cartButton: { backgroundColor: "#964E1E", paddingVertical: 10, paddingHorizontal: 25, borderRadius: 8 },
-  cartText: { color: "#fff", fontWeight: "600", fontSize: 14 },
+  cartText: { color: "#fff", fontFamily: "DMSans-Bold", fontSize: 14 },
 };

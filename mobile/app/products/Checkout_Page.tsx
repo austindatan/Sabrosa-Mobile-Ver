@@ -18,9 +18,9 @@ export default function Checkout_Page() {
     const [userInfo, setUserInfo] = useState(null);
     const [address, setAddress] = useState(null);
     const [selectedPayment, setSelectedPayment] = useState('cod');
-    const [cardDisplayNumber, setCardDisplayNumber] = useState(null); 
-    const [gcashDisplayNumber, setGcashDisplayNumber] = useState(null); 
-    
+    const [cardDisplayNumber, setCardDisplayNumber] = useState(null);
+    const [gcashDisplayNumber, setGcashDisplayNumber] = useState(null);
+
     // --- DATA FETCHING ---
     const fetchCheckoutData = async () => {
         setLoading(true);
@@ -36,13 +36,13 @@ export default function Checkout_Page() {
 
             setCartItems(data.cartItems || []);
             setUserInfo(data.userInfo);
-            setAddress(data.address); 
-            
+            setAddress(data.address);
+
             if (data.defaultPayment) {
                 setSelectedPayment(data.defaultPayment);
             }
-            setCardDisplayNumber(data.cardDisplayNumber); 
-            setGcashDisplayNumber(data.gcashDisplayNumber); 
+            setCardDisplayNumber(data.cardDisplayNumber);
+            setGcashDisplayNumber(data.gcashDisplayNumber);
 
         } catch (err) {
             console.error("CHECKOUT LOAD ERROR:", err.response?.data || err.message);
@@ -54,13 +54,13 @@ export default function Checkout_Page() {
     useFocusEffect(
         useCallback(() => {
             fetchCheckoutData();
-            return () => {};
+            return () => { };
         }, [])
     );
 
     useEffect(() => {
         fetchCheckoutData();
-    }, []); 
+    }, []);
 
     // --- MEMOIZED CALCULATIONS (No changes) ---
     const subtotal = useMemo(() => {
@@ -74,9 +74,9 @@ export default function Checkout_Page() {
 
     const renderItem = ({ item }) => (
         <View style={styles.itemRow}>
-            <Image 
-                source={item.imageUri ? { uri: item.imageUri } : require("../../assets/images/initialization_assets/food/placeholder.png")} 
-                style={styles.itemImage} 
+            <Image
+                source={item.imageUri ? { uri: item.imageUri } : require("../../assets/images/initialization_assets/food/placeholder.png")}
+                style={styles.itemImage}
             />
 
             <View style={{ flex: 1, marginLeft: 12 }}>
@@ -87,25 +87,25 @@ export default function Checkout_Page() {
             <Text style={styles.itemPrice}>₱{(item.price * item.qty).toLocaleString()}</Text>
         </View>
     );
-const onPlaceOrder = async () => {
-        // 🐞 DEBUG: Confirm button press is registered
-        console.log("--- Attempting to Place Order ---"); 
+    const onPlaceOrder = async () => {
+        // 🐞 DEBUG: Confirm button press is registered
+        console.log("--- Attempting to Place Order ---");
 
-        // 🛑 Prevent placing order if cart is empty
-        if (cartItems.length === 0) {
-            alert("Your cart is empty and cannot place an order.");
-            return;
-        }
+        // 🛑 Prevent placing order if cart is empty
+        if (cartItems.length === 0) {
+            alert("Your cart is empty and cannot place an order.");
+            return;
+        }
 
-        try {
-            setLoading(true); // Show loading indicator (This is correct)
-            const userId = await AsyncStorage.getItem("userId");
-            
-            if (!userId) {
-                alert("User not logged in.");
-                router.push('/login');
-                return;
-            }
+        try {
+            setLoading(true); // Show loading indicator (This is correct)
+            const userId = await AsyncStorage.getItem("userId");
+
+            if (!userId) {
+                alert("User not logged in.");
+                router.push('/login');
+                return;
+            }
             // 🐞 DEBUG: Log the payload being sent
             const itemsForPayload = cartItems.map(item => ({
                 id: item.id,
@@ -113,36 +113,36 @@ const onPlaceOrder = async () => {
                 price: item.price,
                 qty: item.qty,
             }));
-            
-            const orderPayload = {
-                userId: userId,
-                subtotal: subtotal,
-                deliveryFee: deliveryFee,
-                tax: tax,
-                total: total,
-                selectedPayment: selectedPayment,
-                items: itemsForPayload, // Use the mapped list
-            };
+
+            const orderPayload = {
+                userId: userId,
+                subtotal: subtotal,
+                deliveryFee: deliveryFee,
+                tax: tax,
+                total: total,
+                selectedPayment: selectedPayment,
+                items: itemsForPayload, // Use the mapped list
+            };
 
             console.log("Payload:", orderPayload); // Log the payload
 
-            // 2. Call the new Place Order API route
-            const response = await axios.post(`${config.API_BASE_URL}/api/order/place`, orderPayload);
-            
-            console.log("Order successful:", response.data);
+            // 2. Call the new Place Order API route
+            const response = await axios.post(`${config.API_BASE_URL}/api/order/place`, orderPayload);
 
-            // 3. Navigate to the success screen
-            router.push("/products/OrderSuccessScreen"); 
+            console.log("Order successful:", response.data);
 
-        } catch (err) {
-            // ✅ This console error is crucial for network/server errors
-            console.error("ORDER PLACEMENT FAILED:", err.response?.data || err.message);
-            // ✅ Show an alert for the user
-            alert(`Failed to place order: ${err.response?.data?.error || "Server error. Check console for details."}`);
-        } finally {
-            setLoading(false); // Hide loading indicator
-        }
-    };
+            // 3. Navigate to the success screen
+            router.push("/products/OrderSuccessScreen");
+
+        } catch (err) {
+            // ✅ This console error is crucial for network/server errors
+            console.error("ORDER PLACEMENT FAILED:", err.response?.data || err.message);
+            // ✅ Show an alert for the user
+            alert(`Failed to place order: ${err.response?.data?.error || "Server error. Check console for details."}`);
+        } finally {
+            setLoading(false); // Hide loading indicator
+        }
+    };
 
     // --- LOADING/EMPTY STATES (No changes) ---
     if (loading) {
@@ -169,14 +169,14 @@ const onPlaceOrder = async () => {
     // --- MAIN RENDER (Payment Card Changes) ---
     return (
         <SafeAreaView style={styles.safe}>
-             <ImageBackground
-                 source={require("../../assets/images/initialization_assets/new.png")}
-                 style={styles.headerBg}
-                 resizeMode="cover"
-             >
-                 <View style={styles.headerOverlay} />
-                 <Text style={styles.pageTitle}>Checkout</Text>
-             </ImageBackground>
+            <ImageBackground
+                source={require("../../assets/images/initialization_assets/new.png")}
+                style={styles.headerBg}
+                resizeMode="cover"
+            >
+                <View style={styles.headerOverlay} />
+                <Text style={styles.pageTitle}>Checkout</Text>
+            </ImageBackground>
 
             <ScrollView contentContainerStyle={styles.scroll}>
 
@@ -199,13 +199,22 @@ const onPlaceOrder = async () => {
                                 </Text>
                             </View>
                         </View>
-                        <Image
-                            source={require('../../assets/images/initialization_assets/map.png')}
-                            style={styles.mapImage}
-                        />
+                        <TouchableOpacity
+                            onPress={() => router.push("/products/DeliveryAddress")}
+                            activeOpacity={0.8}
+                        >
+                            <Image
+                                source={require('../../assets/images/initialization_assets/map.png')}
+                                style={styles.mapImage}
+                            />
+                            <View style={styles.mapOverlay}>
+                                <Ionicons name="location" size={24} color="#FF6C9B" />
+                                <Text style={styles.mapOverlayText}>Tap to view on map</Text>
+                            </View>
+                        </TouchableOpacity>
                     </View>
                 </View>
-                
+
                 {/* 💳 PAYMENT CARD */}
                 <View style={styles.card}>
                     <View style={styles.cardHeader}>
@@ -228,7 +237,7 @@ const onPlaceOrder = async () => {
                                     color={selectedPayment === 'card' ? '#FF6C9B' : '#999'}
                                 />
                                 {/* 🎯 Styling Adjustment: Align text content to the left */}
-                                <View style={{ marginLeft: 10, justifyContent: 'center' }}> 
+                                <View style={{ marginLeft: 10, justifyContent: 'center' }}>
                                     <Text
                                         style={[
                                             styles.paymentLabel,
@@ -263,7 +272,7 @@ const onPlaceOrder = async () => {
                                     color={selectedPayment === 'gcash' ? '#FF6C9B' : '#999'}
                                 />
                                 {/* 🎯 Styling Adjustment: Align text content to the left */}
-                                <View style={{ marginLeft: 10, justifyContent: 'center' }}> 
+                                <View style={{ marginLeft: 10, justifyContent: 'center' }}>
                                     <Text
                                         style={[
                                             styles.paymentLabel,
@@ -289,14 +298,14 @@ const onPlaceOrder = async () => {
                         <TouchableOpacity
                             style={styles.paymentOption}
                             onPress={() => setSelectedPayment('cod')}
-                        >   
+                        >
                             <View style={styles.paymentLeft}>
                                 <Ionicons
                                     name="cash-outline"
                                     size={20}
                                     color={selectedPayment === 'cod' ? '#FF6C9B' : '#999'}
                                 />
-                                <View style={{ marginLeft: 10, justifyContent: 'center' }}> 
+                                <View style={{ marginLeft: 10, justifyContent: 'center' }}>
                                     <Text
                                         style={[
                                             styles.paymentLabel,
@@ -320,13 +329,13 @@ const onPlaceOrder = async () => {
                     <Text style={styles.cardTitle}>Order Summary</Text>
 
                     <FlatList
-                        data={cartItems} 
+                        data={cartItems}
                         renderItem={renderItem}
                         keyExtractor={(i) => i.id}
                         style={{ marginTop: 8 }}
                         scrollEnabled={false}
                     />
-                    
+
                     <View style={styles.summaryRow}>
                         <Text style={styles.summaryLabel}>Subtotal</Text>
                         <Text style={styles.summaryValue}>₱{subtotal.toLocaleString()}</Text>

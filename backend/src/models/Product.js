@@ -9,12 +9,9 @@ const ProductSchema = new mongoose.Schema(
         productImages: [{
             type: String
         }],
-        brandName: {
-            type: String,
-            required: true
-        },
-        brandImage: {
-            type: String,
+        brand: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Brand',
             required: true
         },
         price: {
@@ -29,11 +26,11 @@ const ProductSchema = new mongoose.Schema(
     { timestamps: true }
 );
 
-// Add text index for efficient text search on productName and brandName
-ProductSchema.index({ productName: 'text', brandName: 'text' });
+// Add text index for efficient text search on productName
+ProductSchema.index({ productName: 'text' });
 
-// Add index on brandName for brand filtering queries
-ProductSchema.index({ brandName: 1 });
+// Add index on brand for brand filtering queries
+ProductSchema.index({ brand: 1 });
 
 // Add index on price for potential sorting/filtering
 ProductSchema.index({ price: 1 });

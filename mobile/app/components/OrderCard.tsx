@@ -1,25 +1,25 @@
 // @ts-nocheck
 import React from "react";
 import { View, Text, Image, TouchableOpacity, FlatList } from "react-native";
-import { MotiView } from "moti"; 
-import styles from "../styles/Card_OrderHistory"; 
+import { MotiView } from "moti";
+import styles from "../styles/Card_OrderHistory";
 
 const OrderItemRow = ({ item }) => (
   <View style={styles.itemRow}>
-    <Image 
-      source={{ uri: item.product.productImages[0] }} 
-      style={styles.itemImage} 
+    <Image
+      source={{ uri: item.product?.productImages?.[0] }}
+      style={styles.itemImage}
     />
     <View style={styles.itemDetails}>
-      <Text style={styles.itemName} numberOfLines={1} ellipsisMode="tail"> 
+      <Text style={styles.itemName} numberOfLines={1} ellipsisMode="tail">
         {item.name}
       </Text>
       <Text style={styles.itemQuantity}>
-        Qty: {item.quantity} x ₱{item.price.toFixed(2)}
+        Qty: {item.quantity} x ₱{item.price?.toFixed(2) || '0.00'}
       </Text>
     </View>
     <Text style={styles.itemTotal}>
-      ₱{(item.price * item.quantity).toFixed(2)}
+      ₱{((item.price || 0) * (item.quantity || 0)).toFixed(2)}
     </Text>
   </View>
 );
@@ -41,8 +41,10 @@ const OrderHistoryCard = ({ item, onPress }) => {
       </View>
 
       <View style={styles.itemsListContainer}>
-        {item.items.map((orderItem) => (
-          <OrderItemRow key={orderItem.product._id} item={orderItem} />
+        {item.items.map((orderItem, index) => (
+          orderItem.product ? (
+            <OrderItemRow key={orderItem.product._id || index} item={orderItem} />
+          ) : null
         ))}
       </View>
 

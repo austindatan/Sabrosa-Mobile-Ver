@@ -51,7 +51,12 @@ router.get("/:userId", async (req, res) => {
     const { userId } = req.params;
 
     const cart = await Cart.findOne({ user: userId })
-      .populate("items.product"); // optional, shows product details
+      .populate({
+        path: "items.product",
+        populate: {
+          path: "brand"
+        }
+      });
 
     if (!cart) {
       return res.status(200).json({

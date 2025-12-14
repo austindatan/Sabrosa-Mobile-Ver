@@ -1,5 +1,6 @@
 import express from "express";
 import Product from "../models/Product.js";
+import Brand from "../models/Brand.js";
 
 const router = express.Router();
 
@@ -12,6 +13,7 @@ router.get("/", async (req, res) => {
     const order = req.query.order === 'asc' ? 1 : -1;
 
     const products = await Product.find({})
+      .populate('brand')
       .sort({ [sort]: order })
       .limit(limit)
       .skip(skip);
@@ -31,11 +33,19 @@ router.get("/", async (req, res) => {
   }
 });
 
-// Get all unique brands
+// Get all unique brands with their images
 router.get("/brands", async (req, res) => {
   try {
-    const brands = await Product.distinct("brandName");
-    res.json(brands);
+    const brands = await Brand.find({}).sort({ name: 1 });
+
+    // Format response to match frontend expectations
+    const formattedBrands = brands.map(brand => ({
+      name: brand.name,
+      image: brand.image,
+      _id: brand._id
+    }));
+
+    res.json(formattedBrands);
   } catch (err) {
     console.error("Get brands error:", err);
     res.status(500).json({ message: "Server error" });
@@ -58,15 +68,20 @@ router.get("/search", async (req, res) => {
 
     // Add brand filter if specified
     if (brand) {
-      filter.brandName = brand;
+      // Find brand by name first
+      const brandDoc = await Brand.findOne({ name: brand });
+      if (brandDoc) {
+        filter.brand = brandDoc._id;
+      }
     }
 
     // If using text search, we can sort by relevance score
     const products = query
       ? await Product.find(filter, { score: { $meta: "textScore" } })
+        .populate('brand')
         .sort({ score: { $meta: "textScore" } })
         .limit(limit)
-      : await Product.find(filter).limit(limit);
+      : await Product.find(filter).populate('brand').limit(limit);
 
     res.json(products);
   } catch (err) {
@@ -79,9 +94,16 @@ router.get("/search", async (req, res) => {
 router.get("/brand/:brandName", async (req, res) => {
   try {
     const limit = parseInt(req.query.limit) || 100;
-    const products = await Product.find({
-      brandName: req.params.brandName,
-    }).limit(limit);
+
+    // Find brand by name
+    const brandDoc = await Brand.findOne({ name: req.params.brandName });
+    if (!brandDoc) {
+      return res.status(404).json({ message: "Brand not found" });
+    }
+
+    const products = await Product.find({ brand: brandDoc._id })
+      .populate('brand')
+      .limit(limit);
 
     res.json(products);
   } catch (err) {
@@ -92,7 +114,7 @@ router.get("/brand/:brandName", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
   try {
-    const product = await Product.findById(req.params.id);
+    const product = await Product.findById(req.params.id).populate('brand');
     if (!product) {
       return res.status(404).json({ message: "Product not found" });
     }

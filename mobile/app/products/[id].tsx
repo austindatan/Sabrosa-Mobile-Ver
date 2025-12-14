@@ -22,7 +22,7 @@ export default function ProductPage() {
     <ProductDetail
       productId={product._id}
       heroImage={{ uri: product.productImages[1] }}
-      brandLogo={{ uri: product.brandImage }}
+      brandLogo={{ uri: product.brand?.image }}
       productName={product.productName}
       price={`₱${product.price}`}
 

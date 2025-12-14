@@ -1,41 +1,34 @@
 // @ts-nocheck
 import React from "react";
-import { View, Text, ImageBackground, Image, TextInput, Animated } from "react-native";
+import { View, Text, ImageBackground, Image, TextInput } from "react-native";
 import styles from "../styles/BrandsHeader";
 
-type AnimatedHeaderProps = {
-  headerHeight: Animated.Value;
-  topContentOpacity: Animated.AnimatedInterpolation<string | number>;
-  topContentTranslateY: Animated.AnimatedInterpolation<string | number>;
-  logoScale: Animated.AnimatedInterpolation<string | number>;
-  searchTranslateY: Animated.AnimatedInterpolation<string | number>;
+type StaticHeaderProps = {
   brandName: string;
   brandTagline: string;
   backgroundImage: any;
   brandLogo: any;
   sabrosaLogo?: any;
   placeholder?: string;
+  staticHeaderHeight: number;
 };
 
-const AnimatedHeader = ({
-  headerHeight,
-  topContentOpacity,
-  topContentTranslateY,
-  logoScale,
-  searchTranslateY,
+const StaticHeader = ({
   brandName,
   brandTagline,
   backgroundImage,
   brandLogo,
   sabrosaLogo = require("../../assets/images/initialization_assets/sabrosa_logo.png"),
   placeholder = "Look for products",
-}: AnimatedHeaderProps) => {
+  staticHeaderHeight = 165,
+}: StaticHeaderProps) => {
+
   return (
-    <Animated.View
+    <View
       style={[
         styles.headerWrapper,
         {
-          height: headerHeight,
+          height: staticHeaderHeight,
           position: "absolute",
           top: 0,
           left: 0,
@@ -50,17 +43,12 @@ const AnimatedHeader = ({
         imageStyle={styles.headerImage}
         resizeMode="cover"
       >
-        <Animated.View
-          style={{
-            opacity: topContentOpacity,
-            transform: [{ translateY: topContentTranslateY }],
-          }}
-        >
+        <View>
           <View style={styles.brandInfo}>
             <View style={styles.brandLogoContainer}>
-              <Animated.Image
+              <Image
                 source={brandLogo}
-                style={[styles.brandLogoImage, { transform: [{ scale: logoScale }] }]}
+                style={styles.brandLogoImage}
                 resizeMode="contain"
               />
             </View>
@@ -71,18 +59,17 @@ const AnimatedHeader = ({
             </View>
 
             {sabrosaLogo && (
-              <Animated.Image
+              <Image
                 source={sabrosaLogo}
-                style={[styles.logo, { transform: [{ scale: logoScale }] }]}
+                style={styles.logo}
                 resizeMode="contain"
               />
             )}
           </View>
-        </Animated.View>
+        </View>
 
-        <Animated.View
+        <View
           style={{
-            transform: [{ translateY: searchTranslateY }],
             marginTop: 10,
           }}
         >
@@ -99,10 +86,10 @@ const AnimatedHeader = ({
               />
             </View>
           </View>
-        </Animated.View>
+        </View>
       </ImageBackground>
-    </Animated.View>
+    </View>
   );
 };
 
-export default AnimatedHeader;
+export default StaticHeader;

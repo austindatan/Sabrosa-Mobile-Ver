@@ -5,11 +5,13 @@ import styles from "../styles/Cookie";
 import Header from "../components/HomeHeader";
 import { useRouter } from "expo-router";
 import CartItem from "../components/CartItem";
+import OrderHistoryItem from "../components/OrderHistoryItem";
 import localStyles from "../styles/CartEffects";
 import axios from "axios";
 import config from "../../config";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
+import { Ionicons } from "@expo/vector-icons";
 
 const Cart = () => {
   const scrollY = useRef(new Animated.Value(0)).current;
@@ -17,6 +19,7 @@ const Cart = () => {
   const [activeTab, setActiveTab] = useState("OnCart");
   const [loading, setLoading] = useState(true);
   const [cartItems, setCartItems] = useState([]);
+  const [orderHistory, setOrderHistory] = useState([]);
 
   const fetchCart = async () => {
     try {
@@ -36,13 +39,36 @@ const Cart = () => {
     }
   };
 
+  const fetchOrderHistory = async () => {
+    try {
+      const userId = await AsyncStorage.getItem("userId");
+      if (!userId) return;
+
+      const res = await axios.get(`${config.API_BASE_URL}/api/order/user/${userId}`);
+      setOrderHistory(res.data);
+    } catch (err) {
+      console.log("LOAD ORDER HISTORY ERROR:", err.response?.data || err.message);
+    }
+  };
+
   useEffect(() => {
     fetchCart();
+    fetchOrderHistory();
   }, []);
+
+  // Refresh data when switching tabs
+  useEffect(() => {
+    if (activeTab === "OnCart") {
+      fetchCart();
+    } else if (activeTab === "History") {
+      fetchOrderHistory();
+    }
+  }, [activeTab]);
 
   useFocusEffect(
     React.useCallback(() => {
-      fetchCart(); // ← refresh cart every time you return to this screen
+      fetchCart();
+      fetchOrderHistory();
     }, [])
   );
 
@@ -71,6 +97,47 @@ const Cart = () => {
       fetchCart();
     } catch (err) {
       console.log("REMOVE ERROR:", err.response?.data || err.message);
+    }
+  };
+
+  const handleReorder = async (order) => {
+    try {
+      const userId = await AsyncStorage.getItem("userId");
+      if (!userId) return;
+
+      setLoading(true);
+
+      // Clear current cart first
+      for (const item of cartItems) {
+        await axios.put(`${config.API_BASE_URL}/api/cart/update`, {
+          userId,
+          productId: item.product._id || item.product,
+          quantity: 0,
+        });
+      }
+
+      // Add all items from the order to cart
+      for (const orderItem of order.items) {
+        if (orderItem.product?._id) {
+          await axios.post(`${config.API_BASE_URL}/api/cart/add`, {
+            userId,
+            productId: orderItem.product._id,
+            quantity: orderItem.quantity,
+          });
+        }
+      }
+
+      // Refresh cart and switch to OnCart tab
+      await fetchCart();
+      setActiveTab("OnCart");
+      setLoading(false);
+
+      // Show success message
+      alert("Order items added to cart!");
+    } catch (err) {
+      console.log("REORDER ERROR:", err.response?.data || err.message);
+      setLoading(false);
+      alert("Failed to add items to cart");
     }
   };
 
@@ -117,7 +184,7 @@ const Cart = () => {
                       name: item.product?.productName,
                       price: item.product?.price,
                       image: { uri: item.product?.productImages[0] },
-                      brandImage: { uri: item.product?.brandImage },
+                      brandImage: { uri: item.product?.brand?.image },
                     }}
                     onAdd={() => handleAdd(item)}
                     onRemove={() => handleRemove(item)}
@@ -129,27 +196,56 @@ const Cart = () => {
               />
             ) : (
               <View style={{ padding: 20, alignItems: "center", marginTop: 50 }}>
-                <Text style={{ fontSize: 20, fontWeight: "bold", color: "#333", marginBottom: 10 }}>
-                  Your Cart is Empty 🛒
-                </Text>
-                <TouchableOpacity
-                  onPress={() => router.push("/Home")}
-                  style={{ backgroundColor: "#FF6C9B", padding: 12, borderRadius: 8 }}
-                >
-                  <Text style={{ color: "#fff", fontSize: 16, fontWeight: "600" }}>
-                    Add to Cart Now!
+                <View style={{ alignItems: "center", marginTop: 100 }}>
+                  <Ionicons name="cart" size={64} color="#ccc" />
+                  <Text style={{ marginTop: 16, fontSize: 16, color: "#999", fontFamily: "DMSans-Bold", marginBottom: 15 }}>
+                    Your cart is empty!
                   </Text>
-                </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => router.push("/Home")}
+                    style={{ backgroundColor: "#FF6C9B", padding: 12, borderRadius: 8 }}
+                  >
+                    <Text style={{ color: "#fff", fontSize: 16, fontFamily: "DMSans-Bold" }}>
+                      Add to Cart Now!
+                    </Text>
+                  </TouchableOpacity>
+                </View>
               </View>
             )
           )}
 
-          {activeTab === "History" && (
-            <View style={{ padding: 20 }}>
-              <Text style={{ color: "#777", fontSize: 16, textAlign: "center", marginTop: 20 }}>
-                No past orders yet.
-              </Text>
-            </View>
+          {activeTab === "History" && !loading && (
+            orderHistory.length > 0 ? (
+              <FlatList
+                data={orderHistory}
+                renderItem={({ item }) => (
+                  <OrderHistoryItem
+                    order={item}
+                    onReorder={handleReorder}
+                  />
+                )}
+                keyExtractor={(item) => item._id}
+                scrollEnabled={false}
+                contentContainerStyle={{ marginTop: 5, paddingBottom: 30 }}
+              />
+            ) : (
+              <View style={{ padding: 20, alignItems: "center", marginTop: 50 }}>
+                <View style={{ alignItems: "center", marginTop: 100 }}>
+                  <Ionicons name="cart" size={64} color="#ccc" />
+                  <Text style={{ marginTop: 16, fontSize: 16, color: "#999", fontFamily: "DMSans-Bold", marginBottom: 15 }}>
+                    Your order history is empty!
+                  </Text>
+                  <TouchableOpacity
+                    onPress={() => router.push("/Home")}
+                    style={{ backgroundColor: "#FF6C9B", padding: 12, borderRadius: 8 }}
+                  >
+                    <Text style={{ color: "#fff", fontSize: 16, fontFamily: "DMSans-Bold" }}>
+                      Add to Cart Now!
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            )
           )}
         </Animated.ScrollView>
 

@@ -9,7 +9,9 @@ import checkoutRoutes from "./routes/checkoutRoutes.js";
 import addressRoutes from "./routes/addressRoutes.js";
 import paymentMethodRoutes from "./routes/paymentMethodRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
+import favoriteRoutes from "./routes/favoriteRoutes.js";
 import editProfileRoute from './routes/editProfileRoute.js';
+import adminRoutes from './routes/adminRoutes.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -24,9 +26,13 @@ app.use("/api/checkout", checkoutRoutes);
 app.use("/api/address", addressRoutes);
 app.use("/api/payment", paymentMethodRoutes);
 app.use("/api/order", orderRoutes);
+app.use("/api/favorites", favoriteRoutes);
 
 // Edit profile route now RESTful
 app.use('/api/auth/users', editProfileRoute);  // <-- changed from /edit-profile
+
+// Admin routes
+app.use('/api/admin', adminRoutes);
 
 // Start server
 app.listen(PORT, () => {

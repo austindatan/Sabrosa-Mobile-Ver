@@ -151,12 +151,12 @@ const HelpCenter = () => {
         </View>
 
         {/* Footer */}
-        <View style={{ marginTop: 20, marginBottom: 30 }}>
-          <Text style={{ textAlign: "center", color: "#999", fontSize: 12, lineHeight: 18 }}>
+        <View style={{ marginTop: 20 }}>
+          <Text style={{ textAlign: "center", color: "#999", fontSize: 12, lineHeight: 18, fontFamily: "DMSans-Regular" }}>
             Explore the above sections to find answers to common questions and contact our support team for further assistance. Sabrosa is here to make your experience smooth, safe, and enjoyable.
           </Text>
           <TouchableOpacity style={{ alignSelf: "center", marginTop: 20 }} onPress={scrollToTop}>
-            <Text style={{ color: "#FF6C9B", fontWeight: "600" }}>Back to Top</Text>
+            <Text style={{ color: "#FF6C9B", fontWeight: "600", fontFamily: "DMSans-Regular" }}>Back to Top</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -180,9 +180,9 @@ const headerStyles = StyleSheet.create({
   },
   title: {
     fontSize: 22,
-    fontWeight: "bold",
     color: "#fff",
     textAlign: "center",
+    fontFamily: "DMSans-Bold",
   },
   subtitle: {
     fontSize: 12,
@@ -190,6 +190,7 @@ const headerStyles = StyleSheet.create({
     marginTop: 2,
     textAlign: "center",
     marginBottom: 20,
+    fontFamily: "DMSans-Regular",
   },
 });
 
