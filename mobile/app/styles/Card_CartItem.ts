@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#8a8a8a3a",
     resizeMode: 'contain',
+    backgroundColor: "#d3d3d345",
   },
 
   detailsContainer: {

@@ -124,6 +124,7 @@ const SearchPage = () => {
                   )}
                 </TouchableOpacity>
               ))}
+              <View style={{ height: 20}} />
             </ScrollView>
 
             {/* Action Buttons */}

@@ -26,8 +26,8 @@ const seedProducts = [
     productName: "Donut Bites Lemon Poppy",
     productImages: [
       "https://res.cloudinary.com/dldwg8flq/image/upload/v1765333627/Lemon_Poppy_Donut_Bites_imlmb6.png",
-      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765333920/DonutBitesLemonPoppy3_i0uejx.png",
-      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765333847/DonutBitesLemonPoppy2_hmu2at.png"
+      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765872130/oakland-food-photographer-Blue-Star-Donuts-Lemon-Poppy-Seed-donut_fkhc3u.png",
+      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765872129/LD5L62EV7NHTLN2R2UIVXVJY_f65cm6.jpg"
     ],
     brand: "693e937d904d600084688852",
     price: 500,
@@ -58,8 +58,7 @@ const seedProducts = [
     productName: "Strawberry Shortcake Donut Bites",
     productImages: [
       "https://res.cloudinary.com/dldwg8flq/image/upload/v1765333608/Strawberry_Shortcake_Donut_Bites_tdkpuu.png",
-      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765333848/StrawberryShortcakeDonutBites2_ajxj4c.png",
-      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765333848/StrawberryShortcakeDonutBites3_xfxjt9.png"
+      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765872755/Sabrosa_aidiqb.png",
     ],
     brand: "693e937d904d600084688852",
     price: 500,
@@ -90,7 +89,7 @@ const seedProducts = [
   {
     productName: "Dotty Cookie",
     productImages: [
-      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765344306/DottieCookie_tlsyrj.png",
+      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765873330/Blueberry_Muffin_Cookie_1_sq9zzl.png",
       "https://res.cloudinary.com/dldwg8flq/image/upload/v1765333919/DottyCookie3_k0dwbm.png",
       "https://res.cloudinary.com/dldwg8flq/image/upload/v1765333920/DottyCookie2_pmog8d.png"
     ],
@@ -136,9 +135,9 @@ const seedProducts = [
     ],
   },
   {
-    productName: "White Chocolate Macadamia Cookie",
+    productName: "White Choc & Macadamia Cookie",
     productImages: [
-      "https://res.cloudinary.com/dldwg8flq/image/upload/v1764596174/MilkChocChunkCookie_diwa4y.jpg",
+      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765872956/Blueberry_Muffin_Cookie_bhorww.png",
       "https://res.cloudinary.com/dldwg8flq/image/upload/v1764596321/SW-S-WCM_20230706_3393_o99tkw.jpg",
       "https://res.cloudinary.com/dldwg8flq/image/upload/v1764596274/WhiteChocMacadamiaCookie3_oph9vk.png"
     ],
@@ -148,6 +147,22 @@ const seedProducts = [
       "This classic doughnut combines creamy white chocolate chunks with crunchy macadamia nuts for a timeless favorite. /",
       "One of the original flavors that started it all, loved for its perfect balance of sweetness and texture. /",
       "Freshly made and glazed to perfection — a classic treat that never goes out of style! /",
+      " ",
+    ],
+  },
+  {
+    productName: "PRIDE Cookie 2024",
+    productImages: [
+      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765333611/2024_Pride_Cookie_Limiteds_mtthhd.png",
+      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765873034/PRIDE_20230203_ALL-copy_hd1umw.jpg",
+      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765873035/SW-S-PRIDE_20230706_3391_of5lsc.jpg",
+    ],
+    brand: "693e937d904d600084688853",
+    price: 450,
+    description: [
+      "Baked in partnership with Rainbow Families, a wonderful charity that supports LGBTQ+ parents and their children, the Byron Bay Pride Cookie is a heart-shaped milk choc chunk cookie topped with rainbow choc drops. /",
+      "Individually wrapped for convenience, each Wrapped Cafe Cookie delivers a taste of Byron in every bite. /",
+      "Available as a 60g inividually wrapped cookie or in a box of 12 individually wrapped cookies. Designed with cafes in mind, the Byron Bay Cookie display box is your ultimate cookie stash! Showcase your cookies at home or at work, and wherever else cookie cravings may arise. / ",
       " ",
     ],
   },
@@ -169,11 +184,11 @@ const seedProducts = [
     ],
   },
   {
-    productName: "Chobani Oatmilk Zero Sugar Original",
+    productName: "Chobani Oatmilk: Zero Sugar Original",
     productImages: [
       "https://res.cloudinary.com/dldwg8flq/image/upload/v1765333621/Chobani_Oatmilk_Zero_Sugar_Original_da8lxf.png",
-      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765333927/ChobaniOatmilkZeroSugarOriginal2_qzwpdb.png",
-      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765333846/ChobaniOatmilkZeroSugarOriginal3_lxelxs.png"
+      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765870938/5fd19cdbdcdd4.image_ucdmwg.png",
+      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765870937/0081829001747_dvnaji.jpg"
     ],
     brand: "693e937d904d600084688854",
     price: 600,
@@ -182,6 +197,55 @@ const seedProducts = [
       "Perfectly balanced and deliciously dairy-free, it is great for coffee, cereal, or smoothies. /",
       "A wholesome plant-based choice that is simple, pure, and naturally satisfying! /",
       " ",
+    ],
+  },
+  {
+    productName: "Chobani® Flip® S'more S'mores",
+    productImages: [
+      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765333620/Chobani_Flip_S_more_S_mores_vffbl4.png",
+      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765871099/10818290010732_lquruebamlnpqjux_kydr4k.jpg",
+      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765871100/c1be1845e43a250017fa4a3bc3a09258_kuudqk.jpg",
+
+    ],
+    brand: "693e937d904d600084688854",
+    price: 300,
+    description: [
+      "Honey graham crackers, toasted sugar bits, and milk chocolate tumble in vanilla Chobani® Greek Yogurt. Crafted for everyone from only natural ingredients. /",
+      "Classic s’mores flavors come together for a creamy, crunchy, dessert-inspired snack that feels indulgent but balanced. /",
+      "Every flip delivers a satisfying mix of smooth yogurt and sweet, toasty mix-ins in every bite. /",
+      " "
+    ],
+  },
+  {
+    productName: "Chobani® Oatmilk Barista Plain",
+    productImages: [
+      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765333620/Chobani_Oatmilk_Barista_Original_v1oz0p.png",
+      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765871668/N3DGOUQY2FLGXGH2RVXHCISESY_y66qsp.jpg",
+      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765871668/10818290016918_1_ev0lzsryh8zi04aa_eqgsjn.jpg",
+    ],
+    brand: "693e937d904d600084688854",
+    price: 350,
+    description: [
+      "Smooth and creamy Chobani® Oatmilk Barista is specially crafted to steam, froth, and blend perfectly into coffee and espresso drinks. Made from whole grain oats for a naturally rich taste. /",
+      "Designed for baristas and coffee lovers, it delivers consistent performance with a velvety texture in every cup. /",
+      "Dairy-free and thoughtfully made, it enhances your coffee without overpowering its flavor. /",
+      "  "
+    ],
+  },
+  {
+    productName: "Chobani® Oatmilk Extra Creamy",
+    productImages: [
+      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765333620/Chobani_Oatmilk_Extra_Creamy_jw6s6h.png",
+      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765871963/0081829001703_hp3xpr.jpg",
+      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765871963/a946657f-ff37-4350-8646-726865e002ff_qznhze.jpg",
+    ],
+    brand: "693e937d904d600084688854",
+    price: 350,
+    description: [
+      "Chobani® Oatmilk Extra Creamy is made with whole grain oats for an exceptionally smooth, rich, and indulgent texture. Crafted to deliver a fuller mouthfeel in every sip. /",
+      "Perfect for cooking, baking, or enjoying straight, it adds a creamy boost without any dairy. /",
+      "Thoughtfully made from simple ingredients, it brings comfort and flavor to everyday moments. /",
+      ""
     ],
   },
   {
@@ -205,8 +269,8 @@ const seedProducts = [
     productName: "Cereal Bowl Gourmet Chocolate Bar",
     productImages: [
       "https://res.cloudinary.com/dldwg8flq/image/upload/v1765333617/Cereal_Bowl_Gourmet_Chocolate_Bar_vrkghz.png",
-      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765333818/CerealBowlGourmetChocolateBar2_tji7kw.png",
-      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765333818/CerealBowlGourmetChocolateBar3_rnihzp.png"
+      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765333818/CerealBowlGourmetChocolateBar3_rnihzp.png",
+      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765333818/CerealBowlGourmetChocolateBar2_tji7kw.png"
     ],
     brand: "693e937d904d600084688855",
     price: 500,
@@ -214,22 +278,6 @@ const seedProducts = [
       "Start your day the sweet way with the Cereal Bowl Gourmet Chocolate Bar — creamy milk chocolate blended with crunchy cereal pieces. /",
       "Each bite delivers a nostalgic mix of breakfast crunch and smooth chocolate indulgence. /",
       "Fun, flavorful, and irresistibly unique — a true treat for cereal and chocolate lovers alike! /",
-      " ",
-    ],
-  },
-  {
-    productName: "Dubai Pistachio Knafeh Chocolate Eggs",
-    productImages: [
-      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765346195/DubaiPistachioKnafehChocolateEggs_fs51ag.png",
-      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765333955/DubaiPistachioKnafehChocolateEggs2_hl7pjy.png",
-      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765333937/DubaiPistachioKnafehChocolateEggs3_zyxzcm.png"
-    ],
-    brand: "693e937d904d600084688855",
-    price: 1500,
-    description: [
-      "Experience luxury with Dubai Pistachio Knafeh Chocolate Eggs — a decadent fusion of Middle Eastern flavor and fine chocolate craftsmanship.",
-      "Each egg is filled with layers of rich pistachio cream and crispy knafeh for a unique, indulgent bite.",
-      "A perfect balance of texture and taste — elegant, exotic, and unforgettable.",
       " ",
     ],
   },
@@ -253,8 +301,8 @@ const seedProducts = [
     productName: "Strawberry Shortcake Chocolate Bar",
     productImages: [
       "https://res.cloudinary.com/dldwg8flq/image/upload/v1765333606/Strawberry_Shortcake_Chocolate_Bar_djfw8g.png",
-      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765333932/StrawberryShortcakeChocolateBar2_gc2yzd.png",
-      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765334154/StrawberryShortcakeChocolateBar3_g3kyhg.png"
+      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765334154/StrawberryShortcakeChocolateBar3_g3kyhg.png",
+      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765333932/StrawberryShortcakeChocolateBar2_gc2yzd.png"
     ],
     brand: "693e937d904d600084688855",
     price: 800,
@@ -265,6 +313,23 @@ const seedProducts = [
       " ",
     ],
   },
+  {
+    productName: "California Love Pretzel Chocolate Bar",
+    productImages: [
+      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765333616/California_Love_Pretzel_Chocolate_Bar_cj4bif.png",
+      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765875378/Compartes-California-Love-Gourmet-Dark-Chocolate-Bar_jfpk9g.jpg",
+      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765875284/Premium-Dark-Chocolate-Pretzel-Vegan-Chocolates-Bar-Gift-California-Love_mfhxwc.jpg",
+    ],
+    brand: "693e937d904d600084688855",
+    price: 500,
+    description: [
+      "California Love, one of our most loved creations, features a decadent blend of dark chocolate with the rustic crunch of San Francisco sourdough pretzels and a hint of sea salt. This gourmet bar offers a delight of textures and flavors, with the creamy smoothness of dark chocolate contrasted by the hearty bite of sourdough pretzels. /",
+      "California Love is more than just a pretzel chocolate bar; it's an art piece. The packaging itself captures the essence of Los Angeles, with its vibrant depiction of an LA sunset that sets the sky ablaze with hues of orange, pink, and purple. Silhouettes of palm trees sway against this backdrop, embodying the laid-back, yet bustling lifestyle of the city. The packaging is a visual delight, adorned with a charming pattern in shades of pink and green, making it not only a treat for the palate but also for the eyes. /",
+      "Crafted by hand in our Los Angeles kitchens, this bar celebrates local craftsmanship. Handmade to ensure quality, California Love offers a unique tasting experience that captures California’s rich culture and vibrant aesthetics. /",
+      " ",
+    ],
+  },
+
   // GRAZE
   {
     productName: "Cherry Bakewell Oat Boosts",
@@ -301,7 +366,7 @@ const seedProducts = [
   {
     productName: "Smoky Barbecue Crunch",
     productImages: [
-      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765347720/SmokyBarbecueCrunch_vgs2xy.png",
+      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765874174/68_mtbjrs.png",
       "https://res.cloudinary.com/dldwg8flq/image/upload/v1765334153/SmokyBarbecueCrunch2_ddlonw.png",
       "https://res.cloudinary.com/dldwg8flq/image/upload/v1765333919/SmokyBarbecueCrunch3_kd2gcd.png"
     ],
@@ -315,9 +380,9 @@ const seedProducts = [
     ],
   },
   {
-    productName: "Sweet Chilli Crunch",
+    productName: "Sweet Chili Crunch",
     productImages: [
-      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765347912/SweetChilli_fkqv8y.png",
+      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765874183/BARBIE_Peaches_Cream_Soda_5_czr7hx.png",
       "https://res.cloudinary.com/dldwg8flq/image/upload/v1765333845/SweetChilliCrunch2_oomeks.png",
       "https://res.cloudinary.com/dldwg8flq/image/upload/v1765334153/SweetChilliCrunch3_apsx7j.png",
       " ",
@@ -436,9 +501,9 @@ const seedProducts = [
   },
   // LADUREE
   {
-    productName: "Laduree Macaroons",
+    productName: "Laduree Macaroons 30 Set",
     productImages: [
-      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765350549/Laduree_Macaroons_sjrnhm.png",
+      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765874176/71_hkdzzp.png",
       "https://res.cloudinary.com/dldwg8flq/image/upload/v1765333920/LadureeMacaroons2_mszzud.png",
       "https://res.cloudinary.com/dldwg8flq/image/upload/v1765333931/LadureeMacaroons3_oyb63d.png",
       " ",
@@ -455,7 +520,7 @@ const seedProducts = [
   {
     productName: "Laduree VA Marie Antoinette Collection",
     productImages: [
-      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765350850/Laduree_VA_Marie_Antoinette_Collection_ms9yx5.png",
+      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765874174/69_pa6i1x.png",
       "https://res.cloudinary.com/dldwg8flq/image/upload/v1765333928/LadureeVAMarieAntoinetteCollection2_dd8kkj.png",
       "https://res.cloudinary.com/dldwg8flq/image/upload/v1765350941/LadureeVAMarieAntoinetteCollection3_ehoi1y.png",
       " ",
@@ -472,7 +537,7 @@ const seedProducts = [
   {
     productName: "Laduree x Bridgerton Macaron Box",
     productImages: [
-      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765351993/LadureexBridgertonMacaronBox_xs5kr7.png",
+      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765333629/Laduree_x_Bridgerton_Macaron_Box_n5bdxc.png",
       "https://res.cloudinary.com/dldwg8flq/image/upload/v1765334154/LadureexBridgertonMacaronBox2_rktuue.png",
       "https://res.cloudinary.com/dldwg8flq/image/upload/v1765334153/LadureexBridgertonMacaronBox3_nz7gdh.png",
       " ",
@@ -489,7 +554,7 @@ const seedProducts = [
   {
     productName: "Langues de Chat Gift Box Dark Milk Chocolate",
     productImages: [
-      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765354894/Langues_de_Chat_Gift_Box_Dark_Milk_Chocolate_ryqxku.png",
+      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765874175/70_fclhsp.png",
       "https://res.cloudinary.com/dldwg8flq/image/upload/v1765333837/LanguesdeChatGiftBoxDarkMilkChocolate2_vzu1q7.png",
       "https://res.cloudinary.com/dldwg8flq/image/upload/v1765333819/LanguesdeChatGiftBoxDarkMilkChocolate3_uwkaeq.png",
       " ",
@@ -524,7 +589,7 @@ const seedProducts = [
   {
     productName: "Classic Root Beer",
     productImages: [
-      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765359140/ClassicRootBeer_ayrvtl.png",
+      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765874175/BARBIE_Peaches_Cream_Soda_2_hxfxvk.png",
       "https://res.cloudinary.com/dldwg8flq/image/upload/v1765333933/ClassicRootBeer2_h4tvyt.png",
       "https://res.cloudinary.com/dldwg8flq/image/upload/v1765333934/ClassicRootBeer3_pccgeo.png",
       " ",
@@ -539,11 +604,11 @@ const seedProducts = [
     ],
   },
   {
-    productName: "Pineapple Paradise",
+    productName: "Spongebob Pineapple Paradise",
     productImages: [
-      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765359307/Pineapple_Paradise_ztetnb.png",
-      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765333931/PineappleParadise2_ws7sed.png",
+      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765874186/BARBIE_Peaches_Cream_Soda_yoie8u.png",
       "https://res.cloudinary.com/dldwg8flq/image/upload/v1765333935/PineappleParadise3_m14v0l.png",
+      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765333931/PineappleParadise2_ws7sed.png",
       " ",
     ],
     brand: "693e937d904d600084688859",
@@ -556,9 +621,9 @@ const seedProducts = [
     ],
   },
   {
-    productName: "Vintage Cola",
+    productName: "Vintage Cola Sparkling Tonic",
     productImages: [
-      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765359450/Vintage_Cola_turkcl.png",
+      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765874220/BARBIE_Peaches_Cream_Soda_jhgzhu.png",
       "https://res.cloudinary.com/dldwg8flq/image/upload/v1765333932/VintageCola2_otxcwf.png",
       "https://res.cloudinary.com/dldwg8flq/image/upload/v1765334153/VintageCola3_bcdjno.png",
       " ",
@@ -576,7 +641,7 @@ const seedProducts = [
   {
     productName: "Champagne Bears",
     productImages: [
-      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765359830/Champagne_Bears_ozdl3l.png",
+      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765333619/Champagne_Bears_ov73wm.png",
       "https://res.cloudinary.com/dldwg8flq/image/upload/v1765333933/ChampagneBears3_lmgrh9.png",
       "https://res.cloudinary.com/dldwg8flq/image/upload/v1765333847/ChampagneBears2_k73liq.png",
       " ",
@@ -645,7 +710,7 @@ const seedProducts = [
   {
     productName: "Caramel Chocolate Boba Milk Tea",
     productImages: [
-      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765361308/Caramel_Chocolate_Boba_Milk_Tea_pmofjv.png",
+      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765333616/Caramel_Choco_Boba_Milk_Tea_w7rpdl.png",
       "https://res.cloudinary.com/dldwg8flq/image/upload/v1765361315/Caramel_Chocolate_Boba_Milk_Tea2_h08stu.png",
       "https://res.cloudinary.com/dldwg8flq/image/upload/v1765361318/Caramel_Chocolate_Boba_Milk_Tea3_bqvkys.png",
       " ",
@@ -662,7 +727,7 @@ const seedProducts = [
   {
     productName: "Stunning Strategem Flurry Cocktail Mix",
     productImages: [
-      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765361541/StunningStrategemFlurryCocktailMix_ech1gg.png",
+      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765333608/Stunning_Strategem_Flurry_Cocktail_Mix_bqkqit.png",
       "https://res.cloudinary.com/dldwg8flq/image/upload/v1765361540/StunningStrategemFlurryCocktailMix2_rc2nso.png",
       "https://res.cloudinary.com/dldwg8flq/image/upload/v1765361541/StunningStrategemFlurryCocktailMix3_pifdre.png",
       " ",
@@ -679,7 +744,7 @@ const seedProducts = [
   {
     productName: "Summer Festival Fish",
     productImages: [
-      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765361760/Summer_Festival_Fish_hqsguf.png",
+      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765333608/Summer_Festival_Fish_qjgt2o.png",
       "https://res.cloudinary.com/dldwg8flq/image/upload/v1765361759/Summer_Festival_Fish2_rtg9gk.png",
       "https://res.cloudinary.com/dldwg8flq/image/upload/v1765361759/Summer_Festival_Fish3_anpw3l.png",
       " ",
@@ -696,8 +761,8 @@ const seedProducts = [
   {
     productName: "Victorious Legend Tonkotsu Ramen",
     productImages: [
-      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765361931/VictoriousLegendTonkotsuRamen_umbzqk.png",
-      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765361929/VictoriousLegendTonkotsuRamen2_f3wzxa.pngg",
+      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765333608/Victorious_Legend_Tonkotsu_Ramen_ileu0j.png",
+      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765361929/VictoriousLegendTonkotsuRamen2_f3wzxa.png",
       "https://res.cloudinary.com/dldwg8flq/image/upload/v1765361930/VictoriousLegendTonkotsuRamen3_g5zriv.png",
       " ",
     ],
@@ -746,9 +811,9 @@ const seedProducts = [
     ],
   },
   {
-    productName: "Winter Chai",
+    productName: "Winter Chai Organic Herbal Loose Leaf Tea",
     productImages: [
-      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765362570/Winter_Chai_gnfvdo.png",
+      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765874181/BARBIE_Peaches_Cream_Soda_3_gnepog.png",
       "https://res.cloudinary.com/dldwg8flq/image/upload/v1765334155/WinterChai2_pfqzcb.png",
       "https://res.cloudinary.com/dldwg8flq/image/upload/v1765333933/WinterChai3_aysrkp.png",
       " ",
@@ -765,7 +830,7 @@ const seedProducts = [
   {
     productName: "Winter Chalet Advent ~ 12 Days of Cozy Teas",
     productImages: [
-      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765362685/Winter_Chalet_Advent_12_Days_of_Cozy_Teas_bjd6hk.png",
+      "https://res.cloudinary.com/dldwg8flq/image/upload/v1765874182/BARBIE_Peaches_Cream_Soda_4_komgcw.png",
       "https://res.cloudinary.com/dldwg8flq/image/upload/v1765333929/WinterChaletAdvent2_vvltaa.png",
       "https://res.cloudinary.com/dldwg8flq/image/upload/v1765333930/WinterChaletAdvent3_jxwmel.png",
       " ",

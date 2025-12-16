@@ -54,6 +54,7 @@ const styles = StyleSheet.create({
         height: 40,
         borderRadius: 8,
         backgroundColor: "#f5f5f5",
+        resizeMode: "contain",
     },
 
     itemInfo: {
