@@ -145,7 +145,8 @@ export default function ProfileScreen() {
             />
           )}
           contentContainerStyle={styles.content}
-
+          showsVerticalScrollIndicator={false}
+          ListFooterComponent={<View style={{ height: 60 }} />}
           ListEmptyComponent={
             <View style={{ alignItems: "center", marginTop: 100 }}>
               <Ionicons name="receipt" size={64} color="#ccc" />
@@ -179,6 +180,8 @@ export default function ProfileScreen() {
             />
           )}
           contentContainerStyle={styles.content}
+          showsVerticalScrollIndicator={false}
+          ListFooterComponent={<View style={{ height: 100 }} />}
           ListEmptyComponent={
             <View style={{ alignItems: "center", marginTop: 100 }}>
               <Ionicons name="heart" size={64} color="#ccc" />

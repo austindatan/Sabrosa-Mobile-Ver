@@ -70,6 +70,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 90,
     borderBottomWidth: 1,
     borderColor: "#eee",
+    backgroundColor: "#fff",
+    zIndex: 10,
   },
 
   tabItem: {
@@ -97,8 +99,8 @@ const styles = StyleSheet.create({
   },
 
   content: {
-    flex: 1,
     paddingHorizontal: 20,
+    paddingBottom: 20,
   },
 });
 

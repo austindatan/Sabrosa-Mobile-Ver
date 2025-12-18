@@ -1,6 +1,6 @@
-//@ts-nocheck
-import React, { useState, useMemo, useEffect, useRef } from "react";
-import { View, Text, Animated, FlatList, TouchableOpacity } from "react-native";
+// @ts-nocheck
+import React, { useState, useMemo, useEffect } from "react";
+import { View, Text, FlatList, TouchableOpacity } from "react-native";
 import styles from "../styles/Cookie";
 import Header from "../components/HomeHeader";
 import { useRouter } from "expo-router";
@@ -14,7 +14,6 @@ import { useFocusEffect } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 
 const Cart = () => {
-  const scrollY = useRef(new Animated.Value(0)).current;
   const router = useRouter();
   const [activeTab, setActiveTab] = useState("OnCart");
   const [loading, setLoading] = useState(true);
@@ -55,7 +54,6 @@ const Cart = () => {
     fetchOrderHistory();
   }, []);
 
-  // Refresh data
   useEffect(() => {
     if (activeTab === "OnCart") {
       fetchCart();
@@ -153,43 +151,43 @@ const Cart = () => {
       <Header />
 
       <View style={{ flex: 1 }}>
-        <Animated.ScrollView contentContainerStyle={{ paddingBottom: 200 }} scrollEventThrottle={16}>
-          <View style={localStyles.tabsContainer}>
-            {["OnCart", "History"].map((tab) => (
-              <TouchableOpacity
-                key={tab}
-                onPress={() => setActiveTab(tab)}
-                style={[localStyles.tabButton, activeTab === tab && localStyles.tabButtonActive]}
-              >
+        <View style={localStyles.tabsContainer}>
+          {["OnCart", "History"].map((tab) => (
+            <TouchableOpacity
+              key={tab}
+              onPress={() => setActiveTab(tab)}
+            >
+              <View style={localStyles.tabButton}>
                 <Text style={[localStyles.tabText, activeTab === tab && localStyles.tabTextActive]}>
                   {tab === "OnCart" ? "On Cart" : "History"}
                 </Text>
-              </TouchableOpacity>
-            ))}
-          </View>
+                {activeTab === tab && <View style={localStyles.tabUnderline} />}
+              </View>
+            </TouchableOpacity>
+          ))}
+        </View>
 
-          {activeTab === "OnCart" && !loading && (
-            cartItems.length > 0 ? (
-              <FlatList
-                data={cartItems}
-                renderItem={({ item }) => (
-                  <CartItem
-                    item={{
-                      ...item,
-                      name: item.product?.productName,
-                      price: item.product?.price,
-                      image: { uri: item.product?.productImages[0] },
-                      brandImage: { uri: item.product?.brand?.image },
-                    }}
-                    onAdd={() => handleAdd(item)}
-                    onRemove={() => handleRemove(item)}
-                  />
-                )}
-                keyExtractor={(item) => item._id}
-                scrollEnabled={false}
-                contentContainerStyle={{ marginTop: 5, marginBottom: 30 }}
+        {activeTab === "OnCart" && !loading && (
+          <FlatList
+            data={cartItems}
+            renderItem={({ item }) => (
+              <CartItem
+                item={{
+                  ...item,
+                  name: item.product?.productName,
+                  price: item.product?.price,
+                  image: { uri: item.product?.productImages[0] },
+                  brandImage: { uri: item.product?.brand?.image },
+                }}
+                onAdd={() => handleAdd(item)}
+                onRemove={() => handleRemove(item)}
               />
-            ) : (
+            )}
+            keyExtractor={(item) => item._id}
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={{ paddingBottom: cartItems.length > 0 ? 200 : 20 }}
+            ListFooterComponent={<View style={{ height: 60 }} />}
+            ListEmptyComponent={
               <View style={{ padding: 20, alignItems: "center", marginTop: 50 }}>
                 <View style={{ alignItems: "center", marginTop: 100 }}>
                   <Ionicons name="cart" size={64} color="#ccc" />
@@ -206,24 +204,24 @@ const Cart = () => {
                   </TouchableOpacity>
                 </View>
               </View>
-            )
-          )}
+            }
+          />
+        )}
 
-          {activeTab === "History" && !loading && (
-            orderHistory.length > 0 ? (
-              <FlatList
-                data={orderHistory}
-                renderItem={({ item }) => (
-                  <OrderHistoryItem
-                    order={item}
-                    onReorder={handleReorder}
-                  />
-                )}
-                keyExtractor={(item) => item._id}
-                scrollEnabled={false}
-                contentContainerStyle={{ marginTop: 5, paddingBottom: 30 }}
+        {activeTab === "History" && !loading && (
+          <FlatList
+            data={orderHistory}
+            renderItem={({ item }) => (
+              <OrderHistoryItem
+                order={item}
+                onReorder={handleReorder}
               />
-            ) : (
+            )}
+            keyExtractor={(item) => item._id}
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={{ paddingTop: 10, paddingBottom: 20 }}
+            ListFooterComponent={<View style={{ height: 60 }} />}
+            ListEmptyComponent={
               <View style={{ padding: 20, alignItems: "center", marginTop: 50 }}>
                 <View style={{ alignItems: "center", marginTop: 100 }}>
                   <Ionicons name="cart" size={64} color="#ccc" />
@@ -240,9 +238,9 @@ const Cart = () => {
                   </TouchableOpacity>
                 </View>
               </View>
-            )
-          )}
-        </Animated.ScrollView>
+            }
+          />
+        )}
 
         {activeTab === "OnCart" && !loading && cartItems.length > 0 && (
           <View style={localStyles.stickyCheckout}>

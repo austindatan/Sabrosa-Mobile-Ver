@@ -3,26 +3,35 @@ import { StyleSheet } from "react-native";
 const localStyles = StyleSheet.create({
   tabsContainer: {
     flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: "space-between",
     marginTop: 20,
+    paddingHorizontal: 90,
+    borderBottomWidth: 1,
+    borderColor: "#eee",
+    backgroundColor: "#fff",
+    zIndex: 10,
   },
   tabButton: {
-    marginHorizontal: 30,
-    borderBottomWidth: 0,
-    paddingBottom: 4,
+    alignItems: "center",
+    paddingBottom: 8,
   },
   tabButtonActive: {
-    borderBottomWidth: 2,
-    borderBottomColor: "#FF6C9B",
   },
   tabText: {
     fontSize: 16,
-    color: "#999",
-    fontFamily: "DMSans-Bold",
+    color: "#b2b2c2",
+    fontFamily: "DMSans-Medium",
   },
   tabTextActive: {
-    color: "#FF6C9B",
+    color: "#ff4d92",
+    fontWeight: "600",
+    fontFamily: "DMSans-Bold",
+  },
+  tabUnderline: {
+    marginTop: 4,
+    width: 60,
+    height: 3,
+    backgroundColor: "#ff4d92",
   },
 
   // Skeleton Styles
