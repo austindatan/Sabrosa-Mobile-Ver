@@ -4,7 +4,7 @@ import Brand from "../models/Brand.js";
 
 const router = express.Router();
 
-// Get all products for admin (with full details)
+
 router.get("/products", async (req, res) => {
     try {
         const products = await Product.find({})
@@ -18,7 +18,7 @@ router.get("/products", async (req, res) => {
     }
 });
 
-// Create new product
+
 router.post("/products", async (req, res) => {
     try {
         const { productName, productImages, brand, price, description } = req.body;
@@ -41,7 +41,7 @@ router.post("/products", async (req, res) => {
     }
 });
 
-// Update product
+
 router.put("/products/:id", async (req, res) => {
     try {
         const { productName, productImages, brand, price, description } = req.body;
@@ -63,7 +63,7 @@ router.put("/products/:id", async (req, res) => {
     }
 });
 
-// Delete product
+
 router.delete("/products/:id", async (req, res) => {
     try {
         const product = await Product.findByIdAndDelete(req.params.id);
@@ -79,7 +79,7 @@ router.delete("/products/:id", async (req, res) => {
     }
 });
 
-// Get all brands for dropdown
+
 router.get("/brands", async (req, res) => {
     try {
         const brands = await Brand.find({}).sort({ name: 1 });

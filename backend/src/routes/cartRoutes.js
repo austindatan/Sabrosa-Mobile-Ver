@@ -7,7 +7,7 @@ router.post("/add", async (req, res) => {
   try {
     const { userId, productId, quantity } = req.body;
 
-    // Validate incoming data
+    
     if (!userId || !productId) {
       return res.status(400).json({
         error: "userId and productId are required",
@@ -81,14 +81,14 @@ router.put("/update", async (req, res) => {
       return res.status(400).json({ error: "Missing userId, productId, or quantity" });
     }
 
-    // Find cart or create new one
+    
     let cart = await Cart.findOne({ user: userId });
 
     if (!cart) {
       cart = new Cart({ user: userId, items: [] });
     }
 
-    // Look for existing item
+    
     let item = cart.items.find(
       (i) => i.product.toString() === productId && i.status === "Added"
     );
@@ -96,9 +96,9 @@ router.put("/update", async (req, res) => {
     const newQuantity = Number(quantity);
 
     if (item) {
-      // existing item found
+      
       if (newQuantity <= 0) {
-        // remove item
+        
         cart.items = cart.items.filter(
           (i) => !(i.product.toString() === productId && i.status === "Added")
         );
@@ -106,7 +106,7 @@ router.put("/update", async (req, res) => {
         item.quantity = newQuantity;
       }
     } else {
-      // No item found → CREATE IT
+      
       if (newQuantity > 0) {
         cart.items.push({
           product: productId,

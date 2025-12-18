@@ -1,4 +1,4 @@
-// models/Order.js
+
 import mongoose from 'mongoose';
 
 const OrderSchema = new mongoose.Schema({
@@ -7,7 +7,7 @@ const OrderSchema = new mongoose.Schema({
         ref: 'User',
         required: true,
     },
-    // Captures a snapshot of the ordered items
+
     items: [
         {
             product: {
@@ -23,12 +23,12 @@ const OrderSchema = new mongoose.Schema({
     deliveryAddress: {
         address: { type: String, required: true },
     },
-    // Captures payment details
+
     paymentMethod: {
         type: { type: String, required: true },
         details: { type: String, default: null },
     },
-    // Financials
+
     subtotal: { type: Number, required: true },
     deliveryFee: { type: Number, required: true },
     tax: { type: Number, required: true },
@@ -42,7 +42,7 @@ const OrderSchema = new mongoose.Schema({
     createdAt: { type: Date, default: Date.now },
 });
 
-// Add compound index for efficient querying by user and sorting by createdAt
+
 OrderSchema.index({ user: 1, createdAt: -1 });
 
 export default mongoose.model('Order', OrderSchema);

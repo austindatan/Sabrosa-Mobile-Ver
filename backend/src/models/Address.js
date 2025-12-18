@@ -15,7 +15,7 @@ const deliveryAddressSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// Add index for efficient querying by user
+
 deliveryAddressSchema.index({ user: 1 });
 
 export default mongoose.model("DeliveryAddress", deliveryAddressSchema);

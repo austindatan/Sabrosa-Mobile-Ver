@@ -4,12 +4,12 @@ import Brand from "../models/Brand.js";
 
 const router = express.Router();
 
-// Get all products with pagination
+
 router.get("/", async (req, res) => {
   try {
-    const limit = parseInt(req.query.limit) || 100; // Default limit
+    const limit = parseInt(req.query.limit) || 100; 
     const skip = parseInt(req.query.skip) || 0;
-    const sort = req.query.sort || 'createdAt'; // Default sort by newest
+    const sort = req.query.sort || 'createdAt'; 
     const order = req.query.order === 'asc' ? 1 : -1;
 
     const products = await Product.find({})
@@ -33,12 +33,12 @@ router.get("/", async (req, res) => {
   }
 });
 
-// Get all unique brands with their images
+
 router.get("/brands", async (req, res) => {
   try {
     const brands = await Brand.find({}).sort({ name: 1 });
 
-    // Format response to match frontend expectations
+    
     const formattedBrands = brands.map(brand => ({
       name: brand.name,
       image: brand.image,
@@ -52,30 +52,30 @@ router.get("/brands", async (req, res) => {
   }
 });
 
-// Search for products
+
 router.get("/search", async (req, res) => {
   try {
     const query = req.query.q;
     const brand = req.query.brand;
-    const limit = parseInt(req.query.limit) || 50; // Default limit to prevent huge queries
+    const limit = parseInt(req.query.limit) || 50; 
 
     let filter = {};
 
-    // Use text search if query exists (much faster than regex with text index)
+    
     if (query) {
       filter.$text = { $search: query };
     }
 
-    // Add brand filter if specified
+    
     if (brand) {
-      // Find brand by name first
+      
       const brandDoc = await Brand.findOne({ name: brand });
       if (brandDoc) {
         filter.brand = brandDoc._id;
       }
     }
 
-    // If using text search, we can sort by relevance score
+    
     const products = query
       ? await Product.find(filter, { score: { $meta: "textScore" } })
         .populate('brand')
@@ -90,12 +90,12 @@ router.get("/search", async (req, res) => {
   }
 });
 
-// Get all products of a brand
+
 router.get("/brand/:brandName", async (req, res) => {
   try {
     const limit = parseInt(req.query.limit) || 100;
 
-    // Find brand by name
+    
     const brandDoc = await Brand.findOne({ name: req.params.brandName });
     if (!brandDoc) {
       return res.status(404).json({ message: "Brand not found" });

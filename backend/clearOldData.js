@@ -11,7 +11,7 @@ const clearOldData = async () => {
         await mongoose.connect(process.env.MONGO_URI);
         console.log("MongoDB connected.");
 
-        // Clear old orders, favorites, and cart items
+        
         await Order.deleteMany({});
         console.log("✅ All orders cleared");
 

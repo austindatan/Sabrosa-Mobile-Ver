@@ -1,5 +1,4 @@
-// This script helps convert your old seed.js products to use brand ObjectIds
-// Run this AFTER seeding brands with seedBrands.js
+
 
 import mongoose from "mongoose";
 import Product from "./src/models/Product.js";
@@ -14,7 +13,7 @@ const migrate = async () => {
         await mongoose.connect(process.env.MONGO_URI);
         console.log("MongoDB connected.");
 
-        // Get all brands
+        
         const brands = await Brand.find({});
         const brandMap = {};
         brands.forEach(brand => {

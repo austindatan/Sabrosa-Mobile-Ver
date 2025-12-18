@@ -5,7 +5,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-// Extract unique brands from the old seed data
+
 const brandsData = [
     { name: "Bluestar", image: "https://res.cloudinary.com/dldwg8flq/image/upload/v1765197123/bluestar_ksrxog.png" },
     { name: "ByronBay", image: "https://res.cloudinary.com/dldwg8flq/image/upload/v1764590952/byronbay_logo_wgngyl.png" },
@@ -25,16 +25,16 @@ const seed = async () => {
         await mongoose.connect(process.env.MONGO_URI);
         console.log("MongoDB connected.");
 
-        // Clear existing data
+        
         await Product.deleteMany();
         await Brand.deleteMany();
         console.log("Old data removed.");
 
-        // Seed brands first
+        
         const createdBrands = await Brand.insertMany(brandsData);
         console.log(`${createdBrands.length} brands added successfully!`);
 
-        // Create a map of brand names to their IDs
+        
         const brandMap = {};
         createdBrands.forEach(brand => {
             brandMap[brand.name] = brand._id;

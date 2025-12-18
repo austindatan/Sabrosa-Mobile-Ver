@@ -9,7 +9,7 @@ const createAdminUser = async () => {
         await mongoose.connect(process.env.MONGO_URI);
         console.log("MongoDB connected.");
 
-        // Check if admin already exists
+        
         const existingAdmin = await User.findOne({ email: "admin@sabrosa.com" });
 
         if (existingAdmin) {
@@ -19,12 +19,12 @@ const createAdminUser = async () => {
             process.exit();
         }
 
-        // Create admin user
+        
         const adminUser = new User({
             firstName: "Admin",
             lastName: "User",
             email: "admin@sabrosa.com",
-            password: "admin123", // This will be hashed automatically by the User model
+            password: "admin123", 
             birthday: "01/01/2000",
             number: "1234567890",
         });

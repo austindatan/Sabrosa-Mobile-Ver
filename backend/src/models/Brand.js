@@ -19,7 +19,7 @@ const BrandSchema = new mongoose.Schema(
     { timestamps: true }
 );
 
-// Add index on name for efficient lookups
+
 BrandSchema.index({ name: 1 });
 
 export default mongoose.model("Brand", BrandSchema);

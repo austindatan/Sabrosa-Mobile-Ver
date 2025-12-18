@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-// Brand ID mapping
+
 const BRAND_IDS = {
     "Bluestar": "693e937d904d600084688852",
     "ByronBay": "693e937d904d600084688853",
@@ -15,15 +15,14 @@ const BRAND_IDS = {
     "TeaForte": "693e937d904d60008468885c",
 };
 
-// Read the old seed.js file
+
 const oldSeedContent = fs.readFileSync('./seed.js', 'utf8');
 
-// Replace brandName with brand ObjectId for each brand
+
 let newSeedContent = oldSeedContent;
 
 Object.entries(BRAND_IDS).forEach(([brandName, brandId]) => {
-    // Replace pattern: brandName: "BrandName", brandImage: "url",
-    // With: brand: "ObjectId",
+
     const oldPattern = new RegExp(
         `brandName: "${brandName}",\\s*brandImage: "https://[^"]+",`,
         'g'
@@ -33,7 +32,7 @@ Object.entries(BRAND_IDS).forEach(([brandName, brandId]) => {
     newSeedContent = newSeedContent.replace(oldPattern, newPattern);
 });
 
-// Write the new seed file
+
 fs.writeFileSync('./seed_updated.js', newSeedContent);
 
 console.log('✅ Conversion complete!');
