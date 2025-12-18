@@ -1,1 +1,15 @@
-*.txt
+# Environment variables
+.env
+.env.local
+.env.*.local
+backend/.env
+mobile/.env
+
+# Configuration files with sensitive data
+config.js
+mobile/config.js
+backend/src/config.js
+backend/config.js
+
+# Node modules
+node_modules/
