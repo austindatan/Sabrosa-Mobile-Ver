@@ -15,7 +15,6 @@ export default function ProfileScreen() {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState("  Orders  ");
 
-  // 1. ❌ REMOVED: "History" tab
   const tabs = ["  Orders  ", "Favorites"];
 
   const [user, setUser] = useState(null);
@@ -23,7 +22,6 @@ export default function ProfileScreen() {
   const [favorites, setFavorites] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // ✅ Dynamic reload when screen comes into focus
   useFocusEffect(
     useCallback(() => {
       const loadData = async () => {
@@ -62,7 +60,6 @@ export default function ProfileScreen() {
       const userId = await AsyncStorage.getItem("userId");
       await axios.delete(`${config.API_BASE_URL}/api/favorites/${userId}/${productId}`);
 
-      // Remove from local state
       setFavorites(favorites.filter(fav => fav.product?._id !== productId));
     } catch (err) {
       console.log("Error removing favorite:", err);
@@ -79,7 +76,6 @@ export default function ProfileScreen() {
 
   return (
     <View style={styles.container}>
-      {/* Header Content (Unchanged) */}
       <View style={styles.header}>
         <Image
           source={require("../../assets/images/initialization_assets/new.png")}
@@ -118,7 +114,6 @@ export default function ProfileScreen() {
         {user?.email}
       </Text>
 
-      {/* Tab Row (Updated) */}
       <View style={styles.tabRow}>
         {tabs.map((t) => (
           <TouchableOpacity key={t} onPress={() => setActiveTab(t)}>
@@ -132,7 +127,6 @@ export default function ProfileScreen() {
         ))}
       </View>
 
-      {/* Orders Tab Content (Updated with ListEmptyComponent) */}
       {activeTab === "  Orders  " && (
         <FlatList
           data={orders}
@@ -166,7 +160,6 @@ export default function ProfileScreen() {
         />
       )}
 
-      {/* Favorites Tab Content (Unchanged) */}
       {activeTab === "Favorites" && (
         <FlatList
           data={favorites.filter(fav => fav.product !== null)}
@@ -175,7 +168,6 @@ export default function ProfileScreen() {
             <FavoriteCard
               item={item}
               onPress={() => {
-                // Navigate to product detail
                 if (item.product?._id) {
                   router.push({
                     pathname: "/products/[id]",

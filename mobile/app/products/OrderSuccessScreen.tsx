@@ -24,7 +24,6 @@ const OrderSuccessScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      {/* Placeholder doodle background */}
       <ImageBackground
         source={require("../../assets/images/initialization_assets/ordered.png")} 
         resizeMode="cover"

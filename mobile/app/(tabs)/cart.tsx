@@ -31,7 +31,6 @@ const Cart = () => {
       console.log("CART RESPONSE:", JSON.stringify(res.data, null, 2));
       setCartItems(addedItems);
     } catch (err) {
-      console.log("LOAD CART ERROR:", err.response?.data || err.message);
       console.log("CART RESPONSE:", JSON.stringify(res.data, null, 2));
 
     } finally {
@@ -56,7 +55,7 @@ const Cart = () => {
     fetchOrderHistory();
   }, []);
 
-  // Refresh data when switching tabs
+  // Refresh data
   useEffect(() => {
     if (activeTab === "OnCart") {
       fetchCart();
@@ -107,7 +106,6 @@ const Cart = () => {
 
       setLoading(true);
 
-      // Clear current cart first
       for (const item of cartItems) {
         await axios.put(`${config.API_BASE_URL}/api/cart/update`, {
           userId,
@@ -116,7 +114,6 @@ const Cart = () => {
         });
       }
 
-      // Add all items from the order to cart
       for (const orderItem of order.items) {
         if (orderItem.product?._id) {
           await axios.post(`${config.API_BASE_URL}/api/cart/add`, {
@@ -127,12 +124,10 @@ const Cart = () => {
         }
       }
 
-      // Refresh cart and switch to OnCart tab
       await fetchCart();
       setActiveTab("OnCart");
       setLoading(false);
 
-      // Show success message
       alert("Order items added to cart!");
     } catch (err) {
       console.log("REORDER ERROR:", err.response?.data || err.message);

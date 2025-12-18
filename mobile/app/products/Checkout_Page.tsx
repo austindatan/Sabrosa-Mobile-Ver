@@ -12,7 +12,6 @@ import { useFocusEffect } from 'expo-router';
 export default function Checkout_Page() {
     const router = useRouter();
 
-    // --- STATE MANAGEMENT ---
     const [loading, setLoading] = useState(true);
     const [cartItems, setCartItems] = useState([]);
     const [userInfo, setUserInfo] = useState(null);
@@ -21,7 +20,6 @@ export default function Checkout_Page() {
     const [cardDisplayNumber, setCardDisplayNumber] = useState(null);
     const [gcashDisplayNumber, setGcashDisplayNumber] = useState(null);
 
-    // --- DATA FETCHING ---
     const fetchCheckoutData = async () => {
         setLoading(true);
         try {
@@ -62,7 +60,6 @@ export default function Checkout_Page() {
         fetchCheckoutData();
     }, []);
 
-    // --- MEMOIZED CALCULATIONS (No changes) ---
     const subtotal = useMemo(() => {
         return cartItems.reduce((s, it) => s + (it.price * it.qty), 0);
     }, [cartItems]);
@@ -88,17 +85,15 @@ export default function Checkout_Page() {
         </View>
     );
     const onPlaceOrder = async () => {
-        // 🐞 DEBUG: Confirm button press is registered
         console.log("--- Attempting to Place Order ---");
 
-        // 🛑 Prevent placing order if cart is empty
         if (cartItems.length === 0) {
             alert("Your cart is empty and cannot place an order.");
             return;
         }
 
         try {
-            setLoading(true); // Show loading indicator (This is correct)
+            setLoading(true);
             const userId = await AsyncStorage.getItem("userId");
 
             if (!userId) {
@@ -106,7 +101,7 @@ export default function Checkout_Page() {
                 router.push('/login');
                 return;
             }
-            // 🐞 DEBUG: Log the payload being sent
+
             const itemsForPayload = cartItems.map(item => ({
                 id: item.id,
                 name: item.name,
@@ -121,30 +116,25 @@ export default function Checkout_Page() {
                 tax: tax,
                 total: total,
                 selectedPayment: selectedPayment,
-                items: itemsForPayload, // Use the mapped list
+                items: itemsForPayload,
             };
 
-            console.log("Payload:", orderPayload); // Log the payload
+            console.log("Payload:", orderPayload);
 
-            // 2. Call the new Place Order API route
             const response = await axios.post(`${config.API_BASE_URL}/api/order/place`, orderPayload);
 
             console.log("Order successful:", response.data);
 
-            // 3. Navigate to the success screen
             router.push("/products/OrderSuccessScreen");
 
         } catch (err) {
-            // ✅ This console error is crucial for network/server errors
             console.error("ORDER PLACEMENT FAILED:", err.response?.data || err.message);
-            // ✅ Show an alert for the user
             alert(`Failed to place order: ${err.response?.data?.error || "Server error. Check console for details."}`);
         } finally {
-            setLoading(false); // Hide loading indicator
+            setLoading(false);
         }
     };
 
-    // --- LOADING/EMPTY STATES (No changes) ---
     if (loading) {
         return (
             <SafeAreaView style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -165,8 +155,6 @@ export default function Checkout_Page() {
         );
     }
 
-
-    // --- MAIN RENDER (Payment Card Changes) ---
     return (
         <SafeAreaView style={styles.safe}>
             <ImageBackground
@@ -180,7 +168,6 @@ export default function Checkout_Page() {
 
             <ScrollView contentContainerStyle={styles.scroll}>
 
-                {/* DELIVERY ADDRESS CARD (No changes) */}
                 <View style={styles.card}>
                     <View style={styles.cardHeader}>
                         <Text style={styles.cardTitle}>Delivery Address</Text>
@@ -215,7 +202,6 @@ export default function Checkout_Page() {
                     </View>
                 </View>
 
-                {/* 💳 PAYMENT CARD */}
                 <View style={styles.card}>
                     <View style={styles.cardHeader}>
                         <Text style={styles.cardTitle}>Payment</Text>
@@ -225,7 +211,6 @@ export default function Checkout_Page() {
                     </View>
 
                     <View style={styles.paymentRow}>
-                        {/* Card */}
                         <TouchableOpacity
                             style={styles.paymentOption}
                             onPress={() => setSelectedPayment('card')}
@@ -236,7 +221,7 @@ export default function Checkout_Page() {
                                     size={20}
                                     color={selectedPayment === 'card' ? '#FF6C9B' : '#999'}
                                 />
-                                {/* 🎯 Styling Adjustment: Align text content to the left */}
+                            
                                 <View style={{ marginLeft: 10, justifyContent: 'center' }}>
                                     <Text
                                         style={[
@@ -260,7 +245,6 @@ export default function Checkout_Page() {
                             )}
                         </TouchableOpacity>
 
-                        {/* GCash */}
                         <TouchableOpacity
                             style={styles.paymentOption}
                             onPress={() => setSelectedPayment('gcash')}
@@ -324,7 +308,6 @@ export default function Checkout_Page() {
                     </View>
                 </View>
 
-                {/* ORDER SUMMARY (No changes) */}
                 <View style={styles.card}>
                     <Text style={styles.cardTitle}>Order Summary</Text>
 
@@ -359,7 +342,6 @@ export default function Checkout_Page() {
                     </View>
                 </View>
 
-                {/* NOTES (No changes) */}
                 <View style={styles.card}>
                     <Text style={styles.cardTitle}>Notes & Promo</Text>
                     <Text style={{ color: '#777', marginTop: 8, fontFamily: "DMSans-Medium" }}>
@@ -370,7 +352,6 @@ export default function Checkout_Page() {
                 <View style={{ height: 90 }} />
             </ScrollView>
 
-            {/* STICKY BOTTOM BAR (No changes) */}
             <View style={styles.stickyBar}>
                 <View style={{ flex: 1 }}>
                     <Text style={{ color: '#777', fontSize: 12, fontFamily: 'DMSans-Medium', }}>Total</Text>
@@ -381,7 +362,7 @@ export default function Checkout_Page() {
 
                 <TouchableOpacity
                     style={styles.placeButton}
-                    onPress={onPlaceOrder} // 👈 This is the important call!
+                    onPress={onPlaceOrder}
                     activeOpacity={0.85}
                 >
                     <Text style={styles.placeBtnText}>Place Order</Text>
@@ -390,5 +371,3 @@ export default function Checkout_Page() {
         </SafeAreaView>
     );
 }
-
-// onPress={() => router.push("/products/OrderSuccessScreen")}

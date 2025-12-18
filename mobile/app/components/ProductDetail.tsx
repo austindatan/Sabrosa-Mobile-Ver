@@ -42,10 +42,8 @@ const ProductDetail = ({
   const [loading, setLoading] = useState(true);
   const [activeImage, setActiveImage] = useState(heroImage);
 
-  // MODAL STATES
   const [showModal, setShowModal] = useState(false);
 
-  // Animation refs
   const scaleAnim = useRef(new Animated.Value(0.8)).current;
   const opacityAnim = useRef(new Animated.Value(0)).current;
 
@@ -81,7 +79,6 @@ const ProductDetail = ({
     ]).start(() => setShowModal(false));
   };
 
-  // Check if product is favorited on load
   useEffect(() => {
     const checkFavoriteStatus = async () => {
       try {
@@ -100,7 +97,6 @@ const ProductDetail = ({
     checkFavoriteStatus();
   }, [productId]);
 
-  // Toggle favorite
   const toggleFavorite = async () => {
     try {
       const userId = await AsyncStorage.getItem("userId");
@@ -121,7 +117,6 @@ const ProductDetail = ({
     }
   };
 
-  // Loader timeout
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 800);
     return () => clearTimeout(timer);
@@ -157,22 +152,19 @@ const ProductDetail = ({
     return (
       <View style={styles.wrapper}>
         <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-          {/* Hero Image Skeleton */}
+          
           <View style={styles.heroContainer}>
             <SkeletonLoader width="100%" height={240} borderRadius={0} />
 
-            {/* Back Button Skeleton */}
             <View style={[styles.backButton, { backgroundColor: '#E1E9EE' }]}>
               <SkeletonLoader width={24} height={24} borderRadius={12} />
             </View>
 
-            {/* Heart Button Skeleton */}
             <View style={[styles.heartButton, { backgroundColor: '#E1E9EE' }]}>
               <SkeletonLoader width={24} height={24} borderRadius={12} />
             </View>
           </View>
 
-          {/* Product Info Skeleton */}
           <View style={styles.productInfo}>
             <View style={styles.leftColumn}>
               <SkeletonLoader width={50} height={20} style={{ marginBottom: 4 }} />
@@ -183,14 +175,12 @@ const ProductDetail = ({
             </View>
           </View>
 
-          {/* Gallery Skeleton */}
           <View style={styles.galleryContainer}>
             <SkeletonLoader width={80} height={80} borderRadius={10} />
             <SkeletonLoader width={80} height={80} borderRadius={10} />
             <SkeletonLoader width={80} height={80} borderRadius={10} />
           </View>
 
-          {/* Description Skeleton */}
           <View style={styles.description}>
             <SkeletonLoader width="100%" height={12} style={{ marginBottom: 8 }} />
             <SkeletonLoader width="90%" height={12} style={{ marginBottom: 8 }} />
@@ -201,7 +191,6 @@ const ProductDetail = ({
           <View style={{ height: 50 }} />
         </ScrollView>
 
-        {/* Footer Skeleton */}
         <View style={styles.footer}>
           <SkeletonLoader width={120} height={34} borderRadius={17} />
           <SkeletonLoader width={150} height={48} borderRadius={30} />
@@ -274,7 +263,6 @@ const ProductDetail = ({
         <View style={{ height: 50 }} />
       </ScrollView>
 
-      {/* FOOTER ADD TO CART */}
       <View style={styles.footer}>
         <View style={styles.quantityContainer}>
           <TouchableOpacity
@@ -297,7 +285,6 @@ const ProductDetail = ({
         </TouchableOpacity>
       </View>
 
-      {/* MODAL */}
       <Modal transparent visible={showModal} animationType="fade">
         <View style={modalStyles.overlay}>
           <Animated.View
@@ -314,8 +301,6 @@ const ProductDetail = ({
             <Text style={modalStyles.modalTitle}>Added to Cart!</Text>
             <Text style={modalStyles.modalSubtitle}>{productName} has been added.</Text>
 
-            {/* ⬇️⬇️⬇️ ADDED BUTTONS BELOW — NOTHING ELSE CHANGED */}
-
             <View style={modalStyles.buttonRow}>
               <Pressable style={modalStyles.closeButton} onPress={closeModal}>
                 <Text style={modalStyles.closeText}>Close</Text>
@@ -329,8 +314,6 @@ const ProductDetail = ({
               </Pressable>
             </View>
 
-            {/* ⬆️⬆️⬆️ ONLY THIS WAS ADDED */}
-
           </Animated.View>
         </View>
       </Modal>
@@ -341,9 +324,6 @@ const ProductDetail = ({
 
 export default ProductDetail;
 
-/* ===========================
-   INLINE MODAL STYLES
-=========================== */
 const modalStyles = {
   overlay: {
     flex: 1,

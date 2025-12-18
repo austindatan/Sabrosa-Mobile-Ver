@@ -37,7 +37,6 @@ const Privacy = () => {
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={{ paddingBottom: 30 }}>
-      {/* Header */}
       <View style={headerStyles.curvedContainer}>
         <ImageBackground
           source={require("../../assets/images/initialization_assets/new.png")}
@@ -49,7 +48,6 @@ const Privacy = () => {
         </ImageBackground>
       </View>
 
-      {/* Body */}
       <View style={styles.body}>
         <View style={styles.card}>
           <Text style={styles.cardTitle}>Privacy Options</Text>
@@ -126,7 +124,6 @@ const Privacy = () => {
   );
 };
 
-// Header styles
 const headerStyles = StyleSheet.create({
   curvedContainer: {
     overflow: "hidden",
@@ -135,7 +132,7 @@ const headerStyles = StyleSheet.create({
   },
   background: {
     width: "100%",
-    height: 130, // smaller photo height
+    height: 130,
     justifyContent: "center",
     alignItems: "center",
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight + 25 : 25,

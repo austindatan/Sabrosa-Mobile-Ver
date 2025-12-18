@@ -37,13 +37,12 @@ const AdminDashboard = () => {
     const [currentProduct, setCurrentProduct] = useState(null);
     const [selectedBrand, setSelectedBrand] = useState("All Brands");
 
-    // Form state
     const [formData, setFormData] = useState({
         productName: "",
         price: "",
         brand: "",
         productImages: ["", "", ""],
-        localImageUris: ["", "", ""], // Store local URIs before upload
+        localImageUris: ["", "", ""],
         description: [""],
     });
 
@@ -65,7 +64,6 @@ const AdminDashboard = () => {
         try {
             setLoading(true);
             const res = await axios.get(`${config.API_BASE_URL}/api/admin/products`);
-            // Sort alphabetically by product name
             const sortedProducts = (res.data.products || []).sort((a, b) =>
                 a.productName.localeCompare(b.productName)
             );
@@ -139,7 +137,6 @@ const AdminDashboard = () => {
         });
 
         if (!result.canceled) {
-            // Just store local URI, don't upload yet
             const newLocalUris = [...formData.localImageUris];
             newLocalUris[index] = result.assets[0].uri;
             setFormData({ ...formData, localImageUris: newLocalUris });
@@ -164,7 +161,6 @@ const AdminDashboard = () => {
         setEditMode(true);
         setCurrentProduct(product);
 
-        // Parse description array and remove trailing " /"
         const cleanedDesc = Array.isArray(product.description)
             ? product.description.map(d => d.replace(/ \/$/, '').trim())
             : [product.description?.replace(/ \/$/, '').trim() || ""];
@@ -201,7 +197,6 @@ const AdminDashboard = () => {
     };
 
     const handleSave = async () => {
-        // Validation
         if (!formData.productName.trim()) {
             Alert.alert("Error", "Product name is required");
             return;
@@ -215,7 +210,6 @@ const AdminDashboard = () => {
             return;
         }
 
-        // Check images - with safety
         console.log("Local URIs:", formData.localImageUris);
         console.log("Product Images:", formData.productImages);
 
@@ -243,11 +237,9 @@ const AdminDashboard = () => {
             console.log("Starting upload. Initial finalImages:", finalImages);
             console.log("Local URIs to upload:", formData.localImageUris);
 
-            // Upload new images if any
             for (let i = 0; i < formData.localImageUris.length; i++) {
                 if (formData.localImageUris[i] && typeof formData.localImageUris[i] === 'string') {
                     console.log(`Uploading image ${i + 1}...`);
-                    // Image 1 goes to Sprites, Images 2-3 go to Display
                     const folder = i === 0 ? "Sabrosa/Sprites" : "Sabrosa/Display";
                     try {
                         const uploadedUrl = await uploadToCloudinary(formData.localImageUris[i], folder);
@@ -264,7 +256,6 @@ const AdminDashboard = () => {
 
             console.log("Description array:", formData.description);
 
-            // Add " /" to each description - with comprehensive safety
             const formattedDesc = formData.description
                 .filter(desc => desc !== null && desc !== undefined && typeof desc === 'string' && desc.trim() !== "")
                 .map(desc => desc.trim() + " /");
@@ -361,7 +352,6 @@ const AdminDashboard = () => {
     );
 
     const getImageSource = (index) => {
-        // Show local URI if available, otherwise show existing image
         if (formData.localImageUris[index]) {
             return { uri: formData.localImageUris[index] };
         } else if (formData.productImages[index]) {
@@ -372,7 +362,6 @@ const AdminDashboard = () => {
 
     return (
         <View style={styles.container}>
-            {/* Header like Privacy */}
             <View style={styles.curvedContainer}>
                 <ImageBackground
                     source={require("../../assets/images/initialization_assets/new.png")}
@@ -394,7 +383,6 @@ const AdminDashboard = () => {
                 </ImageBackground>
             </View>
 
-            {/* Brand Filter */}
             <View style={styles.filterContainer}>
                 <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.filterScroll}>
                     <TouchableOpacity
@@ -430,7 +418,6 @@ const AdminDashboard = () => {
                 </ScrollView>
             </View>
 
-            {/* Products List */}
             {loading ? (
                 <View style={styles.loadingContainer}>
                     <ActivityIndicator size="large" color="#FF6C9B" />
@@ -446,7 +433,6 @@ const AdminDashboard = () => {
                 />
             )}
 
-            {/* Add/Edit Modal */}
             <Modal
                 visible={modalVisible}
                 animationType="slide"
@@ -523,7 +509,6 @@ const AdminDashboard = () => {
                                 Image 1: Display | Images 2-3: Gallery
                             </Text>
 
-                            {/* Image Gallery */}
                             <View style={styles.imageGallery}>
                                 {[0, 1, 2].map((index) => (
                                     <TouchableOpacity

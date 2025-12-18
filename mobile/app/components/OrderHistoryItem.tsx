@@ -29,7 +29,6 @@ const OrderHistoryItem = ({ order, onReorder }) => {
 
     return (
         <View style={styles.container}>
-            {/* Header with Status and Date */}
             <View style={styles.header}>
                 <View style={[styles.statusBadge, { backgroundColor: getStatusColor(order.status) + '20' }]}>
                     <Text style={[styles.statusText, { color: getStatusColor(order.status) }]}>
@@ -39,7 +38,6 @@ const OrderHistoryItem = ({ order, onReorder }) => {
                 <Text style={styles.dateText}>{formatDate(order.createdAt)}</Text>
             </View>
 
-            {/* Order Items Preview */}
             <View style={styles.itemsContainer}>
                 {order.items.slice(0, 3).map((item, index) => (
                     <View key={index} style={styles.itemRow}>
@@ -63,13 +61,11 @@ const OrderHistoryItem = ({ order, onReorder }) => {
                 )}
             </View>
 
-            {/* Total */}
             <View style={styles.totalRow}>
                 <Text style={styles.totalLabel}>Total</Text>
                 <Text style={styles.totalValue}>₱{order.total.toFixed(2)}</Text>
             </View>
 
-            {/* Reorder Button */}
             <TouchableOpacity
                 style={styles.reorderButton}
                 onPress={() => onReorder(order)}

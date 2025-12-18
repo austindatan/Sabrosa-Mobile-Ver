@@ -43,7 +43,6 @@ const CartItem = ({ item, onAdd, onRemove }) => {
   if (loading) {
     return (
       <View style={styles.container}>
-        {/* Product Image Skeleton */}
         <SkeletonLoader width={70} height={70} borderRadius={10} />
 
         <View style={styles.detailsContainer}>

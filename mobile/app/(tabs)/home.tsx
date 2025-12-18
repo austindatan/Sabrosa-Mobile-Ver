@@ -15,8 +15,6 @@ const Home = () => {
   const router = useRouter();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  // Get the scroll handler from the hook
   const { handleScroll } = useHideOnScroll();
 
   const fetchRandomProducts = async () => {
@@ -24,8 +22,6 @@ const Home = () => {
       setLoading(true);
       const res = await axios.get(`${config.API_BASE_URL}/api/products`);
       const allProducts = res.data.products || res.data;
-
-      // Shuffle and get 10 random products
       const shuffled = [...allProducts].sort(() => 0.5 - Math.random());
       const randomProducts = shuffled.slice(0, 10);
 
@@ -37,12 +33,11 @@ const Home = () => {
     }
   };
 
-  // Fetch on mount
   useEffect(() => {
     fetchRandomProducts();
   }, []);
 
-  // Refresh every time user returns to this screen
+  // Refresh
   useFocusEffect(
     React.useCallback(() => {
       fetchRandomProducts();
@@ -58,7 +53,7 @@ const Home = () => {
           [{ nativeEvent: { contentOffset: { y: scrollY } } }],
           {
             useNativeDriver: false,
-            listener: handleScroll, // Listener to hide/show the tab bar
+            listener: handleScroll,
           }
         )}
       >

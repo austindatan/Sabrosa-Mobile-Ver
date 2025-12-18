@@ -81,7 +81,6 @@ const TermsPolicies = () => {
         contentInsetAdjustmentBehavior="never"
         showsVerticalScrollIndicator={false}
       >
-        {/* Header with image and curved bottom */}
         <ImageBackground
           source={require("../../assets/images/initialization_assets/new.png")}
           style={headerStyles.curvedContainer}
@@ -92,7 +91,6 @@ const TermsPolicies = () => {
         </ImageBackground>
 
         <View style={styles.body}>
-          {/* Terms Sections */}
           {termsSections.map((section, index) => (
             <View key={index} style={styles.card}>
               <Text style={styles.cardTitle}>{section.title}</Text>
@@ -100,7 +98,6 @@ const TermsPolicies = () => {
             </View>
           ))}
 
-          {/* Footer */}
           <View style={{ marginTop: 20, marginBottom: 30 }}>
             <Text style={{ textAlign: "center", color: "#999", fontSize: 12, lineHeight: 18, fontFamily: "DMSans-Regular" }}>
               By using Sabrosa, you acknowledge that you have read, understood, and agree to these Terms & Policies.
@@ -118,7 +115,7 @@ const TermsPolicies = () => {
 const headerStyles = StyleSheet.create({
   curvedContainer: {
     width: "100%",
-    height: 150, // taller for image + curve + subtitle
+    height: 150,
     justifyContent: "center",
     alignItems: "center",
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight + 20 : 20,

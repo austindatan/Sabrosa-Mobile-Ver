@@ -21,7 +21,6 @@ const SearchPage = () => {
       try {
         const response = await fetch(`${api.API_BASE_URL}/api/products/brands`);
         const data = await response.json();
-        // API now returns array of {name, image} objects
         setBrands(data);
       } catch (error) {
         console.error("Error fetching brands:", error);
@@ -83,7 +82,6 @@ const SearchPage = () => {
       >
         <View style={modalStyles.overlay}>
           <View style={modalStyles.modalContainer}>
-            {/* Header */}
             <View style={modalStyles.header}>
               <Text style={modalStyles.headerTitle}>Filter by Brand</Text>
               <TouchableOpacity onPress={() => setModalVisible(false)}>
@@ -91,7 +89,6 @@ const SearchPage = () => {
               </TouchableOpacity>
             </View>
 
-            {/* Brand List */}
             <ScrollView style={modalStyles.brandList} showsVerticalScrollIndicator={false}>
               {brands.map(brand => (
                 <TouchableOpacity
@@ -127,7 +124,6 @@ const SearchPage = () => {
               <View style={{ height: 20}} />
             </ScrollView>
 
-            {/* Action Buttons */}
             <View style={modalStyles.actionButtons}>
               <TouchableOpacity
                 style={modalStyles.clearButton}

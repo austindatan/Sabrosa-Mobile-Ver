@@ -33,7 +33,6 @@ const HelpCenter = () => {
 
   return (
     <ScrollView style={styles.container} ref={scrollRef} contentContainerStyle={{ paddingBottom: 30 }}>
-      {/* Header */}
       <View style={headerStyles.curvedContainer}>
         <ImageBackground
           source={require("../../assets/images/initialization_assets/new.png")}
@@ -45,9 +44,7 @@ const HelpCenter = () => {
         </ImageBackground>
       </View>
 
-      {/* Body */}
       <View style={styles.body}>
-        {/* FAQ Section */}
         <View style={styles.card}>
           <Text style={styles.cardTitle}>Frequently Asked Questions</Text>
 
@@ -67,7 +64,6 @@ const HelpCenter = () => {
           </TouchableOpacity>
         </View>
 
-        {/* Additional FAQ Section */}
         <View style={styles.card}>
           <Text style={styles.cardTitle}>More FAQs</Text>
 
@@ -92,7 +88,6 @@ const HelpCenter = () => {
           </TouchableOpacity>
         </View>
 
-        {/* Quick Actions Section */}
         <View style={styles.card}>
           <Text style={styles.cardTitle}>Quick Actions</Text>
 
@@ -112,7 +107,6 @@ const HelpCenter = () => {
           </TouchableOpacity>
         </View>
 
-        {/* Contact Support Section */}
         <View style={styles.card}>
           <Text style={styles.cardTitle}>Contact Support</Text>
           <Text style={{ marginBottom: 10, color: "#555" }}>
@@ -130,7 +124,6 @@ const HelpCenter = () => {
           </TouchableOpacity>
         </View>
 
-        {/* Social Media Section */}
         <View style={styles.card}>
           <Text style={styles.cardTitle}>Connect with Us</Text>
 
@@ -150,7 +143,6 @@ const HelpCenter = () => {
           </TouchableOpacity>
         </View>
 
-        {/* Footer */}
         <View style={{ marginTop: 20 }}>
           <Text style={{ textAlign: "center", color: "#999", fontSize: 12, lineHeight: 18, fontFamily: "DMSans-Regular" }}>
             Explore the above sections to find answers to common questions and contact our support team for further assistance. Sabrosa is here to make your experience smooth, safe, and enjoyable.
@@ -164,7 +156,6 @@ const HelpCenter = () => {
   );
 };
 
-// Header styles (same as Privacy)
 const headerStyles = StyleSheet.create({
   curvedContainer: {
     overflow: "hidden",

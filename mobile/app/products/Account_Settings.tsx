@@ -39,16 +39,13 @@ const AccountSettings = () => {
           style={headerStyles.background}
           resizeMode="cover"
         >
-          {/* Header Title */}
           <Text style={headerStyles.title}>Account Settings</Text>
-          {/* Small Description */}
           <Text style={headerStyles.subtitle}>
             Manage your profile and preferences
           </Text>
         </ImageBackground>
       </View>
 
-      {/* Body */}
       <View style={styles.body}>
         <View style={styles.card}>
           <Text style={styles.cardTitle}>Account Options</Text>
@@ -149,7 +146,6 @@ const AccountSettings = () => {
   );
 };
 
-// Header styles
 const headerStyles = StyleSheet.create({
   curvedContainer: {
     overflow: "hidden",

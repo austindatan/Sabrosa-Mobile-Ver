@@ -34,7 +34,7 @@ const SignUp = () => {
       const body = {
         firstName,
         lastName,
-        birthday: formatDate(date), // from your date picker
+        birthday: formatDate(date),
         number,
         email,
         password,

@@ -11,8 +11,6 @@ import { Ionicons } from '@expo/vector-icons';
 
 const { height } = Dimensions.get('window');
 
-// ... (localStyles remains the same) ...
-
 const localStyles = StyleSheet.create({
     container: { flex: 1, backgroundColor: '#f8f8f8' },
     map: { width: '100%', height: height }, 
@@ -68,7 +66,6 @@ export default function AddAddressScreen() {
     const [addressLine, setAddressLine] = useState('');
     const [isSaving, setIsSaving] = useState(false);
 
-    // Use a reference region for initial load and centering
     const [initialRegion] = useState({ 
         latitude: 8.4556, 
         longitude: 124.6465,
@@ -76,7 +73,6 @@ export default function AddAddressScreen() {
         longitudeDelta: 0.05,
     });
     
-    // We'll use this state to manually pan the map when a location is selected
     const [currentRegion, setCurrentRegion] = useState(initialRegion);
 
     const [markerCoord, setMarkerCoord] = useState({
@@ -84,7 +80,6 @@ export default function AddAddressScreen() {
         longitude: 124.6465,
     });
 
-    // ... (rest of useEffect and reverseGeocode functions remain the same) ...
     useEffect(() => {
         (async () => {
             let { status } = await Location.requestForegroundPermissionsAsync();
@@ -98,7 +93,6 @@ export default function AddAddressScreen() {
                 latitude: location.coords.latitude,
                 longitude: location.coords.longitude,
             };
-            // Set the region once on initial load
             setCurrentRegion({ ...newCoords, latitudeDelta: 0.01, longitudeDelta: 0.01 }); 
             setMarkerCoord(newCoords);
             reverseGeocode(newCoords); 
@@ -119,12 +113,9 @@ export default function AddAddressScreen() {
         }
     };
 
-
-    // Handle map tap to set new delivery point
     const onMapPress = (e) => {
         const newCoords = e.nativeEvent.coordinate;
         setMarkerCoord(newCoords);
-        // 💡 FIX: Manually update the map center by setting currentRegion only when we drop the pin
         setCurrentRegion({ 
             ...newCoords, 
             latitudeDelta: currentRegion.latitudeDelta, 
@@ -133,7 +124,6 @@ export default function AddAddressScreen() {
         reverseGeocode(newCoords);
     };
 
-    // Function to save the address
     const handleSaveAddress = async () => {
         if (!addressLine || addressLine.length < 5) {
             Alert.alert('Missing Address', 'Please provide a detailed address line or select a location on the map.');
@@ -149,8 +139,6 @@ export default function AddAddressScreen() {
                 return;
             }
             
-            // API CALL TO SAVE ADDRESS
-            // 💡 Ensure your backend API route is registered as '/api/addresses/add'
             const response = await axios.post(`${config.API_BASE_URL}/api/address/add`, {
                 user: userId,
                 address: addressLine,
@@ -174,20 +162,14 @@ export default function AddAddressScreen() {
             <Stack.Screen 
                 options={{ 
                     headerTitle: () => <Text style={localStyles.headerText}>Select Delivery Location</Text>,
-                    // 💡 BACK BUTTON FIX: Expo Router automatically handles the back button 
-                    // if you use `router.back()`. Ensure `headerBackVisible: true` (default)
-                    // and that you're using a stack navigator.
                     headerBackTitle: "Back",
                 }} 
             />
             
-            {/* Full Screen Map View */}
             <MapView
                 style={localStyles.map}
-                // 💡 FIX: Use currentRegion state to control the map's center
                 region={currentRegion} 
                 initialRegion={initialRegion}
-                // 💡 REMOVED: onRegionChangeComplete={setRegion} to prevent glitching
                 onPress={onMapPress}
                 showsUserLocation={true}
             >
@@ -196,13 +178,11 @@ export default function AddAddressScreen() {
                         coordinate={markerCoord}
                         title={"Delivery Location"}
                         draggable={true}
-                        // Use onMapPress to process the new drag-end coordinate
                         onDragEnd={onMapPress} 
                     />
                 )}
             </MapView>
 
-            {/* Sticky Bottom Sheet */}
             <View style={localStyles.bottomSheet}>
                 <TouchableOpacity onPress={() => router.back()}>
                     <Ionicons name="arrow-back" size={24} color="#000" />

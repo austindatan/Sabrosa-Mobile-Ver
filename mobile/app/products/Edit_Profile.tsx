@@ -24,26 +24,21 @@ const Edit_Profile = () => {
 
   const [user, setUser] = useState(null);
 
-  // Editable fields
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [number, setNumber] = useState("");
   const [email, setEmail] = useState("");
 
-  // Profile Picture (display only)
   const [profilePic, setProfilePic] = useState(null);
 
-  // Cover photo (static)
   const [coverPhoto] = useState(
     require("../../assets/images/initialization_assets/new.png")
   );
 
-  // MODAL STATES
   const [showModal, setShowModal] = useState(false);
   const scaleAnim = useRef(new Animated.Value(0.8)).current;
   const opacityAnim = useRef(new Animated.Value(0)).current;
 
-  // Load user info
   useEffect(() => {
     const loadUser = async () => {
       try {
@@ -63,13 +58,11 @@ const Edit_Profile = () => {
         const data = await res.json();
         setUser(data);
 
-        // Pre-fill fields
         setFirstName(data.firstName || "");
         setLastName(data.lastName || "");
         setNumber(data.number || "");
         setEmail(data.email || "");
 
-        // Pre-fill profile image
         setProfilePic(data.profileImage || null);
       } catch (err) {
         console.error("Error loading user:", err);
@@ -79,7 +72,6 @@ const Edit_Profile = () => {
     loadUser();
   }, []);
 
-  // MODAL ANIMATION
   const openModal = () => {
     setShowModal(true);
     Animated.parallel([
@@ -95,7 +87,6 @@ const Edit_Profile = () => {
     ]).start(() => setShowModal(false));
   };
 
-  // Save changes
   const handleSave = async () => {
     try {
       const token = await SecureStore.getItemAsync("token");
@@ -142,7 +133,6 @@ const Edit_Profile = () => {
 
   return (
     <ScrollView style={styles.container}>
-      {/* COVER PHOTO (static) */}
       <ImageBackground source={coverPhoto} style={styles.headerBackground} resizeMode="cover">
         <View style={styles.profileSection}>
           <Image
@@ -196,7 +186,6 @@ const Edit_Profile = () => {
         </Pressable>
       </View>
 
-      {/* MODAL */}
       {showModal && (
         <Modal transparent visible={showModal} animationType="fade">
           <View style={modalStyles.overlay}>

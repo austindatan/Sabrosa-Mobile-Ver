@@ -14,7 +14,6 @@ const User_Settings = () => {
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
   const [user, setUser] = useState(null);
 
-  // Fetch user data function
   const fetchUserData = async () => {
     try {
       const token = await SecureStore.getItemAsync("token");
@@ -38,7 +37,6 @@ const User_Settings = () => {
     }
   };
 
-  // Refresh on screen focus
   useFocusEffect(
     useCallback(() => {
       fetchUserData();
@@ -57,7 +55,6 @@ const User_Settings = () => {
 
   return (
     <ScrollView style={styles.container}>
-      {/* Header */}
       <ImageBackground
         source={require("../../assets/images/initialization_assets/new.png")}
         style={styles.headerBackground}
@@ -72,7 +69,6 @@ const User_Settings = () => {
       </ImageBackground>
 
       <View style={styles.bodyUser}>
-        {/* Personal Info */}
         <View style={styles.card}>
           <Text style={styles.cardTitle}>Personal Info</Text>
           <View style={styles.infoRow}>
@@ -89,7 +85,6 @@ const User_Settings = () => {
           </View>
         </View>
 
-        {/* Contact Info */}
         <View style={styles.card}>
           <Text style={styles.cardTitle}>Contact Info</Text>
           <View style={styles.infoRow}>
@@ -102,7 +97,6 @@ const User_Settings = () => {
           </View>
         </View>
 
-        {/* Edit Profile Button */}
         <TouchableOpacity
           style={styles.editProfileButton}
           onPress={() => router.push("products/Edit_Profile")}
@@ -110,7 +104,6 @@ const User_Settings = () => {
           <Text style={styles.editProfileText}>Edit Profile</Text>
         </TouchableOpacity>
 
-        {/* Settings */}
         <View style={styles.card}>
           <Text style={styles.cardTitle}>Settings</Text>
 

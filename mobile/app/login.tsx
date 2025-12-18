@@ -8,11 +8,9 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const Login = () => {
   const router = useRouter();
 
-  // added states
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  // backend login flow
   const handleLogin = async () => {
     if (!email || !password) {
       Alert.alert("Missing Fields", "Please enter both email and password.");
@@ -33,12 +31,10 @@ const Login = () => {
         return;
       }
 
-      // store data
       await SecureStore.setItemAsync("token", data.token);
       await AsyncStorage.setItem("userId", data.user.id);
       await AsyncStorage.setItem("userEmail", email);
 
-      // Check if admin and redirect accordingly
       if (email === "admin@sabrosa.com") {
         router.replace("/products/AdminDashboard");
       } else {
@@ -82,7 +78,6 @@ const Login = () => {
           <Text style={styles.titleBase}>Sign Up or Log In</Text>
           <Text style={styles.subtitleBase}>Select your preferred method to continue</Text>
 
-          {/* Email Input */}
           <TextInput
             placeholder="Email"
             placeholderTextColor="#555"
@@ -93,7 +88,6 @@ const Login = () => {
             onChangeText={setEmail}
           />
 
-          {/* Password Input */}
           <TextInput
             placeholder="Password"
             placeholderTextColor="#555"

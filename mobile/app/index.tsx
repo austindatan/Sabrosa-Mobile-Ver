@@ -1,37 +1,27 @@
 import { StyleSheet, Text, View, Image, ImageBackground, TouchableOpacity} from "react-native";
-import React, { useEffect } from "react"; // 🚨 Import useEffect
+import React, { useEffect } from "react";
 import { useRouter } from "expo-router";
 import * as SecureStore from "expo-secure-store";
 
 const Index = () => {
-    // 🚨 FIX 1: Move router initialization inside the component
-    const router = useRouter(); 
-
-    // ------------------------------------
-    // 🚨 FIX 2: Add useEffect for Auth Check
-    // ------------------------------------
+    const router = useRouter();
     useEffect(() => {
         const checkAuthStatus = async () => {
             try {
-                // Check if a token exists in secure storage
                 const token = await SecureStore.getItemAsync("token");
                 
-                // If a token exists, the user is logged in.
                 if (token) {
                     console.log("User logged in. Redirecting to Home.");
-                    // Use replace to prevent the user from navigating back to the index/splash screen
                     router.replace("/(tabs)/Home"); 
                 }
-                // If no token exists, do nothing, allowing the splash screen to display.
 
             } catch (error) {
                 console.error("Error checking auth status:", error);
-                // Even on error, we assume no token and allow normal flow
             }
         };
 
         checkAuthStatus();
-    }, []); // Empty dependency array ensures this runs only once on mount
+    }, []);
     // ------------------------------------
 
 
