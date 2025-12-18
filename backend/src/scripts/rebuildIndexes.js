@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 import "dotenv/config.js";
 
-// Import all models to ensure indexes are registered
 import PaymentMethod from "../models/PaymentMethod.js";
 import Cart from "../models/Cart.js";
 import Address from "../models/Address.js";
@@ -9,17 +8,15 @@ import Order from "../models/Order.js";
 import Product from "../models/Product.js";
 import User from "../models/User.js";
 import Favorite from "../models/Favorite.js";
+import Brand from "../models/Brand.js";
 
 const rebuildIndexes = async () => {
     try {
-        // Connect to MongoDB
-        await mongoose.connect(process.env.MONGO_URI);
+        await mongoose.connect(process.env.MONGODB_URI);
         console.log("✅ Connected to MongoDB");
 
-        // Rebuild indexes for each collection
         console.log("\n🔨 Rebuilding indexes...\n");
 
-        // PaymentMethod
         console.log("📦 PaymentMethod collection:");
         try {
             await PaymentMethod.collection.dropIndexes();
@@ -30,7 +27,6 @@ const rebuildIndexes = async () => {
         const pmIndexes = await PaymentMethod.collection.getIndexes();
         console.log("   Indexes:", Object.keys(pmIndexes).join(", "));
 
-        // Cart
         console.log("\n🛒 Cart collection:");
         try {
             await Cart.collection.dropIndexes();
@@ -41,7 +37,6 @@ const rebuildIndexes = async () => {
         const cartIndexes = await Cart.collection.getIndexes();
         console.log("   Indexes:", Object.keys(cartIndexes).join(", "));
 
-        // Address
         console.log("\n📍 DeliveryAddress collection:");
         try {
             await Address.collection.dropIndexes();
@@ -52,7 +47,6 @@ const rebuildIndexes = async () => {
         const addressIndexes = await Address.collection.getIndexes();
         console.log("   Indexes:", Object.keys(addressIndexes).join(", "));
 
-        // Order
         console.log("\n📋 Order collection:");
         try {
             await Order.collection.dropIndexes();
@@ -63,7 +57,6 @@ const rebuildIndexes = async () => {
         const orderIndexes = await Order.collection.getIndexes();
         console.log("   Indexes:", Object.keys(orderIndexes).join(", "));
 
-        // Product
         console.log("\n🛍️  Product collection:");
         try {
             await Product.collection.dropIndexes();
@@ -74,7 +67,6 @@ const rebuildIndexes = async () => {
         const productIndexes = await Product.collection.getIndexes();
         console.log("   Indexes:", Object.keys(productIndexes).join(", "));
 
-        // User
         console.log("\n👤 User collection:");
         try {
             await User.collection.dropIndexes();
@@ -85,7 +77,6 @@ const rebuildIndexes = async () => {
         const userIndexes = await User.collection.getIndexes();
         console.log("   Indexes:", Object.keys(userIndexes).join(", "));
 
-        // Favorite
         console.log("\n❤️  Favorite collection:");
         try {
             await Favorite.collection.dropIndexes();
@@ -96,6 +87,16 @@ const rebuildIndexes = async () => {
         const favoriteIndexes = await Favorite.collection.getIndexes();
         console.log("   Indexes:", Object.keys(favoriteIndexes).join(", "));
 
+        console.log("\n🏷️  Brand collection:");
+        try {
+            await Brand.collection.dropIndexes();
+        } catch (e) {
+            console.log("   (No existing indexes to drop)");
+        }
+        await Brand.createIndexes();
+        const brandIndexes = await Brand.collection.getIndexes();
+        console.log("   Indexes:", Object.keys(brandIndexes).join(", "));
+
         console.log("\n✅ All indexes rebuilt successfully!");
         console.log("\n📊 Summary:");
         console.log("   - PaymentMethod:", Object.keys(pmIndexes).length, "indexes");
@@ -105,8 +106,8 @@ const rebuildIndexes = async () => {
         console.log("   - Product:", Object.keys(productIndexes).length, "indexes");
         console.log("   - User:", Object.keys(userIndexes).length, "indexes");
         console.log("   - Favorite:", Object.keys(favoriteIndexes).length, "indexes");
+        console.log("   - Brand:", Object.keys(brandIndexes).length, "indexes");
 
-        // Close connection
         await mongoose.connection.close();
         console.log("\n✅ MongoDB connection closed");
         process.exit(0);

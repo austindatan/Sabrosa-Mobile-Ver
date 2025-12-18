@@ -20,6 +20,4 @@ const BrandSchema = new mongoose.Schema(
 );
 
 
-BrandSchema.index({ name: 1 });
-
 export default mongoose.model("Brand", BrandSchema);
