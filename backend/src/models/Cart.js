@@ -19,11 +19,11 @@ const cartSchema = new mongoose.Schema(
                     default: 1,
                     min: 1,
                 },
-                // ✅ NEW FIELD: Status of the individual item
+                
                 status: {
                     type: String,
-                    enum: ["Added", "Ordered", "Delivered", "Cancelled"], // Your four statuses
-                    default: "Added", // Default status when first added to cart
+                    enum: ["Added", "Ordered", "Delivered", "Cancelled"], 
+                    default: "Added", 
                 },
             },
         ],
@@ -31,7 +31,7 @@ const cartSchema = new mongoose.Schema(
     { timestamps: true }
 );
 
-// Add index for efficient querying by user
+
 cartSchema.index({ user: 1 });
 
 export default mongoose.model("Cart", cartSchema);

@@ -22,21 +22,21 @@ router.get("/preview/:userId", async (req, res) => {
              select: 'productName price productImages' 
         });
 
-        // 🛑 CRITICAL FIX: Changed findOne (singular) to find (multiple) 
-        // to correctly initialize the 'defaultMethods' array expected by the loop.
+        
+        
         const defaultMethods = await PaymentMethod.find({ user: userId, isDefault: true }); 
         
-        let defaultPaymentKey = 'cod'; // Default fallback
+        let defaultPaymentKey = 'cod'; 
         let defaultCardNumber = null;
         let defaultGcashNumber = null;
         
         for (const method of defaultMethods) {
             if (method.type === 'Credit Card' && method.cardNumber) {
-                // Store masked card number for display
+                
                 defaultCardNumber = `**** ${method.cardNumber.slice(-4)}`;
                 defaultPaymentKey = 'card';
             } else if (method.type === 'GCash' && method.gcashNumber) {
-                // Store full GCash number for display
+                
                 defaultGcashNumber = method.gcashNumber;
                 defaultPaymentKey = 'gcash';
             } else if (method.type === 'Cash') {
@@ -44,8 +44,8 @@ router.get("/preview/:userId", async (req, res) => {
             }
         }
         
-        // Ensure the default key is set correctly based on the found method
-        // (This block can be simplified but we'll leave it to match your original intent)
+        
+        
         if (defaultMethods.length === 0) {
              defaultPaymentKey = 'cod';
         } else if (defaultMethods.find(m => m.type === 'GCash')) {
@@ -58,7 +58,7 @@ router.get("/preview/:userId", async (req, res) => {
             ? cart.items.filter(item => item.status === "Added")
             : [];
         
-        // 5. Construct the final response payload
+        
         const responsePayload = {
             userInfo: {
                 recipient: `${user.firstName} ${user.lastName}`,
@@ -78,7 +78,7 @@ router.get("/preview/:userId", async (req, res) => {
                     : null 
             })),
             
-            // ✅ Updated keys (match what the frontend is expecting)
+            
             defaultPayment: defaultPaymentKey,
             cardDisplayNumber: defaultCardNumber,   
             gcashDisplayNumber: defaultGcashNumber, 
@@ -87,7 +87,7 @@ router.get("/preview/:userId", async (req, res) => {
         res.status(200).json(responsePayload);
 
     } catch (err) {
-        // Log the detailed error for debugging
+        
         console.error("CHECKOUT PREVIEW ERROR:", err); 
         res.status(500).json({ error: "Failed to load checkout preview" });
     }

@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema({
     required: true,
   },
   birthday: {
-    type: String, // store as MM/DD/YY (your format)
+    type: String, 
     required: true,
   },
   number: {
@@ -34,7 +34,7 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-// Hash password before save
+
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
   const salt = await bcrypt.genSalt(10);

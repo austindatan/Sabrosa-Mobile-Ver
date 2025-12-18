@@ -1,14 +1,14 @@
-// routes/order.js
+
 import express from "express";
 import Cart from "../models/Cart.js";
 import Order from "../models/Order.js";
 import User from "../models/User.js";
-import DeliveryAddress from "../models/Address.js"; // Existing Delivery Address Model
-import PaymentMethod from "../models/PaymentMethod.js"; // Existing Payment Method Model
+import DeliveryAddress from "../models/Address.js"; 
+import PaymentMethod from "../models/PaymentMethod.js"; 
 
 const router = express.Router();
 
-// Get all orders for a specific user
+
 router.get("/user/:userId", async (req, res) => {
     try {
         const orders = await Order.find({ user: req.params.userId }).populate({
@@ -31,24 +31,24 @@ router.post("/place", async (req, res) => {
             return res.status(400).json({ error: "User ID is required." });
         }
 
-        // 1. Fetch User and Delivery Address Details by userId
-        // The User model provides recipient name and phone number
+        
+        
         const user = await User.findById(userId).select('firstName lastName number');
-        // The Address model provides the most recent delivery address
+        
         const deliveryAddress = await DeliveryAddress.findOne({ user: userId }).sort({ createdAt: -1 });
 
         if (!user || !deliveryAddress) {
             return res.status(404).json({ error: "User or Delivery Address not found." });
         }
 
-        // 2. Determine Payment Details from the PaymentMethod model
+        
         let paymentDetails = { type: selectedPayment, details: null };
 
         if (selectedPayment === 'card' || selectedPayment === 'gcash') {
             const defaultMethod = await PaymentMethod.findOne({
                 user: userId,
                 isDefault: true,
-                // Match the type stored in your PaymentMethod model
+                
                 type: selectedPayment === 'card' ? 'Credit Card' : 'GCash'
             });
 
@@ -61,7 +61,7 @@ router.post("/place", async (req, res) => {
             }
         }
 
-        // 3. Create the Order Document (Snapshot)
+        
         const order = new Order({
             user: userId,
             items: items.map(item => ({
@@ -70,7 +70,7 @@ router.post("/place", async (req, res) => {
                 price: item.price,
                 quantity: item.qty,
             })),
-            // Snapshotting the data from the User and DeliveryAddress models:
+            
             deliveryAddress: {
                 recipient: `${user.firstName} ${user.lastName}`,
                 phone: user.number,
@@ -86,13 +86,13 @@ router.post("/place", async (req, res) => {
 
         await order.save();
 
-        // 4. Delete Items from the Cart Table
+        
         const cart = await Cart.findOne({ user: userId });
 
         if (cart) {
             const orderedProductIds = items.map(item => item.id.toString());
 
-            // Filter out items that were just ordered and had the "Added" status
+            
             cart.items = cart.items.filter(item =>
                 !orderedProductIds.includes(item.product.toString()) ||
                 item.status !== "Added"

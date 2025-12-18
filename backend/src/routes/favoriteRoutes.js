@@ -3,9 +3,7 @@ import Favorite from "../models/Favorite.js";
 
 const router = express.Router();
 
-/* -----------------------------
-   ADD/TOGGLE FAVORITE
------------------------------ */
+
 router.post("/toggle", async (req, res) => {
     try {
         const { userId, productId } = req.body;
@@ -14,15 +12,15 @@ router.post("/toggle", async (req, res) => {
             return res.status(400).json({ error: "userId and productId are required" });
         }
 
-        // Check if already favorited
+        
         const existing = await Favorite.findOne({ user: userId, product: productId });
 
         if (existing) {
-            // Remove from favorites
+            
             await Favorite.deleteOne({ _id: existing._id });
             return res.json({ message: "Removed from favorites", isFavorited: false });
         } else {
-            // Add to favorites
+            
             const newFavorite = new Favorite({
                 user: userId,
                 product: productId,
@@ -36,9 +34,7 @@ router.post("/toggle", async (req, res) => {
     }
 });
 
-/* -----------------------------
-   GET ALL FAVORITES FOR USER
------------------------------ */
+
 router.get("/user/:userId", async (req, res) => {
     try {
         const favorites = await Favorite.find({ user: req.params.userId })
@@ -48,7 +44,7 @@ router.get("/user/:userId", async (req, res) => {
                     path: "brand"
                 }
             })
-            .sort({ createdAt: -1 }); // Newest first
+            .sort({ createdAt: -1 }); 
 
         res.json(favorites);
     } catch (err) {
@@ -57,9 +53,7 @@ router.get("/user/:userId", async (req, res) => {
     }
 });
 
-/* -----------------------------
-   CHECK IF PRODUCT IS FAVORITED
------------------------------ */
+
 router.get("/check/:userId/:productId", async (req, res) => {
     try {
         const { userId, productId } = req.params;
@@ -76,9 +70,7 @@ router.get("/check/:userId/:productId", async (req, res) => {
     }
 });
 
-/* -----------------------------
-   REMOVE FAVORITE
------------------------------ */
+
 router.delete("/:userId/:productId", async (req, res) => {
     try {
         const { userId, productId } = req.params;

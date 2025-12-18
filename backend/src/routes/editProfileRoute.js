@@ -1,31 +1,31 @@
 import express from 'express';
-import User from '../models/User.js'; // Make sure this points to your User model
+import User from '../models/User.js'; 
 
 const router = express.Router();
 
-// PUT route to update user profile
+
 router.put("/:id", async (req, res) => {
   try {
     const userId = req.params.id;
     const { firstName, lastName, number, email } = req.body;
 
-    // Validate required fields
+    
     if (!firstName || !lastName || !number || !email) {
       return res.status(400).json({ error: "All fields are required." });
     }
 
-    // Find user by ID and update
+    
     const updatedUser = await User.findByIdAndUpdate(
       userId,
       { firstName, lastName, number, email },
-      { new: true, runValidators: true } // return updated document & validate
+      { new: true, runValidators: true } 
     );
 
     if (!updatedUser) {
       return res.status(404).json({ error: "User not found." });
     }
 
-    // Return updated user as JSON
+    
     res.status(200).json({
       message: "Profile updated successfully",
       user: updatedUser

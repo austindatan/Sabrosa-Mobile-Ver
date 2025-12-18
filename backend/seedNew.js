@@ -5,7 +5,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-// Brand ID mapping from your database
+
 const BRAND_IDS = {
     "Bluestar": "693e937d904d600084688852",
     "ByronBay": "693e937d904d600084688853",
@@ -218,8 +218,7 @@ const seedProducts = [
     },
 ];
 
-// Due to file size, I'll create a helper function to continue...
-// This is just the first ~15 products. The pattern continues for all brands.
+
 
 const seed = async () => {
     try {

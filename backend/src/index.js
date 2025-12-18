@@ -7,7 +7,7 @@ import productRoutes from "./routes/productRoutes.js";
 import cartRoutes from "./routes/cartRoutes.js";
 import checkoutRoutes from "./routes/checkoutRoutes.js";
 import addressRoutes from "./routes/addressRoutes.js";
-import paymentMethodRoutes from "./routes/paymentMethodRoutes.js";
+import paymentMethodRoutes from "./routes/paymentmethodRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
 import favoriteRoutes from "./routes/favoriteRoutes.js";
 import editProfileRoute from './routes/editProfileRoute.js';
@@ -19,7 +19,7 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 
 // Main routes
-app.use("/api/auth", authRoutes);             // e.g., login, register
+app.use("/api/auth", authRoutes);             
 app.use("/api/products", productRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/checkout", checkoutRoutes);
@@ -29,7 +29,7 @@ app.use("/api/order", orderRoutes);
 app.use("/api/favorites", favoriteRoutes);
 
 // Edit profile route now RESTful
-app.use('/api/auth/users', editProfileRoute);  // <-- changed from /edit-profile
+app.use('/api/auth/users', editProfileRoute);  
 
 // Admin routes
 app.use('/api/admin', adminRoutes);

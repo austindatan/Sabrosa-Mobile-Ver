@@ -25,7 +25,7 @@ const PaymentMethodSchema = new mongoose.Schema({
     }
 }, { timestamps: true });
 
-// Add compound index for efficient querying by user and sorting by isDefault/createdAt
+
 PaymentMethodSchema.index({ user: 1, isDefault: -1, createdAt: -1 });
 
 export default mongoose.model("PaymentMethod", PaymentMethodSchema);

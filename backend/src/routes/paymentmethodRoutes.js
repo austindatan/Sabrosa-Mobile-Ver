@@ -3,14 +3,12 @@ import PaymentMethod from "../models/PaymentMethod.js";
 
 const router = express.Router();
 
-/* -----------------------------
-   GET ALL METHODS FOR USER
------------------------------ */
+
 router.get("/list/:userId", async (req, res) => {
     try {
         const data = await PaymentMethod
             .find({ user: req.params.userId })
-            .sort({ isDefault: -1, createdAt: -1 }); // 👈 DEFAULT FIRST
+            .sort({ isDefault: -1, createdAt: -1 }); 
 
         res.json(data);
     } catch (err) {
@@ -32,27 +30,24 @@ router.get("/fix-user-types", async (req, res) => {
     res.send("Fixed user types");
 });
 
-/* -----------------------------
-   ADD NEW PAYMENT METHOD
-   AND SET AS DEFAULT IF ASKED
------------------------------ */
+
 router.post("/add", async (req, res) => {
     try {
         const { user, type, cardNumber, gcashNumber, isDefault } = req.body;
 
-        if (isDefault) { // Use the corrected key
+        if (isDefault) { 
             await PaymentMethod.updateMany(
-                { user: user }, // Use the corrected key
+                { user: user }, 
                 { $set: { isDefault: false } }
             );
         }
 
         const newMethod = new PaymentMethod({
-            user: user, // Use the corrected key
+            user: user, 
             type,
             cardNumber,
             gcashNumber,
-            isDefault: isDefault ? true : false // Use the corrected key
+            isDefault: isDefault ? true : false 
         });
 
         await newMethod.save();
@@ -65,21 +60,19 @@ router.post("/add", async (req, res) => {
     }
 });
 
-/* -----------------------------
-   SET AS DEFAULT
------------------------------ */
+
 router.put("/set-default/:id", async (req, res) => {
     try {
         const method = await PaymentMethod.findById(req.params.id);
         if (!method) return res.status(404).json({ error: "Method not found" });
 
-        // 1. clear old default
+        
         await PaymentMethod.updateMany(
             { user: method.user },
             { $set: { isDefault: false } }
         );
 
-        // 2. set this as default
+        
         method.isDefault = true;
         await method.save();
 
